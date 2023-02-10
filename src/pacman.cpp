@@ -1,5 +1,7 @@
-#include <SDL.h>
+#include "ghosts.hpp"
+#include "thePacman.hpp"
 
+#include <SDL.h>
 #include <iostream>
 
 SDL_Window *pWindow = nullptr;
@@ -14,6 +16,7 @@ SDL_Rect red_ghost_l = {37, 123, 16, 16};
 SDL_Rect red_ghost_d = {105, 123, 16, 16};
 SDL_Rect red_ghost_u = {71, 123, 16, 16};
 SDL_Rect ghost = {34, 34, 32, 32}; // ici scale x2
+SDL_Rect pacman = {34, 34, 32, 32}; // ici scale x2
 
 SDL_Rect pink_ghost_r = {3, 141, 16, 16};
 SDL_Rect pink_ghost_l = {37, 141, 16, 16};
@@ -49,7 +52,7 @@ void init() {
 }
 
 // fonction qui met à jour la surface de la fenetre "win_surf"
-void draw() {
+void draw(SDL_Rect *pac_move) {
     SDL_SetColorKey(plancheSprites, false, 0);
     SDL_BlitScaled(plancheSprites, &src_bg, win_surf, &bg);
 
@@ -84,6 +87,7 @@ void draw() {
     SDL_SetColorKey(plancheSprites, true, 0);
     // copie du sprite zoomé
     SDL_BlitScaled(plancheSprites, &ghost_in2, win_surf, &ghost);
+    SDL_BlitScaled(plancheSprites, pac_move, win_surf, &pacman);
 }
 
 int main(int argc, char **argv) {
@@ -91,6 +95,11 @@ int main(int argc, char **argv) {
         std::cerr << "Echec de l'initialisation de la SDL " << SDL_GetError() << std::endl;
         return 1;
     }
+
+    //
+    thePacman *pac=new thePacman{};
+    int animation=0;
+    SDL_Rect *pac_move=pac->getLeft(0);
 
     init();
     // BOUCLE PRINCIPALE
@@ -110,19 +119,32 @@ int main(int argc, char **argv) {
         // Gestion du clavier
         int nbk;
         const Uint8 *keys = SDL_GetKeyboardState(&nbk);
+        
+        if ((count ) % 2)
+            animation = (animation+1)%2;
+
         if (keys[SDL_SCANCODE_ESCAPE])
             quit = true;
-        if (keys[SDL_SCANCODE_LEFT])
-            puts("LEFT");
-        if (keys[SDL_SCANCODE_RIGHT])
-            puts("RIGHT");
+        if (keys[SDL_SCANCODE_LEFT]){
+            pac_move=pac->getLeft(animation);
+        }
+        if (keys[SDL_SCANCODE_RIGHT]){
+            pac_move=pac->getRight(animation);
+        }
+        if (keys[SDL_SCANCODE_UP]){
+            pac_move=pac->getUp(animation);
+        }
+        if (keys[SDL_SCANCODE_DOWN]){
+            pac_move=pac->getDown(animation);
+        }
 
         // AFFICHAGE
-        draw();
+        draw(pac_move);
         SDL_UpdateWindowSurface(pWindow);
         // LIMITE A 60 FPS
         SDL_Delay(16); // utiliser SDL_GetTicks64() pour plus de precisions
     }
     SDL_Quit(); // ON SORT
+    delete(pac);
     return 0;
 }
