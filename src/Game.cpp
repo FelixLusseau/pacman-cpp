@@ -84,7 +84,7 @@ void Game::draw(){
         x++;
         break;
     case 1:
-        ghost_in = ghosts[0]->getSprite(4+animation);
+        ghost_in = ghosts[0]->getSprite(6+animation);
         y++;
         break;
     case 2:
@@ -93,7 +93,7 @@ void Game::draw(){
         ghosts[0]->changePosition(x,y);
         break;
     case 3:
-        ghost_in = ghosts[0]->getSprite(6+animation);
+        ghost_in = ghosts[0]->getSprite(4+animation);
         y--;
         break;
     }

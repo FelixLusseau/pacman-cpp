@@ -14,7 +14,7 @@ class Game{
         SDL_Window *pWindow;
         SDL_Surface *win_surf;
         SDL_Surface *plancheSprites;    
-        SDL_Rect src_bg ; // x,y, w,h (0,0) en haut a gauche
+        SDL_Rect src_bg ;   // x,y, w,h (0,0) en haut a gauche
         SDL_Rect bg ;       // ici scale x4
 
         int count;
