@@ -6,8 +6,8 @@ Game::Game(){
     win_surf = SDL_GetWindowSurface(pWindow);
 
     plancheSprites = SDL_LoadBMP("./pacman_sprites.bmp");
-    SDL_Rect src_bg = {200, 3, 168, 216}; // x,y, w,h (0,0) en haut a gauche
-    SDL_Rect bg = {4, 4, 672, 864};       // ici scale x4
+    src_bg = {200, 3, 168, 216}; // x,y, w,h (0,0) en haut a gauche
+    bg = {4, 4, 672, 864};       // ici scale x4
     SDL_SetColorKey(plancheSprites, false, 0);
     SDL_BlitScaled(plancheSprites, &src_bg, win_surf, &bg);
 
@@ -63,6 +63,9 @@ int Game::start(){
 }
 
 void Game::draw(){
+    
+    SDL_SetColorKey(plancheSprites, false, 0);
+    SDL_BlitScaled(plancheSprites, &src_bg, win_surf, &bg);
 
     // petit truc pour faire tourner le fantome
     SDL_Rect *ghost_in = nullptr;
@@ -74,24 +77,27 @@ void Game::draw(){
     }
     int x=ghosts[0]->getPosition()->x;
     int y=ghosts[0]->getPosition()->y;
+
     switch (count / 128) {
     case 0:
         ghost_in = ghosts[0]->getSprite(0+animation);
-        ghosts[0]->changePosition(x++,y);
+        x++;
         break;
     case 1:
-        ghost_in = ghosts[0]->getSprite(2+animation);
-        ghosts[0]->changePosition(x,y++);
+        ghost_in = ghosts[0]->getSprite(4+animation);
+        y++;
         break;
     case 2:
-        ghost_in = ghosts[0]->getSprite(4+animation);
-        ghosts[0]->changePosition(x--,y);
+        ghost_in = ghosts[0]->getSprite(2+animation);
+        x--;
+        ghosts[0]->changePosition(x,y);
         break;
     case 3:
         ghost_in = ghosts[0]->getSprite(6+animation);
-        ghosts[0]->changePosition(x,y--);
+        y--;
         break;
     }
+    ghosts[0]->changePosition(x,y);
     count = (count + 1) % (512);
 
     // couleur transparente
