@@ -1,3 +1,3 @@
-#include "Ghost.hpp"
+#include "../include/Ghost.hpp"
 
-Ghost::Ghost():Character(){}
+Ghost::Ghost() : Character() {}

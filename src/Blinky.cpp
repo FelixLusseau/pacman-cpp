@@ -1,7 +1,7 @@
 
-#include "Blinky.hpp"
+#include "../include/Blinky.hpp"
 
-Blinky::Blinky():Ghost(){
+Blinky::Blinky() : Ghost() {
     /* right */
     sprite_[0] = {3, 123, 16, 16};
     sprite_[1] = {20, 123, 16, 16};
