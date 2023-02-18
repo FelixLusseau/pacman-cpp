@@ -13,9 +13,17 @@ Game::Game() {
 
     pacman = new ThePacman{};
 
-    for (int i = 0; i < 4; i++) {
-        ghosts[i] = new Blinky();
-    }
+    ghosts[0] = new Blinky();
+    ghosts[1] = new Pinky();
+    ghosts[2] = new Inky();
+    ghosts[3] = new Clyde();
+
+    blueghost = new BlueGhost();
+    blankghost = new BlankGhost();
+    eyes = new Eyes();
+
+    /* for (int i = 0; i < 4; i++) {
+    } */
 }
 
 int Game::start() {
@@ -70,40 +78,43 @@ void Game::draw() {
     // petit truc pour faire tourner le fantome
     SDL_Rect *ghost_in = nullptr;
 
+    // choix du fantome
+    Ghost *cur_ghost = ghosts[3];
+
     // ici on change entre les 2 sprites sources pour une jolie animation.
     int animation = 0;
     if ((count / 4) % 2) {
         animation = 1;
     }
-    int x = ghosts[0]->getPosition()->x;
-    int y = ghosts[0]->getPosition()->y;
+    int x = cur_ghost->getPosition()->x;
+    int y = cur_ghost->getPosition()->y;
 
     switch (count / 128) {
     case 0:
-        ghost_in = ghosts[0]->getSprite(0 + animation);
+        ghost_in = cur_ghost->getSprite(0 + animation);
         x++;
         break;
     case 1:
-        ghost_in = ghosts[0]->getSprite(6 + animation);
+        ghost_in = cur_ghost->getSprite(6 + animation);
         y++;
         break;
     case 2:
-        ghost_in = ghosts[0]->getSprite(2 + animation);
+        ghost_in = cur_ghost->getSprite(2 + animation);
         x--;
-        ghosts[0]->changePosition(x, y);
+        cur_ghost->changePosition(x, y);
         break;
     case 3:
-        ghost_in = ghosts[0]->getSprite(4 + animation);
+        ghost_in = cur_ghost->getSprite(4 + animation);
         y--;
         break;
     }
-    ghosts[0]->changePosition(x, y);
+    cur_ghost->changePosition(x, y);
     count = (count + 1) % (512);
 
     // couleur transparente
     SDL_SetColorKey(plancheSprites, true, 0);
     // copie du sprite zoomé
-    SDL_BlitScaled(plancheSprites, ghost_in, win_surf, ghosts[0]->getPosition());
+    SDL_BlitScaled(plancheSprites, ghost_in, win_surf, cur_ghost->getPosition());
 
     SDL_UpdateWindowSurface(pWindow);
 }
