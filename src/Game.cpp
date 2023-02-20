@@ -13,17 +13,16 @@ Game::Game() {
 
     pacman = new ThePacman{};
 
-    ghosts[0] = new Blinky();
-    ghosts[1] = new Pinky();
-    ghosts[2] = new Inky();
-    ghosts[3] = new Clyde();
+    ghosts[0] = new Blinky{};
+    ghosts[1] = new Pinky{};
+    ghosts[2] = new Inky{};
+    ghosts[3] = new Clyde{};
 
-    blueghost = new BlueGhost();
-    blankghost = new BlankGhost();
-    eyes = new Eyes();
+    map=new Map{};
 
-    /* for (int i = 0; i < 4; i++) {
-    } */
+    blueghost = new BlueGhost{};
+    blankghost = new BlankGhost{};
+    eyes = new Eyes{};
 }
 
 int Game::start() {
@@ -52,14 +51,8 @@ int Game::start() {
 
         if (keys[SDL_SCANCODE_ESCAPE])
             quit = true;
-        if (keys[SDL_SCANCODE_LEFT]) {
-        }
-        if (keys[SDL_SCANCODE_RIGHT]) {
-        }
-        if (keys[SDL_SCANCODE_UP]) {
-        }
-        if (keys[SDL_SCANCODE_DOWN]) {
-        }
+
+        pacman->deplacement(keys,this->changeSprite(),map->getMap());
 
         // AFFICHAGE
         draw();
@@ -81,11 +74,8 @@ void Game::draw() {
     // choix du fantome
     Ghost *cur_ghost = ghosts[3];
 
-    // ici on change entre les 2 sprites sources pour une jolie animation.
-    int animation = 0;
-    if ((count / 4) % 2) {
-        animation = 1;
-    }
+    int animation=this->changeSprite();
+
     int x = cur_ghost->getPosition()->x;
     int y = cur_ghost->getPosition()->y;
 
@@ -101,20 +91,32 @@ void Game::draw() {
     case 2:
         ghost_in = cur_ghost->getSprite(2 + animation);
         x--;
-        cur_ghost->changePosition(x, y);
         break;
     case 3:
         ghost_in = cur_ghost->getSprite(4 + animation);
         y--;
         break;
     }
-    cur_ghost->changePosition(x, y);
+    cur_ghost->changePosition(x, y, map->getMap());
     count = (count + 1) % (512);
 
     // couleur transparente
     SDL_SetColorKey(plancheSprites, true, 0);
     // copie du sprite zoomé
     SDL_BlitScaled(plancheSprites, ghost_in, win_surf, cur_ghost->getPosition());
+    
+    SDL_BlitScaled(plancheSprites, pacman->get_currSprite(), win_surf, pacman->getPosition());
 
     SDL_UpdateWindowSurface(pWindow);
+}
+
+int Game::changeSprite(){
+    // ici on change entre les 2 sprites sources pour une jolie animation.
+    int animation = 0;
+
+    if ((count / 4) % 2) {
+        animation = 1;
+    }
+
+  return animation;  
 }

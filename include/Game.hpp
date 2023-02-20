@@ -21,6 +21,8 @@ class Game {
     Ghost *blankghost;
     Ghost *eyes;
 
+    Map *map;
+
     SDL_Window *pWindow;
     SDL_Surface *win_surf;
     SDL_Surface *plancheSprites;
@@ -34,6 +36,9 @@ class Game {
 
     void draw();
     int start();
+
+    /* renvoit 1 ou 0 pour determiner l'animation des sprites */
+    int changeSprite(void);
 };
 
 #endif

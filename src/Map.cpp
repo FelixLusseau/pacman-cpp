@@ -60,5 +60,5 @@ Map::Map() {
          Tile::Dot,  Tile::Dot, Tile::Dot, Tile::Dot, Tile::Dot, Tile::Dot, Tile::Dot, Tile::Dot, Tile::Dot, Tile::Wall},
         {Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall,
          Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall}
-    }
-}
+    };
+};

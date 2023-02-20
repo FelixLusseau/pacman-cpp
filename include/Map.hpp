@@ -12,6 +12,9 @@ class Map {
 
   public:
     Map();
+    inline std::vector<std::vector<Tile>> getMap(void){
+      return map;
+    }
 };
 
 #endif
