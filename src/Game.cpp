@@ -6,8 +6,8 @@ Game::Game() {
     win_surf = SDL_GetWindowSurface(pWindow);
 
     plancheSprites = SDL_LoadBMP("./pacman_sprites.bmp");
-    src_bg = {200, 3, 168, 216}; // x,y, w,h (0,0) en haut a gauche
-    bg = {4, 4, 672, 864};       // ici scale x4
+    src_bg = {201, 4, 166, 214}; // x,y, w,h (0,0) en haut a gauche
+    bg = {0, 0, 714, 918};       // ici scale x4
     SDL_SetColorKey(plancheSprites, false, 0);
     SDL_BlitScaled(plancheSprites, &src_bg, win_surf, &bg);
 
@@ -97,7 +97,7 @@ void Game::draw() {
         y--;
         break;
     }
-    cur_ghost->changePosition(x, y, map->getMap());
+    //cur_ghost->changePosition(x, y, map->getMap());
     count = (count + 1) % (512);
 
     // couleur transparente
