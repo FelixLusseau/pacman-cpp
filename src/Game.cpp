@@ -7,7 +7,7 @@ Game::Game() {
 
     plancheSprites = SDL_LoadBMP("./pacman_sprites.bmp");
     src_bg = {201, 4, 166, 214}; // x,y, w,h (0,0) en haut a gauche
-    bg = {0, 0, 714, 918};       // ici scale x4
+    bg = {0, 0, 664, 856};       // ici scale x4
     SDL_SetColorKey(plancheSprites, false, 0);
     SDL_BlitScaled(plancheSprites, &src_bg, win_surf, &bg);
 

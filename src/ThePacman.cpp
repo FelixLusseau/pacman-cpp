@@ -15,14 +15,16 @@ ThePacman::ThePacman() : Character() {
     sprite_[6] = {76, 90, 16, 16};
     sprite_[7] = {92, 94, 16, 12};
 
-    cur_sprite_= {3, 90, 16, 16};
+    cur_sprite_= {4, 90, 16, 16};
 
-    position_ = {34, 34, 32, 32};
+    position_ = {34, 34, 30, 30};
 }
 
 void ThePacman::deplacement(const Uint8 *keys, int animation,std::vector<std::vector<Tile>> map){
     int x=0;
     int y=0;
+
+    SDL_Rect sp=cur_sprite_;
 
     if (keys[SDL_SCANCODE_RIGHT]) {
         cur_sprite_=sprite_[0+animation];
@@ -40,6 +42,7 @@ void ThePacman::deplacement(const Uint8 *keys, int animation,std::vector<std::ve
         cur_sprite_=sprite_[6+animation];
         y=-2;
     }
+    //cur_sprite_=sp;
     this->changePosition(position_.x+x,position_.y+y, map);
 
     std::cout<<position_.x<<" "<<position_.y<<std::endl;
