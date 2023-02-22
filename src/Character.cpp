@@ -4,22 +4,26 @@
 Character::Character(){};
 
 void Character::changePosition(int x, int y, std::vector<std::vector<Tile>> map) {
+
     float tailleCase=float(664)/float(21);
-    std::cout<<tailleCase<<std::endl;
-    int ligne=x/tailleCase;
-    int colonne=y/tailleCase;
+    int tailleSprite=(position_.w/2)-2;
+
+    int origineX=position_.x+tailleSprite;
+    int origineY=position_.y+tailleSprite;
+
+    int ligne=origineX/tailleCase;
+    int colonne=origineY/tailleCase;
 
     std::cout<<"vector: "<<ligne<<" "<<colonne<<std::endl;
 
-    /* évite de sortir du cadre
-    if( !(x<=714 && x>=0 && y<=918 && y>=0)){
-        return ;
-    }*/
+    int futurX=x+tailleSprite;
+    int futurY=y+tailleSprite;
 
 
-   if( ((x<position_.x || y<position_.y ) && map[y/tailleCase][x/tailleCase]==Tile::Wall )    ||
-        (y>position_.y  && map[(y+32)/tailleCase][(x+2)/tailleCase]==Tile::Wall )    ||
-        (x>position_.x  && map[(y+2)/tailleCase][(x+32)/tailleCase]==Tile::Wall )    ){
+   if(  (futurX<origineX  && map[futurY/tailleCase][(futurX-tailleSprite)/tailleCase]==Tile::Wall )    ||
+        (futurY<origineY  && map[(futurY-tailleSprite)/tailleCase][futurX/tailleCase]==Tile::Wall )    ||
+        (futurY>origineY  && map[(futurY+tailleSprite)/tailleCase][(futurX)/tailleCase]==Tile::Wall )    ||
+        (futurX>origineX  && map[(futurY)/tailleCase][(futurX+tailleSprite)/tailleCase]==Tile::Wall )    ){
             return ;
     }
 

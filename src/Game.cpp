@@ -97,7 +97,7 @@ void Game::draw() {
         y--;
         break;
     }
-    //cur_ghost->changePosition(x, y, map->getMap());
+    cur_ghost->changePosition(x, y, map->getMap());
     count = (count + 1) % (512);
 
     // couleur transparente

@@ -82,7 +82,7 @@ Map::Map() {
         {Tile::Wall, Tile::Dot,  Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Dot, Tile::Wall,
          Tile::Dot,  Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Dot,  Tile::Wall},
         //26
-        {Tile::Wall, Tile::Dot, Tile::Dot, Tile::Dot, Tile::Dot, Tile::Dot, Tile::Dot, Tile::Dot, Tile::Dot, Tile::Dot, Tile::Wall,
+        {Tile::Wall, Tile::Dot, Tile::Dot, Tile::Dot, Tile::Dot, Tile::Dot, Tile::Dot, Tile::Dot, Tile::Dot, Tile::Dot, Tile::Dot,
          Tile::Dot,  Tile::Dot, Tile::Dot, Tile::Dot, Tile::Dot, Tile::Dot, Tile::Dot, Tile::Dot, Tile::Dot, Tile::Wall},
         //27
         {Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall,
