@@ -10,6 +10,7 @@
 #include "../include/Map.hpp"
 #include "../include/Pinky.hpp"
 #include "../include/ThePacman.hpp"
+#include "../include/Dot.hpp"
 #include <SDL.h>
 #include <iostream>
 
@@ -22,6 +23,7 @@ class Game {
     Ghost *eyes;
 
     Map *map;
+    std::vector<Dot *> dots;
 
     SDL_Window *pWindow;
     SDL_Surface *win_surf;

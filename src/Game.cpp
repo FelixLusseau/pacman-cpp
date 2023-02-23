@@ -1,19 +1,7 @@
 #include "../include/Game.hpp"
+#include "../include/Dot.hpp"
 
 Game::Game() {
-
-    pWindow = SDL_CreateWindow("PacMan", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 700, 900, SDL_WINDOW_SHOWN);
-    win_surf = SDL_GetWindowSurface(pWindow);
-
-    plancheSprites = SDL_LoadBMP("./pacman_sprites.bmp");
-    src_bg = {201, 4, 166, 214}; // x,y, w,h (0,0) en haut a gauche
-    src_bg_dotless = {201+166+3, 4, 166, 214};
-    src_bg_white = {201+2*166+8, 4, 166, 214};
-
-    bg = {0, 0, 664, 856};       // ici scale x4
-
-    SDL_SetColorKey(plancheSprites, false, 0);
-    SDL_BlitScaled(plancheSprites, &src_bg, win_surf, &bg);
 
     pacman = new ThePacman{};
 
@@ -22,11 +10,47 @@ Game::Game() {
     ghosts[2] = new Inky{};
     ghosts[3] = new Clyde{};
 
-    map=new Map{};
-
     blueghost = new BlueGhost{};
     blankghost = new BlankGhost{};
     eyes = new Eyes{};
+
+    map=new Map{};
+
+    pWindow = SDL_CreateWindow("PacMan", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 700, 900, SDL_WINDOW_SHOWN);
+    win_surf = SDL_GetWindowSurface(pWindow);
+
+    plancheSprites = SDL_LoadBMP("./pacman_sprites.bmp");
+    src_bg = {201, 4, 166, 214}; // x,y, w,h (0,0) en haut a gauche
+    src_bg_dotless = {201+166+3, 4, 166, 214};
+    src_bg_white = {201+2*166+8, 4, 166, 214};
+    src_bg=src_bg_dotless;
+
+    bg = {0, 0, 664, 856};       // ici scale x4
+
+    SDL_SetColorKey(plancheSprites, false, 0);
+    SDL_BlitScaled(plancheSprites, &src_bg, win_surf, &bg);
+
+    std::vector<std::vector<Tile>> thisMap=map->getMap();
+    float pixelX=float(bg.w)/float(thisMap[0].size());
+    float pixelY=float(bg.h)/float(thisMap.size());
+
+    for(int i=0; i<thisMap.size();i++){
+
+        int y=(int)(float(i)*pixelY+(pixelY/4));
+
+        for(int j=0; j<thisMap[0].size();j++){
+
+            if(thisMap[i][j]==Tile::Dot ){
+
+                int x=(int)(float(j)*pixelX+(pixelX/4));
+
+                std::cout<<"dot: "<<i<<" "<<j<<" "<<x<<" "<<y<<std::endl;
+
+                dots.push_back(new Dot{x,y});
+            }
+        }
+    }
+
 }
 
 int Game::start() {
@@ -74,6 +98,12 @@ void Game::draw() {
 
     SDL_SetColorKey(plancheSprites, false, 0);
     SDL_BlitScaled(plancheSprites, &src_bg, win_surf, &bg);
+
+    for(int i=0; i< dots.size(); i++){
+        if(dots[i]->getExist()){
+            SDL_BlitScaled(plancheSprites, dots[i]->getSprite(), win_surf, dots[i]->getPosition());
+        }
+    }
 
     // petit truc pour faire tourner le fantome
     SDL_Rect *ghost_in = nullptr;

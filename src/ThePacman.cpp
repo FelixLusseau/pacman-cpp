@@ -1,4 +1,3 @@
-
 #include "../include/ThePacman.hpp"
 
 ThePacman::ThePacman() : Character() {
