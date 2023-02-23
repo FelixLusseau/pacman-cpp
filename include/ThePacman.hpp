@@ -8,12 +8,16 @@
 
 class ThePacman : public Character{
     private:
+
+    SDL_Rect die_animation[11];
     
     public:
 
     ThePacman();
 
-    void deplacement(const Uint8 *keys, int animation, std::vector<std::vector<Tile>> map);
+    void move(const Uint8 *keys, int animation, std::vector<std::vector<Tile>> map, SDL_Rect bg);
+
+    void die(SDL_Surface *plancheSprites,SDL_Rect *src_bg,SDL_Surface *win_surf,SDL_Rect *bg,SDL_Window *pWindow);
 
 };
 

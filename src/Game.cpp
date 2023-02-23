@@ -7,7 +7,11 @@ Game::Game() {
 
     plancheSprites = SDL_LoadBMP("./pacman_sprites.bmp");
     src_bg = {201, 4, 166, 214}; // x,y, w,h (0,0) en haut a gauche
+    src_bg_dotless = {201+166+3, 4, 166, 214};
+    src_bg_white = {201+2*166+8, 4, 166, 214};
+
     bg = {0, 0, 664, 856};       // ici scale x4
+
     SDL_SetColorKey(plancheSprites, false, 0);
     SDL_BlitScaled(plancheSprites, &src_bg, win_surf, &bg);
 
@@ -49,13 +53,16 @@ int Game::start() {
         int nbk;
         const Uint8 *keys = SDL_GetKeyboardState(&nbk);
 
-        if (keys[SDL_SCANCODE_ESCAPE])
-            quit = true;
 
-        pacman->deplacement(keys,this->changeSprite(),map->getMap());
+        pacman->move(keys,this->changeSprite(),map->getMap(),bg);
 
         // AFFICHAGE
         draw();
+
+        if (keys[SDL_SCANCODE_ESCAPE]){
+            quit = gameOver();
+        }
+
         // LIMITE A 60 FPS
         SDL_Delay(16); // utiliser SDL_GetTicks64() pour plus de precisions
     }
@@ -97,7 +104,7 @@ void Game::draw() {
         y--;
         break;
     }
-    cur_ghost->changePosition(x, y, map->getMap());
+    //cur_ghost->changePosition(x, y, map->getMap(), bg);
     count = (count + 1) % (512);
 
     // couleur transparente
@@ -119,4 +126,29 @@ int Game::changeSprite(){
     }
 
   return animation;  
+}
+
+bool Game::gameOver(){
+
+    SDL_FillRect(win_surf, NULL, 0x000000);
+    SDL_BlitScaled(plancheSprites, &src_bg_dotless, win_surf, &bg);
+    SDL_UpdateWindowSurface(pWindow);
+    SDL_Delay(500);
+
+    pacman->die(plancheSprites,&src_bg_dotless,win_surf,&bg,pWindow);
+
+    for(int i=0; i<3; i++){
+
+        SDL_BlitScaled(plancheSprites, &src_bg_dotless, win_surf, &bg);
+        SDL_UpdateWindowSurface(pWindow);
+        SDL_Delay(500);
+
+        SDL_BlitScaled(plancheSprites, &src_bg_white, win_surf, &bg);
+        SDL_UpdateWindowSurface(pWindow);
+        SDL_Delay(500);
+    }
+
+    SDL_Delay(500);
+
+    return true;
 }

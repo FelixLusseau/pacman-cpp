@@ -27,6 +27,8 @@ class Game {
     SDL_Surface *win_surf;
     SDL_Surface *plancheSprites;
     SDL_Rect src_bg; // x,y, w,h (0,0) en haut a gauche
+    SDL_Rect src_bg_dotless;
+    SDL_Rect src_bg_white;
     SDL_Rect bg;     // ici scale x4
 
     int count;
@@ -39,6 +41,8 @@ class Game {
 
     /* renvoit 1 ou 0 pour determiner l'animation des sprites */
     int changeSprite(void);
+
+    bool gameOver(void);
 };
 
 #endif

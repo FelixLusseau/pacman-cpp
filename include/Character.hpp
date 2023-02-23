@@ -31,7 +31,7 @@ class Character{
             return &cur_sprite_;
         };
 
-        void changePosition(int x, int y, std::vector<std::vector<Tile>> map);
+        void changePosition(int x, int y, std::vector<std::vector<Tile>> map, SDL_Rect bg);
 
 };
 
