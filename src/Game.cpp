@@ -14,48 +14,47 @@ Game::Game() {
     blankghost = new BlankGhost{};
     eyes = new Eyes{};
 
-    map=new Map{};
+    map = new Map{};
 
-    score=0;
+    score = 0;
 
     pWindow = SDL_CreateWindow("PacMan", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 700, 900, SDL_WINDOW_SHOWN);
     win_surf = SDL_GetWindowSurface(pWindow);
 
     plancheSprites = SDL_LoadBMP("./pacman_sprites.bmp");
     src_bg = {201, 4, 166, 214}; // x,y, w,h (0,0) en haut a gauche
-    src_bg_dotless = {201+166+3, 4, 166, 214};
-    src_bg_white = {201+2*166+8, 4, 166, 214};
-    src_bg=src_bg_dotless;
+    src_bg_dotless = {201 + 166 + 3, 4, 166, 214};
+    src_bg_white = {201 + 2 * 166 + 8, 4, 166, 214};
+    src_bg = src_bg_dotless;
 
-    bg = {0, 0, 664, 856};       // ici scale x4
+    bg = {0, 0, 664, 856}; // ici scale x4
 
     SDL_SetColorKey(plancheSprites, false, 0);
     SDL_BlitScaled(plancheSprites, &src_bg, win_surf, &bg);
 
-    std::vector<std::vector<Tile>> thisMap=map->getMap();
+    std::vector<std::vector<Tile>> thisMap = map->getMap();
 
     /* tailles cases */
-    float pixelX=float(bg.w)/float(thisMap[0].size());
-    float pixelY=float(bg.h)/float(thisMap.size());
+    float pixelX = float(bg.w) / float(thisMap[0].size());
+    float pixelY = float(bg.h) / float(thisMap.size());
 
     /* création de tout les points à partir de la map fournit */
-    for(int i=0; i<thisMap.size();i++){
+    for (int i = 0; i < thisMap.size(); i++) {
 
-        int y=(int)(float(i)*pixelY+(pixelY/4)+0.5);
+        int y = (int)(float(i) * pixelY + (pixelY / 4) + 0.5);
 
-        for(int j=0; j<thisMap[0].size();j++){
+        for (int j = 0; j < thisMap[0].size(); j++) {
 
-            if(thisMap[i][j]==Tile::Dot ){
+            if (thisMap[i][j] == Tile::Dot) {
 
-                int x=(int)(float(j)*pixelX+(pixelX/4));
+                int x = (int)(float(j) * pixelX + (pixelX / 4));
 
-                std::cout<<"dot: "<<i<<" "<<j<<" "<<x<<" "<<y<<std::endl;
+                std::cout << "dot: " << i << " " << j << " " << x << " " << y << std::endl;
 
-                dots.push_back(new Dot{x,y});
+                dots.push_back(new Dot{x, y});
             }
         }
     }
-
 }
 
 int Game::start() {
@@ -82,13 +81,12 @@ int Game::start() {
         int nbk;
         const Uint8 *keys = SDL_GetKeyboardState(&nbk);
 
-
-        pacman->move(keys,this->changeSprite(),map->getMap(),bg);
+        pacman->move(keys, this->changeSprite(), map->getMap(), bg);
 
         // AFFICHAGE
         draw();
 
-        if (keys[SDL_SCANCODE_ESCAPE]){
+        if (keys[SDL_SCANCODE_ESCAPE]) {
             quit = gameOver();
         }
 
@@ -101,16 +99,15 @@ int Game::start() {
 
 void Game::draw() {
 
-
     SDL_SetColorKey(plancheSprites, false, 0);
     SDL_BlitScaled(plancheSprites, &src_bg, win_surf, &bg);
 
     /* gestion des points */
-    for(int i=0; i< dots.size(); i++){
+    for (int i = 0; i < dots.size(); i++) {
 
-        score+=dots[i]->getEat(pacman->getPosition());
+        score += dots[i]->getEat(pacman->getPosition());
 
-        if(dots[i]->getExist()){ // affichage
+        if (dots[i]->getExist()) { // affichage
             SDL_BlitScaled(plancheSprites, dots[i]->getSprite(), win_surf, dots[i]->getPosition());
         }
     }
@@ -121,7 +118,7 @@ void Game::draw() {
     // choix du fantome
     Ghost *cur_ghost = ghosts[3];
 
-    int animation=this->changeSprite();
+    int animation = this->changeSprite();
 
     int x = cur_ghost->getPosition()->x;
     int y = cur_ghost->getPosition()->y;
@@ -144,7 +141,7 @@ void Game::draw() {
         y--;
         break;
     }
-    //cur_ghost->changePosition(x, y, map->getMap(), bg);
+    // cur_ghost->changePosition(x, y, map->getMap(), bg);
     count = (count + 1) % (512);
 
     // couleur transparente
@@ -157,7 +154,7 @@ void Game::draw() {
     SDL_UpdateWindowSurface(pWindow);
 }
 
-int Game::changeSprite(){
+int Game::changeSprite() {
     // ici on change entre les 2 sprites sources pour une jolie animation.
     int animation = 0;
 
@@ -165,22 +162,22 @@ int Game::changeSprite(){
         animation = 1;
     }
 
-  return animation;  
+    return animation;
 }
 
-bool Game::gameOver(){
+bool Game::gameOver() {
 
-    std::cout<<"GAME OVER"<<std::endl;
-    std::cout<<"score: "<<score<<std::endl;
+    std::cout << "GAME OVER" << std::endl;
+    std::cout << "score: " << score << std::endl;
 
     SDL_FillRect(win_surf, NULL, 0x000000);
     SDL_BlitScaled(plancheSprites, &src_bg_dotless, win_surf, &bg);
     SDL_UpdateWindowSurface(pWindow);
     SDL_Delay(500);
 
-    pacman->die(plancheSprites,&src_bg_dotless,win_surf,&bg,pWindow);
+    pacman->die(plancheSprites, &src_bg_dotless, win_surf, &bg, pWindow);
 
-    for(int i=0; i<3; i++){
+    for (int i = 0; i < 3; i++) {
 
         SDL_BlitScaled(plancheSprites, &src_bg_dotless, win_surf, &bg);
         SDL_UpdateWindowSurface(pWindow);
