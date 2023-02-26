@@ -2,6 +2,7 @@
 #include "../include/Map.hpp"
 
 extern int mv_x, mv_y;
+extern SDL_Scancode prec_key;
 
 Character::Character(){};
 
@@ -33,6 +34,7 @@ void Character::changePosition(int x, int y, std::vector<std::vector<Tile>> map,
         (futurX > origineX && map[(futurY) / tailleCaseY][(futurX + tailleSprite) / tailleCaseX] == Tile::Wall)) {
         mv_x = 0;
         mv_y = 0;
+        prec_key = SDL_SCANCODE_UNKNOWN;
         return;
     }
     if ((futurX < origineX && map[futurY / tailleCaseY][(futurX - tailleSprite) / tailleCaseX] == Tile::EscapeTunnel)) {
