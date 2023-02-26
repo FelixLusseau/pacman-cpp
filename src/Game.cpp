@@ -16,6 +16,8 @@ Game::Game() {
 
     map=new Map{};
 
+    score=0;
+
     pWindow = SDL_CreateWindow("PacMan", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 700, 900, SDL_WINDOW_SHOWN);
     win_surf = SDL_GetWindowSurface(pWindow);
 
@@ -31,12 +33,15 @@ Game::Game() {
     SDL_BlitScaled(plancheSprites, &src_bg, win_surf, &bg);
 
     std::vector<std::vector<Tile>> thisMap=map->getMap();
+
+    /* tailles cases */
     float pixelX=float(bg.w)/float(thisMap[0].size());
     float pixelY=float(bg.h)/float(thisMap.size());
 
+    /* création de tout les points à partir de la map fournit */
     for(int i=0; i<thisMap.size();i++){
 
-        int y=(int)(float(i)*pixelY+(pixelY/4));
+        int y=(int)(float(i)*pixelY+(pixelY/4)+0.5);
 
         for(int j=0; j<thisMap[0].size();j++){
 
@@ -96,11 +101,16 @@ int Game::start() {
 
 void Game::draw() {
 
+
     SDL_SetColorKey(plancheSprites, false, 0);
     SDL_BlitScaled(plancheSprites, &src_bg, win_surf, &bg);
 
+    /* gestion des points */
     for(int i=0; i< dots.size(); i++){
-        if(dots[i]->getExist()){
+
+        score+=dots[i]->getEat(pacman->getPosition());
+
+        if(dots[i]->getExist()){ // affichage
             SDL_BlitScaled(plancheSprites, dots[i]->getSprite(), win_surf, dots[i]->getPosition());
         }
     }
@@ -141,7 +151,7 @@ void Game::draw() {
     SDL_SetColorKey(plancheSprites, true, 0);
     // copie du sprite zoomé
     SDL_BlitScaled(plancheSprites, ghost_in, win_surf, cur_ghost->getPosition());
-    
+    // affichage pacman
     SDL_BlitScaled(plancheSprites, pacman->get_currSprite(), win_surf, pacman->getPosition());
 
     SDL_UpdateWindowSurface(pWindow);
@@ -159,6 +169,9 @@ int Game::changeSprite(){
 }
 
 bool Game::gameOver(){
+
+    std::cout<<"GAME OVER"<<std::endl;
+    std::cout<<"score: "<<score<<std::endl;
 
     SDL_FillRect(win_surf, NULL, 0x000000);
     SDL_BlitScaled(plancheSprites, &src_bg_dotless, win_surf, &bg);

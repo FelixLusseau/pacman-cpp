@@ -29,7 +29,13 @@ class Dot {
     }
     inline SDL_Rect* getSprite(void){
         return &sprite_;
+    } 
+    inline int getPoint(void){
+        return point;
     }
+
+    /* fonction pour manger les points: renvoit 0 si pas mangé, son nombre de point sinon */
+    int getEat(SDL_Rect*pac_position);
 
 };
 

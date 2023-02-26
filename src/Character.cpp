@@ -19,8 +19,9 @@ void Character::changePosition(int x, int y, std::vector<std::vector<Tile>> map,
     int ligne=origineX/tailleCaseX;
     int colonne=origineY/tailleCaseY;
 
-    std::cout<<"vector: "<<ligne<<" "<<colonne<<" "<<std::endl;
-
+    //std::cout<<"vector: "<<ligne<<" "<<colonne<<" "<<std::endl;
+    
+    // origine futur
     int futurX=x+tailleSprite;
     int futurY=y+tailleSprite;
 

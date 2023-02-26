@@ -56,7 +56,7 @@ void ThePacman::move(const Uint8 *keys, int animation,std::vector<std::vector<Ti
     //cur_sprite_=sp;
     this->changePosition(position_.x+x,position_.y+y, map, bg);
 
-    std::cout<<position_.x<<" "<<position_.y<<std::endl;
+    //std::cout<<position_.x<<" "<<position_.y<<std::endl;
 }
 
 void ThePacman::die(SDL_Surface *plancheSprites,SDL_Rect *src_bg,SDL_Surface *win_surf,SDL_Rect *bg,SDL_Window *pWindow){

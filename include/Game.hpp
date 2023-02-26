@@ -34,6 +34,7 @@ class Game {
     SDL_Rect bg;     // ici scale x4
 
     int count;
+    int score;
 
   public:
     Game();
