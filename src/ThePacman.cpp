@@ -16,7 +16,7 @@ ThePacman::ThePacman() : Character() {
 
     cur_sprite_ = {4, 90, 16, 16};
 
-    position_ = {34, 34, 30, 30};
+    position_ = {34, 160, 30, 30};
 
     die_animation[0] = {4, 90, 16, 16};
     die_animation[1] = {4, 106, 16, 16};

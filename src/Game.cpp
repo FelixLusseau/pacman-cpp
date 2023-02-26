@@ -83,6 +83,14 @@ int Game::start() {
 
         pacman->move(keys, this->changeSprite(), map->getMap(), bg);
 
+        for (Ghost *fantom : ghosts) {
+            // std::cout << fantom->getPosition()->x << " " << fantom->getPosition()->y << std::endl;
+            // std::cout << pacman->getPosition()->x << " " << pacman->getPosition()->y << std::endl;
+            if (pacman->getPosition()->x == fantom->getPosition()->x && pacman->getPosition()->y == fantom->getPosition()->y) {
+                quit = gameOver();
+            }
+        }
+
         // AFFICHAGE
         draw();
 
@@ -141,7 +149,7 @@ void Game::draw() {
         y--;
         break;
     }
-    // cur_ghost->changePosition(x, y, map->getMap(), bg);
+    cur_ghost->changePosition(x, y, map->getMap(), bg);
     count = (count + 1) % (512);
 
     // couleur transparente
