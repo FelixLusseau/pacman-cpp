@@ -26,7 +26,7 @@ Game::Game() {
     float pixelX = float(bg.w) / float(thisMap[0].size());
     float pixelY = float(bg.h) / float(thisMap.size());
 
-    pacman = new ThePacman{10*(int)(pixelX)+12, 15*(int)(pixelY)+12};
+    pacman = new ThePacman{10 * (int)(pixelX) + 12, 15 * (int)(pixelY) + 12};
 
     ghosts[0] = new Blinky{};
     ghosts[1] = new Pinky{};
@@ -39,21 +39,19 @@ Game::Game() {
 
     score = 0;
 
-
-
     /* création de tout les points à partir de la map fournit */
-    for (int i = 0; i < thisMap.size(); i++) {
+    for (int i{0}; i < thisMap.size(); i++) {
 
         int y = (int)(float(i) * pixelY + (pixelY / 4) + 0.5);
 
-        for (int j = 0; j < thisMap[0].size(); j++) {
+        for (int j{0}; j < thisMap[0].size(); j++) {
 
             if (thisMap[i][j] == Tile::Dot) {
 
                 int x = (int)(float(j) * pixelX + (pixelX / 4));
                 dots.push_back(new Dot{x, y});
 
-                //std::cout << "dot: " << i << " " << j << " " << x << " " << y << std::endl;
+                // std::cout << "dot: " << i << " " << j << " " << x << " " << y << std::endl;
             }
         }
     }
@@ -113,7 +111,7 @@ void Game::draw() {
     SDL_BlitScaled(plancheSprites, &src_bg, win_surf, &bg);
 
     /* gestion des points */
-    for (int i = 0; i < dots.size(); i++) {
+    for (int i{0}; i < dots.size(); i++) {
 
         score += dots[i]->getEat(pacman->getPosition());
 
@@ -166,7 +164,7 @@ void Game::draw() {
 
 int Game::changeSprite() {
     // ici on change entre les 2 sprites sources pour une jolie animation.
-    int animation = 0;
+    int animation{0};
 
     if ((count / 4) % 2) {
         animation = 1;
@@ -187,7 +185,7 @@ bool Game::gameOver() {
 
     pacman->die(plancheSprites, &src_bg_dotless, win_surf, &bg, pWindow);
 
-    for (int i = 0; i < 3; i++) {
+    for (int i{0}; i < 3; i++) {
 
         SDL_BlitScaled(plancheSprites, &src_bg_dotless, win_surf, &bg);
         SDL_UpdateWindowSurface(pWindow);

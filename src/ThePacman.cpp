@@ -35,8 +35,8 @@ void ThePacman::move(const Uint8 *keys, int animation, std::vector<std::vector<T
 
     SDL_Rect sp = cur_sprite_;
 
-    int mv_x=0;
-    int mv_y=0;
+    int mv_x{0};
+    int mv_y{0};
 
     if (keys[SDL_SCANCODE_RIGHT] || prec_key == SDL_SCANCODE_RIGHT) {
         prec_key = SDL_SCANCODE_RIGHT;
@@ -58,7 +58,7 @@ void ThePacman::move(const Uint8 *keys, int animation, std::vector<std::vector<T
         cur_sprite_ = sprite_[6 + animation];
         mv_y = -2;
     }
-    //cur_sprite_=sp;
+    // cur_sprite_=sp;
     this->changePosition(position_.x + mv_x, position_.y + mv_y, map, bg);
 
     // std::cout<<position_.x<<" "<<position_.y<<std::endl;
@@ -66,10 +66,10 @@ void ThePacman::move(const Uint8 *keys, int animation, std::vector<std::vector<T
 
 void ThePacman::die(SDL_Surface *plancheSprites, SDL_Rect *src_bg, SDL_Surface *win_surf, SDL_Rect *bg, SDL_Window *pWindow) {
 
-    int x = position_.x;
-    int y = position_.y;
+    int x{position_.x};
+    int y{position_.y};
 
-    for (int i = 0; i < 11; i++) { // animation
+    for (int i{0}; i < 11; i++) { // animation
 
         if (i == 9) { // n°9 est un rectangle qui requiert une largeur différente des autres sprites
             position_.w = 4;

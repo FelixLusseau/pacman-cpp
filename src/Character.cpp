@@ -3,10 +3,7 @@
 
 extern SDL_Scancode prec_key;
 
-Character::Character(){
-    
-    SDL_Scancode prec_key=SDL_SCANCODE_UNKNOWN;
-};
+Character::Character() { SDL_Scancode prec_key = SDL_SCANCODE_UNKNOWN; };
 
 void Character::changePosition(int x, int y, std::vector<std::vector<Tile>> map, SDL_Rect bg) {
 
@@ -38,26 +35,24 @@ void Character::changePosition(int x, int y, std::vector<std::vector<Tile>> map,
     }
 
     // collision mur
-    if ((futurX < origineX && map[futurY / tailleCaseY][(futurX - tailleSprite) / tailleCaseX] == Tile::Wall)   ||
-        (futurY < origineY && map[(futurY - tailleSprite) / tailleCaseY][futurX / tailleCaseX] == Tile::Wall)   ||
+    if ((futurX < origineX && map[futurY / tailleCaseY][(futurX - tailleSprite) / tailleCaseX] == Tile::Wall) ||
+        (futurY < origineY && map[(futurY - tailleSprite) / tailleCaseY][futurX / tailleCaseX] == Tile::Wall) ||
         (futurY > origineY && map[(futurY + tailleSprite) / tailleCaseY][(futurX) / tailleCaseX] == Tile::Wall) ||
-        (futurX > origineX && map[(futurY) / tailleCaseY][(futurX + tailleSprite) / tailleCaseX] == Tile::Wall) ){
+        (futurX > origineX && map[(futurY) / tailleCaseY][(futurX + tailleSprite) / tailleCaseX] == Tile::Wall)) {
 
         prec_key = SDL_SCANCODE_UNKNOWN;
         return;
-
     }
 
     // collision aux coins
-    int rondeur=6;
-    if( ( map[(y+rondeur) / tailleCaseY][(x+rondeur) / tailleCaseX] == Tile::Wall)||
-          map[(y+rondeur) / tailleCaseY][(x+position_.h-rondeur) / tailleCaseX] == Tile::Wall||
-          map[(y+position_.w-rondeur) / tailleCaseY][(x+rondeur) / tailleCaseX] == Tile::Wall ||
-          map[(y+position_.w-rondeur) / tailleCaseY][(x+position_.h-rondeur) / tailleCaseX] == Tile::Wall){
-            prec_key = SDL_SCANCODE_UNKNOWN;
-            return;
+    int rondeur{6};
+    if ((map[(y + rondeur) / tailleCaseY][(x + rondeur) / tailleCaseX] == Tile::Wall) ||
+        map[(y + rondeur) / tailleCaseY][(x + position_.h - rondeur) / tailleCaseX] == Tile::Wall ||
+        map[(y + position_.w - rondeur) / tailleCaseY][(x + rondeur) / tailleCaseX] == Tile::Wall ||
+        map[(y + position_.w - rondeur) / tailleCaseY][(x + position_.h - rondeur) / tailleCaseX] == Tile::Wall) {
+        prec_key = SDL_SCANCODE_UNKNOWN;
+        return;
     }
-
 
     position_.x = x;
     position_.y = y;

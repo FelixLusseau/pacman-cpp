@@ -5,7 +5,7 @@ BlankGhost::BlankGhost() : Ghost() {
     sprite_[0] = {36, 195, 16, 16};
     sprite_[1] = {53, 195, 16, 16};
 
-    for (int i = 2; i < 8; i += 2) {
+    for (int i{2}; i < 8; i += 2) {
         sprite_[i] = sprite_[0];
         sprite_[i + 1] = sprite_[1];
     }

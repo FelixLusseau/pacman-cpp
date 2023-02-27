@@ -11,7 +11,7 @@ Eyes::Eyes() : Ghost() {
     /* down */
     sprite_[6] = {122, 195, 16, 16};
 
-    for (int i = 1; i < 8; i += 2) {
+    for (int i{1}; i < 8; i += 2) {
         sprite_[i] = sprite_[i - 1];
     }
 
