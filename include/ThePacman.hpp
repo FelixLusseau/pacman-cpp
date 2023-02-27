@@ -13,7 +13,7 @@ class ThePacman : public Character{
     
     public:
 
-    ThePacman();
+    ThePacman(int x, int y);
 
     /* pacman bouge */
     void move(const Uint8 *keys, int animation, std::vector<std::vector<Tile>> map, SDL_Rect bg);

@@ -1,22 +1,22 @@
 #include "../include/ThePacman.hpp"
 
-ThePacman::ThePacman() : Character() {
+ThePacman::ThePacman(int x, int y) : Character() {
     /* right */
     sprite_[0] = {18, 90, 16, 16};
     sprite_[1] = {34, 90, 14, 16};
     /* left */
     sprite_[2] = {48, 90, 16, 16};
     sprite_[3] = {62, 90, 14, 16};
-    /* up */
+    /* down */
     sprite_[4] = {108, 90, 16, 16};
     sprite_[5] = {126, 94, 16, 12};
-    /* down */
+    /* up */
     sprite_[6] = {76, 90, 16, 16};
     sprite_[7] = {92, 94, 16, 12};
 
     cur_sprite_ = {4, 90, 16, 16};
 
-    position_ = {34, 160, 30, 30};
+    position_ = {x, y, 32, 32};
 
     die_animation[0] = {4, 90, 16, 16};
     die_animation[1] = {4, 106, 16, 16};
@@ -31,12 +31,12 @@ ThePacman::ThePacman() : Character() {
     die_animation[10] = {143, 106, 16, 16};
 }
 
-int mv_x{0}, mv_y{0};
-SDL_Scancode prec_key{SDL_SCANCODE_UNKNOWN};
-
 void ThePacman::move(const Uint8 *keys, int animation, std::vector<std::vector<Tile>> map, SDL_Rect bg) {
 
     SDL_Rect sp = cur_sprite_;
+
+    int mv_x=0;
+    int mv_y=0;
 
     if (keys[SDL_SCANCODE_RIGHT] || prec_key == SDL_SCANCODE_RIGHT) {
         prec_key = SDL_SCANCODE_RIGHT;
@@ -58,7 +58,7 @@ void ThePacman::move(const Uint8 *keys, int animation, std::vector<std::vector<T
         cur_sprite_ = sprite_[6 + animation];
         mv_y = -2;
     }
-    // cur_sprite_=sp;
+    //cur_sprite_=sp;
     this->changePosition(position_.x + mv_x, position_.y + mv_y, map, bg);
 
     // std::cout<<position_.x<<" "<<position_.y<<std::endl;

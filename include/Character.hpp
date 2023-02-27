@@ -17,6 +17,9 @@ class Character{
 
         /* position dans la fenètre de jeu */
         SDL_Rect position_;
+
+
+        SDL_Scancode prec_key;
         
     public:
         Character();

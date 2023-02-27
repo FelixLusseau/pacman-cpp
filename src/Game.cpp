@@ -3,7 +3,30 @@
 
 Game::Game() {
 
-    pacman = new ThePacman{};
+    pWindow = SDL_CreateWindow("PacMan", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 700, 900, SDL_WINDOW_SHOWN);
+    win_surf = SDL_GetWindowSurface(pWindow);
+
+    plancheSprites = SDL_LoadBMP("./pacman_sprites.bmp");
+
+    SDL_SetColorKey(plancheSprites, false, 0);
+    SDL_BlitScaled(plancheSprites, &src_bg, win_surf, &bg);
+
+    // apparence de la carte
+    src_bg = {201, 4, 166, 214}; // x,y, w,h (0,0) en haut a gauche
+    src_bg_dotless = {201 + 166 + 3, 4, 166, 214};
+    src_bg_white = {201 + 2 * 166 + 8, 4, 166, 214};
+    src_bg = src_bg_dotless;
+
+    bg = {0, 0, 664, 856}; // ici scale x4
+
+    map = new Map{};
+    std::vector<std::vector<Tile>> thisMap = map->getMap();
+
+    /* tailles cases */
+    float pixelX = float(bg.w) / float(thisMap[0].size());
+    float pixelY = float(bg.h) / float(thisMap.size());
+
+    pacman = new ThePacman{10*(int)(pixelX)+12, 15*(int)(pixelY)+12};
 
     ghosts[0] = new Blinky{};
     ghosts[1] = new Pinky{};
@@ -14,29 +37,9 @@ Game::Game() {
     blankghost = new BlankGhost{};
     eyes = new Eyes{};
 
-    map = new Map{};
-
     score = 0;
 
-    pWindow = SDL_CreateWindow("PacMan", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 700, 900, SDL_WINDOW_SHOWN);
-    win_surf = SDL_GetWindowSurface(pWindow);
 
-    plancheSprites = SDL_LoadBMP("./pacman_sprites.bmp");
-    src_bg = {201, 4, 166, 214}; // x,y, w,h (0,0) en haut a gauche
-    src_bg_dotless = {201 + 166 + 3, 4, 166, 214};
-    src_bg_white = {201 + 2 * 166 + 8, 4, 166, 214};
-    src_bg = src_bg_dotless;
-
-    bg = {0, 0, 664, 856}; // ici scale x4
-
-    SDL_SetColorKey(plancheSprites, false, 0);
-    SDL_BlitScaled(plancheSprites, &src_bg, win_surf, &bg);
-
-    std::vector<std::vector<Tile>> thisMap = map->getMap();
-
-    /* tailles cases */
-    float pixelX = float(bg.w) / float(thisMap[0].size());
-    float pixelY = float(bg.h) / float(thisMap.size());
 
     /* création de tout les points à partir de la map fournit */
     for (int i = 0; i < thisMap.size(); i++) {
@@ -48,10 +51,9 @@ Game::Game() {
             if (thisMap[i][j] == Tile::Dot) {
 
                 int x = (int)(float(j) * pixelX + (pixelX / 4));
-
-                std::cout << "dot: " << i << " " << j << " " << x << " " << y << std::endl;
-
                 dots.push_back(new Dot{x, y});
+
+                //std::cout << "dot: " << i << " " << j << " " << x << " " << y << std::endl;
             }
         }
     }

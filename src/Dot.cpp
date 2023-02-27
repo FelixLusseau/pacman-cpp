@@ -17,13 +17,18 @@ int Dot::getEat(SDL_Rect*pac_position){
 
     int score=0;
 
-    float side=pac_position->w/2;
-    float distance=sqrt(pow(float(position_.x)-float(pac_position->x+side),2)+pow(float(position_.y)-float(pac_position->y+side),2));
+    float side=(float(pac_position->w)/2);
 
-    if(distance < side){
+    float origineX= float(pac_position->x)+float(pac_position->w)/2;
+    float origineY= float(pac_position->y)+float(pac_position->w)/2;
+
+    //float distance=sqrt( pow(float(position_.x)-origineX,2) + pow(float(position_.y)-origineY,2) );
+
+    if( abs(origineX-position_.x)<side && abs(origineY-position_.y)<side ){
         exist=false;
         score=point;
-        std::cout<<"get eaten!, +"<<score<<std::endl;
+        std::cout<<"get eaten!, +"<<score<<" x:"<<position_.x<<" y:"<<position_.y<<std::endl;
+        std::cout<<"pacman x:"<<origineX<<" y:"<<origineY<<std::endl;
     }
 
     return score;
