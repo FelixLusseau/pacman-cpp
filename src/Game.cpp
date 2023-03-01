@@ -106,16 +106,13 @@ int Game::start() {
 }
 
 void Game::draw() {
+    SDL_SetColorKey(plancheSprites, false, 0);
+    SDL_BlitScaled(plancheSprites, &src_bg, win_surf, &bg);
+
     dictionary = new Write{};
     std::map<char, SDL_Rect> my_dictionary = dictionary->getDictionary();
     SDL_Rect score_pos = {34, 860, 14, 14};
-    dictionary->drawText(plancheSprites, win_surf, &score_pos, "SCORE 0000");
-    // SDL_Rect score_pos2 = {60, 860, 14, 14};
-
-    SDL_SetColorKey(plancheSprites, false, 0);
-    SDL_BlitScaled(plancheSprites, &src_bg, win_surf, &bg);
-    // SDL_BlitScaled(plancheSprites, &my_dictionary['S'], win_surf, &score_pos);
-    // SDL_BlitScaled(plancheSprites, &my_dictionary['P'], win_surf, &score_pos2);
+    dictionary->drawText(plancheSprites, win_surf, &score_pos, "SCORE " + std::to_string(score));
 
     /* gestion des points */
     for (int i{0}; i < dots.size(); i++) {
