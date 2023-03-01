@@ -5,12 +5,13 @@
 #include "../include/Blinky.hpp"
 #include "../include/BlueGhost.hpp"
 #include "../include/Clyde.hpp"
+#include "../include/Dot.hpp"
 #include "../include/Eyes.hpp"
 #include "../include/Inky.hpp"
 #include "../include/Map.hpp"
 #include "../include/Pinky.hpp"
 #include "../include/ThePacman.hpp"
-#include "../include/Dot.hpp"
+#include "../include/Write.hpp"
 #include <SDL.h>
 #include <iostream>
 
@@ -23,6 +24,7 @@ class Game {
     Ghost *eyes;
 
     Map *map;
+    Write *dictionary;
     std::vector<Dot *> dots;
 
     SDL_Window *pWindow;
@@ -31,7 +33,7 @@ class Game {
     SDL_Rect src_bg; // x,y, w,h (0,0) en haut a gauche
     SDL_Rect src_bg_dotless;
     SDL_Rect src_bg_white;
-    SDL_Rect bg;     // ici scale x4
+    SDL_Rect bg; // ici scale x4
 
     int count;
     int score;
