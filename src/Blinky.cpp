@@ -42,16 +42,21 @@ void Blinky::move(int animation, SDL_Rect *PacPosition ,std::vector<std::vector<
     int ligne=(int)(origineX/tailleCaseX);
     int colonne=(int)(origineY/tailleCaseY);
 
-    int intersection{0};
-
     std::vector<Tile> directions={map[colonne+1][ligne],
                                     map[colonne-1][ligne],
                                     map[colonne][ligne+1],
                                     map[colonne][ligne-1]};
 
-    if((position_.x+14)/tailleCaseX == (position_.x+tailleSprite*2-14)/tailleCaseX &&
-       (position_.y+14)/tailleCaseY == (position_.y+tailleSprite*2-14)/tailleCaseY ){
-        std::cout<<"bien aligné"<<std::endl;
+    // bien aligné sur une case => est ce qu'on est sur une intersection?
+    int rondeur{4};
+    int intersection{0};
+
+    int cornerX=static_cast<int>(position_.x+rondeur)/tailleCaseX;
+    int cornerXX=static_cast<int>(position_.x+tailleSprite*2-rondeur)/tailleCaseX;
+    int cornerY=static_cast<int>(position_.y+rondeur)/tailleCaseY;
+    int cornerYY=static_cast<int>(position_.y+tailleSprite*2-rondeur)/tailleCaseY;
+    
+    if(cornerX==cornerXX && cornerY==cornerYY){
         for( int i{0}; i<4 ;i++){
             if(directions[i]!=Tile::Wall && directions[i]!=Tile::GhostHouseDoor){
                 intersection++;

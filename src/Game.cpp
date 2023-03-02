@@ -120,14 +120,14 @@ void Game::draw() {
     SDL_SetColorKey(plancheSprites, false, 0);
     SDL_BlitScaled(plancheSprites, &src_bg, win_surf, &bg);
 
-    // couleur transparente
-    // SDL_SetColorKey(plancheSprites, true, 0);
-
     dictionary = new Write{};
     std::map<char, SDL_Rect> my_dictionary = dictionary->getDictionary();
     SDL_Rect score_pos = {34, 860, 14, 14};
     std::string score_str = "SCORE " + std::to_string(score) + " PTS";
     dictionary->drawText(plancheSprites, win_surf, &score_pos, score_str);
+
+    // couleur transparente
+    SDL_SetColorKey(plancheSprites, true, 0);
 
     /* gestion des points */
     for (int i{0}; i < dots.size(); i++) {

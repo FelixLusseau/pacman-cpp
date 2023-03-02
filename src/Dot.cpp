@@ -11,7 +11,7 @@ Dot::Dot(int x, int y, TypeDot typeDot) {
             point = 10;
             break;
         case TypeDot::Big:
-            sprite_ = {9, 79, 8, 8};
+            sprite_ = {9, 79, 7, 7};
             point = 50;
             break;
     }
