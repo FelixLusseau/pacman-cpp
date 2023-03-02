@@ -7,7 +7,9 @@
 class Blinky : public Ghost{
     private:
     public:
-        Blinky();
+        Blinky(int PixelX, int PixelY);
+
+        void move(int animation,SDL_Rect *PacPosition, std::vector<std::vector<Tile>> map, SDL_Rect bg);
 
 };
 

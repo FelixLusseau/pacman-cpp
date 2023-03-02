@@ -5,8 +5,13 @@
 #include <vector>
 #include <SDL.h>
 
+
+enum class TypeDot { Simple, Big, Fruit };
+
 class Dot {
     private:
+
+    TypeDot type;
 
     /* combien de point il vaut */
     int point;
@@ -19,7 +24,7 @@ class Dot {
     
     public:
 
-    Dot(int x, int y);
+    Dot(int x, int y, TypeDot type);
 
     bool inline getExist(void){
         return exist;

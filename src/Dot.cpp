@@ -1,12 +1,22 @@
 #include "../include/Dot.hpp"
 
-Dot::Dot(int x, int y) {
+Dot::Dot(int x, int y, TypeDot typeDot) {
 
-    point = 100;
     exist = true;
+    type=typeDot;
 
-    sprite_ = {3, 80, 4, 4};
-    position_ = {x, y, 16, 16};
+    switch(type){
+        case TypeDot::Simple:
+            sprite_ = {3, 80, 4, 4};
+            point = 10;
+            break;
+        case TypeDot::Big:
+            sprite_ = {9, 79, 8, 8};
+            point = 50;
+            break;
+    }
+
+    position_ = {x, y, sprite_.w*4, sprite_.h*4};
 };
 
 int Dot::getEat(SDL_Rect *pac_position) {
@@ -27,8 +37,8 @@ int Dot::getEat(SDL_Rect *pac_position) {
     if (abs(origineX - position_.x) < side && abs(origineY - position_.y) < side) {
         exist = false;
         score = point;
-        std::cout << "get eaten!, +" << score << " x:" << position_.x << " y:" << position_.y << std::endl;
-        std::cout << "pacman x:" << origineX << " y:" << origineY << std::endl;
+        //std::cout << "get eaten!, +" << score << " x:" << position_.x << " y:" << position_.y << std::endl;
+        //std::cout << "pacman x:" << origineX << " y:" << origineY << std::endl;
     }
 
     return score;

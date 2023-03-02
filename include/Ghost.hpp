@@ -9,7 +9,7 @@ class Ghost : public Character{
     public:
         Ghost();
 
-
+        void dontStopMoving(int animation,std::vector<std::vector<Tile>> map,SDL_Rect bg);
 };
 
 

@@ -16,7 +16,7 @@
 
 class Game {
   protected:
-    Ghost *ghosts[4];
+    Blinky *ghosts[1];
     ThePacman *pacman;
     Ghost *blueghost;
     Ghost *blankghost;

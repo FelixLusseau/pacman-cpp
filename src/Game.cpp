@@ -26,30 +26,38 @@ Game::Game() {
     float pixelX = float(bg.w) / float(thisMap[0].size());
     float pixelY = float(bg.h) / float(thisMap.size());
 
-    pacman = new ThePacman{10 * (int)(pixelX) + 12, 15 * (int)(pixelY) + 12};
+    pacman = new ThePacman{10 * (int)(pixelX) + 8, 20 * (int)(pixelY) + 18};
 
-    ghosts[0] = new Blinky{};
-    ghosts[1] = new Pinky{};
+    ghosts[0] = new Blinky{(int)pixelX,(int)pixelY};
+    /*ghosts[1] = new Pinky{};
     ghosts[2] = new Inky{};
-    ghosts[3] = new Clyde{};
+    ghosts[3] = new Clyde{}*/
 
     blueghost = new BlueGhost{};
     blankghost = new BlankGhost{};
     eyes = new Eyes{};
 
-    score = 0;
+    score = {0};
 
     /* création de tout les points à partir de la map fournit */
     for (int i{0}; i < thisMap.size(); i++) {
-
-        int y = (int)(float(i) * pixelY + (pixelY / 4) + 0.5);
 
         for (int j{0}; j < thisMap[0].size(); j++) {
 
             if (thisMap[i][j] == Tile::Dot) {
 
+                int y = (int)(float(i) * pixelY + (pixelY / 4) + 0.5);
                 int x = (int)(float(j) * pixelX + (pixelX / 4));
-                dots.push_back(new Dot{x, y});
+                dots.push_back(new Dot{x, y,TypeDot::Simple});
+
+                // std::cout << "dot: " << i << " " << j << " " << x << " " << y << std::endl;
+
+            }else if (thisMap[i][j] == Tile::PowerPellet) {
+
+                int y = (int)(float(i) * pixelY + (pixelY / 8) + 0.5);
+                int x = (int)(float(j) * pixelX + (pixelX / 8));
+
+                dots.push_back(new Dot{x, y,TypeDot::Big});
 
                 // std::cout << "dot: " << i << " " << j << " " << x << " " << y << std::endl;
             }
@@ -85,9 +93,10 @@ int Game::start() {
 
         for (Ghost *fantom : ghosts) {
             // std::cout << fantom->getPosition()->x << " " << fantom->getPosition()->y << std::endl;
-            // std::cout << pacman->getPosition()->x << " " << pacman->getPosition()->y << std::endl;
-            if (pacman->getPosition()->x == fantom->getPosition()->x && pacman->getPosition()->y == fantom->getPosition()->y) {
+            if (abs(pacman->getPosition()->x - fantom->getPosition()->x) < fantom->getPosition()->w && 
+                abs(pacman->getPosition()->y - fantom->getPosition()->y) < fantom->getPosition()->h) {
                 quit = gameOver();
+                if(quit){break;}
             }
         }
 
@@ -109,6 +118,9 @@ void Game::draw() {
 
     SDL_SetColorKey(plancheSprites, false, 0);
     SDL_BlitScaled(plancheSprites, &src_bg, win_surf, &bg);
+    
+    // couleur transparente
+    SDL_SetColorKey(plancheSprites, true, 0);
 
     /* gestion des points */
     for (int i{0}; i < dots.size(); i++) {
@@ -120,42 +132,17 @@ void Game::draw() {
         }
     }
 
-    // petit truc pour faire tourner le fantome
-    SDL_Rect *ghost_in = nullptr;
-
-    // choix du fantome
-    Ghost *cur_ghost = ghosts[3];
 
     int animation = this->changeSprite();
 
-    int x = cur_ghost->getPosition()->x;
-    int y = cur_ghost->getPosition()->y;
+    // choix du fantome
+    Blinky *cur_ghost = ghosts[0];
+    cur_ghost->move(animation,pacman->getPosition(),map->getMap(),bg);
 
-    switch (count / 128) {
-    case 0:
-        ghost_in = cur_ghost->getSprite(0 + animation);
-        x++;
-        break;
-    case 1:
-        ghost_in = cur_ghost->getSprite(6 + animation);
-        y++;
-        break;
-    case 2:
-        ghost_in = cur_ghost->getSprite(2 + animation);
-        x--;
-        break;
-    case 3:
-        ghost_in = cur_ghost->getSprite(4 + animation);
-        y--;
-        break;
-    }
-    cur_ghost->changePosition(x, y, map->getMap(), bg);
     count = (count + 1) % (512);
 
-    // couleur transparente
-    SDL_SetColorKey(plancheSprites, true, 0);
-    // copie du sprite zoomé
-    SDL_BlitScaled(plancheSprites, ghost_in, win_surf, cur_ghost->getPosition());
+    // affichage fantome
+    SDL_BlitScaled(plancheSprites, cur_ghost->get_currSprite(), win_surf, cur_ghost->getPosition());
     // affichage pacman
     SDL_BlitScaled(plancheSprites, pacman->get_currSprite(), win_surf, pacman->getPosition());
 
@@ -175,6 +162,7 @@ int Game::changeSprite() {
 
 bool Game::gameOver() {
 
+
     std::cout << "GAME OVER" << std::endl;
     std::cout << "score: " << score << std::endl;
 
@@ -182,6 +170,9 @@ bool Game::gameOver() {
     SDL_BlitScaled(plancheSprites, &src_bg_dotless, win_surf, &bg);
     SDL_UpdateWindowSurface(pWindow);
     SDL_Delay(500);
+
+    // couleur transparente
+    SDL_SetColorKey(plancheSprites, true, 0);
 
     pacman->die(plancheSprites, &src_bg_dotless, win_surf, &bg, pWindow);
 
