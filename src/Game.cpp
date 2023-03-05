@@ -48,16 +48,16 @@ Game::Game() {
 
                 int y = (int)(float(i) * pixelY + (pixelY / 4) + 0.5);
                 int x = (int)(float(j) * pixelX + (pixelX / 4));
-                dots.push_back(new Dot{x, y,TypeDot::Simple});
+                dots.push_back(new Dot{x, y, TypeDot::Simple});
 
                 // std::cout << "dot: " << i << " " << j << " " << x << " " << y << std::endl;
 
-            }else if (thisMap[i][j] == Tile::PowerPellet) {
+            } else if (thisMap[i][j] == Tile::PowerPellet) {
 
                 int y = (int)(float(i) * pixelY + (pixelY / 8) + 0.5);
                 int x = (int)(float(j) * pixelX + (pixelX / 8));
 
-                dots.push_back(new Dot{x, y,TypeDot::Big});
+                dots.push_back(new Dot{x, y, TypeDot::Big});
 
                 // std::cout << "dot: " << i << " " << j << " " << x << " " << y << std::endl;
             }
@@ -93,10 +93,12 @@ int Game::start() {
     /*
         for (Ghost *fantom : ghosts) {
             // std::cout << fantom->getPosition()->x << " " << fantom->getPosition()->y << std::endl;
-            if (abs(pacman->getPosition()->x - fantom->getPosition()->x) < fantom->getPosition()->w && 
+            if (abs(pacman->getPosition()->x - fantom->getPosition()->x) < fantom->getPosition()->w &&
                 abs(pacman->getPosition()->y - fantom->getPosition()->y) < fantom->getPosition()->h) {
                 quit = gameOver();
-                if(quit){break;}
+                if (quit) {
+                    break;
+                }
             }
         }*/
 
@@ -121,11 +123,11 @@ void Game::draw() {
     dictionary = new Write{};
     std::map<char, SDL_Rect> my_dictionary = dictionary->getDictionary();
     SDL_Rect score_pos = {34, 860, 14, 14};
-    dictionary->drawText(plancheSprites, win_surf, &score_pos, "SCORE " + std::to_string(score));
-    
+    std::string score_str = "SCORE " + std::to_string(score) + " PTS";
+    dictionary->drawText(plancheSprites, win_surf, &score_pos, score_str);
+
     // couleur transparente
     SDL_SetColorKey(plancheSprites, true, 0);
-
 
     /* gestion des points */
     for (int i{0}; i < dots.size(); i++) {
@@ -136,7 +138,6 @@ void Game::draw() {
             SDL_BlitScaled(plancheSprites, dots[i]->getSprite(), win_surf, dots[i]->getPosition());
         }
     }
-
 
     int animation = this->changeSprite();
 
@@ -171,7 +172,6 @@ int Game::changeSprite() {
 }
 
 bool Game::gameOver() {
-
 
     std::cout << "GAME OVER" << std::endl;
     std::cout << "score: " << score << std::endl;
