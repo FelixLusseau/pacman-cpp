@@ -8,6 +8,7 @@ class Inky : public Ghost {
   private:
   public:
     Inky();
+    void chase(int animation,ThePacman *pacman, std::vector<std::vector<Tile>> map, SDL_Rect bg) override;
 };
 
 #endif

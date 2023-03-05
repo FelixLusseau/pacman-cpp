@@ -18,8 +18,11 @@ class Character{
         /* position dans la fenètre de jeu */
         SDL_Rect position_;
 
-
+        /* dernière touche du clavier pressé / direction prise*/
         SDL_Scancode prec_key;
+
+        /* vitesse du personnage */
+        int speed;
         
     public:
         Character();
@@ -33,9 +36,14 @@ class Character{
         inline SDL_Rect* get_currSprite(){
             return &cur_sprite_;
         };
+        inline SDL_Scancode get_key(){
+            return prec_key;
+        };
+        inline void set_speed(int newSpeed){
+            speed=newSpeed;
+        };
 
         void changePosition(int x, int y, std::vector<std::vector<Tile>> map, SDL_Rect bg);
-
 
 };
 

@@ -9,7 +9,7 @@ class Blinky : public Ghost{
     public:
         Blinky(int PixelX, int PixelY);
 
-        void move(int animation,SDL_Rect *PacPosition, std::vector<std::vector<Tile>> map, SDL_Rect bg);
+        void chase(int animation,ThePacman *pacman, std::vector<std::vector<Tile>> map, SDL_Rect bg) override;
 
 };
 

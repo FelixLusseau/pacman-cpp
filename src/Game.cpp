@@ -29,9 +29,9 @@ Game::Game() {
     pacman = new ThePacman{10 * (int)(pixelX) + 8, 20 * (int)(pixelY) + 18};
 
     ghosts[0] = new Blinky{(int)pixelX,(int)pixelY};
-    /*ghosts[1] = new Pinky{};
+    ghosts[1] = new Pinky{(int)pixelX,(int)pixelY};
     ghosts[2] = new Inky{};
-    ghosts[3] = new Clyde{}*/
+    ghosts[3] = new Clyde{};
 
     blueghost = new BlueGhost{};
     blankghost = new BlankGhost{};
@@ -90,7 +90,7 @@ int Game::start() {
         const Uint8 *keys = SDL_GetKeyboardState(&nbk);
 
         pacman->move(keys, this->changeSprite(), map->getMap(), bg);
-
+    /*
         for (Ghost *fantom : ghosts) {
             // std::cout << fantom->getPosition()->x << " " << fantom->getPosition()->y << std::endl;
             if (abs(pacman->getPosition()->x - fantom->getPosition()->x) < fantom->getPosition()->w && 
@@ -98,7 +98,7 @@ int Game::start() {
                 quit = gameOver();
                 if(quit){break;}
             }
-        }
+        }*/
 
         // AFFICHAGE
         draw();
@@ -141,17 +141,22 @@ void Game::draw() {
     int animation = this->changeSprite();
 
     // choix du fantome
-    Blinky *cur_ghost = ghosts[0];
-    cur_ghost->move(animation,pacman->getPosition(),map->getMap(),bg);
+    for(int i{0};i<4;i++){
 
-    count = (count + 1) % (512);
+        Ghost *cur_ghost = ghosts[i];
 
-    // affichage fantome
-    SDL_BlitScaled(plancheSprites, cur_ghost->get_currSprite(), win_surf, cur_ghost->getPosition());
+        cur_ghost->chase(animation,pacman,map->getMap(),bg);
+
+        // affichage fantome
+        SDL_BlitScaled(plancheSprites, cur_ghost->get_currSprite(), win_surf, cur_ghost->getPosition());
+    }
+        
     // affichage pacman
     SDL_BlitScaled(plancheSprites, pacman->get_currSprite(), win_surf, pacman->getPosition());
 
     SDL_UpdateWindowSurface(pWindow);
+
+    count = (count + 1) % (512);
 }
 
 int Game::changeSprite() {

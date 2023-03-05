@@ -1,7 +1,7 @@
 #include "../include/Character.hpp"
 #include "../include/Map.hpp"
 
-Character::Character() { prec_key = SDL_SCANCODE_UNKNOWN; };
+Character::Character() { prec_key = SDL_SCANCODE_UNKNOWN; speed=1;};
 
 void Character::changePosition(int x, int y, std::vector<std::vector<Tile>> map, SDL_Rect bg) {
 
@@ -10,40 +10,40 @@ void Character::changePosition(int x, int y, std::vector<std::vector<Tile>> map,
     float tailleCaseY = float(bg.h) / float(map.size());
 
     // taille de la case de pacman
-    int tailleSprite = (position_.w / 2);
+    int halfWidth = (position_.w / 2);
 
     // origine = centre de la case de pacman et pas son coin gauche
-    int origineX = position_.x + tailleSprite;
-    int origineY = position_.y + tailleSprite;
+    int origineX = position_.x + halfWidth;
+    int origineY = position_.y + halfWidth;
 
     // origine futur
-    int futurX = x + tailleSprite;
-    int futurY = y + tailleSprite;
+    int futurX = x + halfWidth;
+    int futurY = y + halfWidth;
 
     // tunnel de téléportation
-    if ((futurX < origineX && map[futurY / tailleCaseY][(futurX - tailleSprite) / tailleCaseX] == Tile::EscapeTunnel)) {
+    if ((futurX < origineX && map[futurY / tailleCaseY][(futurX - halfWidth) / tailleCaseX] == Tile::EscapeTunnel)) {
         position_.x = x + 19 * tailleCaseX;
         position_.y = y;
         
         return;
     }
-    if ((futurX > origineX && map[futurY / tailleCaseY][(futurX + tailleSprite) / tailleCaseX] == Tile::EscapeTunnel)) {
+    if ((futurX > origineX && map[futurY / tailleCaseY][(futurX + halfWidth) / tailleCaseX] == Tile::EscapeTunnel)) {
         position_.x = x - 19 * tailleCaseX;
         position_.y = y;
         return;
     }
 
     // collision mur
-    if ((futurX < origineX && map[futurY / tailleCaseY][(futurX - tailleSprite) / tailleCaseX] == Tile::Wall) ||
-        (futurY < origineY && map[(futurY - tailleSprite) / tailleCaseY][futurX / tailleCaseX] == Tile::Wall) ||
-        (futurY > origineY && map[(futurY + tailleSprite) / tailleCaseY][(futurX) / tailleCaseX] == Tile::Wall) ||
-        (futurX > origineX && map[(futurY) / tailleCaseY][(futurX + tailleSprite) / tailleCaseX] == Tile::Wall)) {
+    if ((futurX < origineX && map[futurY / tailleCaseY][(futurX - halfWidth) / tailleCaseX] == Tile::Wall) ||
+        (futurY < origineY && map[(futurY - halfWidth) / tailleCaseY][futurX / tailleCaseX] == Tile::Wall) ||
+        (futurY > origineY && map[(futurY + halfWidth) / tailleCaseY][(futurX) / tailleCaseX] == Tile::Wall) ||
+        (futurX > origineX && map[(futurY) / tailleCaseY][(futurX + halfWidth) / tailleCaseX] == Tile::Wall)) {
 
         prec_key = SDL_SCANCODE_UNKNOWN;
         return;
     }
 
-    // collision aux coins
+    // collision aux coins avec un sprite ayant une certaine rondeur
     int rondeur{6};
     if ((map[(y + rondeur) / tailleCaseY][(x + rondeur) / tailleCaseX] == Tile::Wall) ||
         map[(y + rondeur) / tailleCaseY][(x + position_.h - rondeur) / tailleCaseX] == Tile::Wall ||
