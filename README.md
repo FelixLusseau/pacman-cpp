@@ -30,3 +30,9 @@ cmake --build ./
 ```bash
 ./PacMan
 ```
+
+- Pour nettoyer le projet et recompiler depuis la racine du projet :
+
+```bash
+./clean-and-compile.sh
+```
