@@ -4,24 +4,30 @@
 #include "Character.hpp"
 #include "ThePacman.hpp"
 
-class Ghost : public Character{
-    protected:
-    
-    public:
-        Ghost();
+class Ghost : public Character {
+  protected:
+    SDL_Rect blue_sprite_[2];
+    SDL_Rect white_sprite_[2];
+    SDL_Rect eyes_sprite_[4];
+    bool eyes;
 
-        void dontStopMoving(int animation,std::vector<std::vector<Tile>> map,SDL_Rect bg);
+  public:
+    Ghost();
+    static bool idle;
 
-        virtual void chase(int animation,ThePacman *pacman, std::vector<std::vector<Tile>> map, SDL_Rect bg) ;
+    void dontStopMoving(int animation, std::vector<std::vector<Tile>> map, SDL_Rect bg);
 
-        /* est bien placé à une intersection */
-        bool intersection(float tailleCaseX,float tailleCaseY,std::vector<Tile> directions);
+    virtual void chase(int animation, ThePacman *pacman, std::vector<std::vector<Tile>> map, SDL_Rect bg);
 
-        /* change key_prec selon la meilleur direction pour aller au Goal au plus court */
-        void shortestPath(SDL_Rect *Goal,std::vector<Tile> directions,std::vector<std::vector<Tile>> map, SDL_Rect bg);
+    /* est bien placé à une intersection */
+    bool intersection(float tailleCaseX, float tailleCaseY, std::vector<Tile> directions);
 
+    /* change key_prec selon la meilleur direction pour aller au Goal au plus court */
+    void shortestPath(SDL_Rect *Goal, std::vector<Tile> directions, std::vector<std::vector<Tile>> map, SDL_Rect bg);
 
+    inline void setEyes(bool eyes) { this->eyes = eyes; }
+
+    inline bool getEyes() { return eyes; }
 };
-
 
 #endif

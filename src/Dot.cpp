@@ -1,22 +1,26 @@
 #include "../include/Dot.hpp"
+#include "../include/Game.hpp"
+#include "../include/Ghost.hpp"
+
+// extern bool idle;
 
 Dot::Dot(int x, int y, TypeDot typeDot) {
 
     exist = true;
-    type=typeDot;
+    type = typeDot;
 
-    switch(type){
-        case TypeDot::Simple:
-            sprite_ = {3, 80, 4, 4};
-            point = 10;
-            break;
-        case TypeDot::Big:
-            sprite_ = {9, 79, 7, 7};
-            point = 50;
-            break;
+    switch (type) {
+    case TypeDot::Simple:
+        sprite_ = {3, 80, 4, 4};
+        point = 10;
+        break;
+    case TypeDot::Big:
+        sprite_ = {9, 79, 7, 7};
+        point = 50;
+        break;
     }
 
-    position_ = {x, y, sprite_.w*4, sprite_.h*4};
+    position_ = {x, y, sprite_.w * 4, sprite_.h * 4};
 };
 
 int Dot::getEat(SDL_Rect *pac_position) {
@@ -37,8 +41,13 @@ int Dot::getEat(SDL_Rect *pac_position) {
     if (abs(origineX - position_.x) < side && abs(origineY - position_.y) < side) {
         exist = false;
         score = point;
-        //std::cout << "get eaten!, +" << score << " x:" << position_.x << " y:" << position_.y << std::endl;
-        //std::cout << "pacman x:" << origineX << " y:" << origineY << std::endl;
+        // std::cout << "get eaten!, +" << score << " x:" << position_.x << " y:" << position_.y << std::endl;
+        // std::cout << "pacman x:" << origineX << " y:" << origineY << std::endl;
+        if (type == TypeDot::Big) {
+            std::cout << "big dot eaten" << std::endl;
+            Ghost::idle = true;
+            Game::timer_begin = clock();
+        }
     }
 
     return score;

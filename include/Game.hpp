@@ -1,27 +1,22 @@
 #ifndef GAME_HPP
 #define GAME_HPP
 
-#include "../include/BlankGhost.hpp"
 #include "../include/Blinky.hpp"
-#include "../include/BlueGhost.hpp"
 #include "../include/Clyde.hpp"
 #include "../include/Dot.hpp"
-#include "../include/Eyes.hpp"
 #include "../include/Inky.hpp"
 #include "../include/Map.hpp"
 #include "../include/Pinky.hpp"
 #include "../include/ThePacman.hpp"
 #include "../include/Write.hpp"
 #include <SDL.h>
+#include <ctime>
 #include <iostream>
 
 class Game {
   protected:
     Ghost *ghosts[4];
     ThePacman *pacman;
-    Ghost *blueghost;
-    Ghost *blankghost;
-    Ghost *eyes;
 
     Map *map;
     Write *dictionary;
@@ -47,6 +42,7 @@ class Game {
     /* renvoit 1 ou 0 pour determiner l'animation des sprites */
     int changeSprite(void);
 
+    static clock_t timer_begin, timer_end;
     bool gameOver(void);
 };
 
