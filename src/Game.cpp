@@ -100,6 +100,11 @@ int Game::start() {
                     break;
                 }
                 quit = gameOver();
+                if (pacman->getLives() != 0) {
+                    quit = false;
+                    resetPositions(ghosts, pacman, map->getMap(), bg);
+                    break;
+                }
                 if (quit) {
                     break;
                 }
@@ -126,9 +131,21 @@ void Game::draw() {
 
     dictionary = new Write{};
     std::map<char, SDL_Rect> my_dictionary = dictionary->getDictionary();
-    SDL_Rect score_pos = {34, 860, 14, 14};
-    std::string score_str = "SCORE " + std::to_string(score) + " PTS";
+    SDL_Rect score_pos = {34, 870, 14, 14};
+    std::string score_str = "SCORE " + std::to_string(score) + " PT" + (score > 1 ? "S" : "");
     dictionary->drawText(plancheSprites, win_surf, &score_pos, score_str);
+
+    SDL_Rect lives_pos = {580, 865, 28, 28};
+    SDL_Rect lives = {168, 75, 14, 14};
+    SDL_BlitScaled(plancheSprites, &lives, win_surf, &lives_pos);
+    if (pacman->getLives() >= 2) {
+        lives_pos.x += 29;
+        SDL_BlitScaled(plancheSprites, &lives, win_surf, &lives_pos);
+    }
+    if (pacman->getLives() == 3) {
+        lives_pos.x += 29;
+        SDL_BlitScaled(plancheSprites, &lives, win_surf, &lives_pos);
+    }
 
     // couleur transparente
     SDL_SetColorKey(plancheSprites, true, 0);
@@ -204,4 +221,11 @@ bool Game::gameOver() {
     SDL_Delay(500);
 
     return true;
+}
+
+void Game::resetPositions(Ghost **ghosts, ThePacman *pacman, std::vector<std::vector<Tile>> map, SDL_Rect bg) {
+    pacman->setPosition(*(pacman->get_initPosition()));
+    for (int i{0}; i < 4; i++) {
+        ghosts[i]->setPosition(*(ghosts[i]->get_initPosition()));
+    }
 }

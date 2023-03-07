@@ -17,6 +17,9 @@ ThePacman::ThePacman(int x, int y) : Character() {
     cur_sprite_ = {4, 90, 16, 16};
 
     position_ = {x, y, 32, 32};
+    init_position_ = {x, y, 32, 32};
+
+    lives_ = 3;
 
     die_animation[0] = {4, 90, 16, 16};
     die_animation[1] = {4, 106, 16, 16};
@@ -87,4 +90,6 @@ void ThePacman::die(SDL_Surface *plancheSprites, SDL_Rect *src_bg, SDL_Surface *
     }
 
     SDL_UpdateWindowSurface(pWindow);
+
+    lives_--;
 }

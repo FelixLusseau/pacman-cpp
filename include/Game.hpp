@@ -44,6 +44,7 @@ class Game {
 
     static clock_t timer_begin, timer_end;
     bool gameOver(void);
+    void resetPositions(Ghost **ghosts, ThePacman *pacman, std::vector<std::vector<Tile>> map, SDL_Rect bg);
 };
 
 #endif

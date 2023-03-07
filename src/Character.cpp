@@ -1,7 +1,10 @@
 #include "../include/Character.hpp"
 #include "../include/Map.hpp"
 
-Character::Character() { prec_key = SDL_SCANCODE_UNKNOWN; speed=1;};
+Character::Character() {
+    prec_key = SDL_SCANCODE_UNKNOWN;
+    speed = 1;
+};
 
 void Character::changePosition(int x, int y, std::vector<std::vector<Tile>> map, SDL_Rect bg) {
 
@@ -24,7 +27,7 @@ void Character::changePosition(int x, int y, std::vector<std::vector<Tile>> map,
     if ((futurX < origineX && map[futurY / tailleCaseY][(futurX - halfWidth) / tailleCaseX] == Tile::EscapeTunnel)) {
         position_.x = x + 19 * tailleCaseX;
         position_.y = y;
-        
+
         return;
     }
     if ((futurX > origineX && map[futurY / tailleCaseY][(futurX + halfWidth) / tailleCaseX] == Tile::EscapeTunnel)) {
