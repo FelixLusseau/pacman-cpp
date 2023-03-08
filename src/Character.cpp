@@ -38,7 +38,7 @@ void Character::changePosition(int x, int y, std::vector<std::vector<Tile>> map,
         (futurY < origineY && map[(futurY - halfWidth) / tailleCaseY][futurX / tailleCaseX] == Tile::Wall) ||
         (futurY > origineY && map[(futurY + halfWidth) / tailleCaseY][(futurX) / tailleCaseX] == Tile::Wall) ||
         (futurX > origineX && map[(futurY) / tailleCaseY][(futurX + halfWidth) / tailleCaseX] == Tile::Wall)) {
-
+        
         prec_key = SDL_SCANCODE_UNKNOWN;
         return;
     }

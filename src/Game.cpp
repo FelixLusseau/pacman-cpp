@@ -97,6 +97,7 @@ int Game::start() {
                 if (Ghost::idle) {
                     score += 200;
                     fantom->setEyes(true);
+                    fantom->set_speed(4);
                     break;
                 }
                 quit = gameOver();
@@ -150,7 +151,7 @@ void Game::draw() {
 
         Ghost *cur_ghost = ghosts[i];
 
-        cur_ghost->chase(animation, pacman, map->getMap(), bg);
+        cur_ghost->chase(animation,pacman, map->getMap(), bg);
 
         // affichage fantome
         SDL_BlitScaled(plancheSprites, cur_ghost->get_currSprite(), win_surf, cur_ghost->getPosition());

@@ -48,9 +48,19 @@ void Blinky::chase(int animation, ThePacman *pacman ,std::vector<std::vector<Til
 
     // on choisit une nouvelle direction si on est a une intersection (3 directions possible) ou si on a arrêté de bouger
     if( inter || prec_key== SDL_SCANCODE_UNKNOWN){
-        shortestPath(PacPosition,directions,map, bg);
+            
+        if(idle){
+            PacPosition=&position_;
+        }else if( eyes && 
+                !( sqrt( pow( float(position_.x-jail_position_.x),2 ) 
+                       + pow( float(position_.y-jail_position_.y),2) )<60 ) ){
+            PacPosition=&jail_position_;
+
+        }
+
+        choosePath(PacPosition,directions,map, bg);
     }
-    this->dontStopMoving(animation, map,bg);
-    
+
+    dontStopMoving(animation, map,bg);    
 
 }

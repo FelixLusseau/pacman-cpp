@@ -18,7 +18,13 @@ Ghost::Ghost() : Character() {
     /* down */
     eyes_sprite_[3] = {122, 195, 16, 16};
 
+
+    jail_position_={0,0,0,0};
+
     eyes = false;
+}
+
+void Ghost::move(ThePacman *pacman, int animation, std::vector<std::vector<Tile>> map, SDL_Rect bg){
 }
 
 void Ghost::dontStopMoving(int animation, std::vector<std::vector<Tile>> map, SDL_Rect bg) {
@@ -120,7 +126,7 @@ bool Ghost::intersection(float tailleCaseX, float tailleCaseY, std::vector<Tile>
     return false;
 }
 
-void Ghost::shortestPath(SDL_Rect *Goal, std::vector<Tile> directions, std::vector<std::vector<Tile>> map, SDL_Rect bg) {
+void Ghost::choosePath(SDL_Rect *Goal, std::vector<Tile> directions, std::vector<std::vector<Tile>> map, SDL_Rect bg) {
     // tailles d'une case de la carte
     float tailleCaseX = float(bg.w) / float(map[0].size());
     float tailleCaseY = float(bg.h) / float(map.size());

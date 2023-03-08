@@ -71,11 +71,16 @@ void Pinky::chase(int animation, ThePacman *pacman ,std::vector<std::vector<Tile
     
     }
 
-    std::cout<<"goal: "<<Goal.x<<" "<<Goal.y<<std::endl;
-
     // on choisit une nouvelle direction si on est a une intersection (3 directions possible) ou si on a arrêté de bouger
     if( inter || prec_key== SDL_SCANCODE_UNKNOWN){
-        shortestPath(&Goal,directions,map, bg);
+            
+        if(idle){
+            Goal=position_;
+        }else if(eyes){
+            Goal=jail_position_;
+
+        }
+        choosePath(&Goal,directions,map, bg);
     }
     this->dontStopMoving(animation, map,bg);
     

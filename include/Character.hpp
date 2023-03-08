@@ -45,6 +45,7 @@ class Character{
 
         void changePosition(int x, int y, std::vector<std::vector<Tile>> map, SDL_Rect bg);
 
+
 };
 
 #endif
