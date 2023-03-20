@@ -9,22 +9,89 @@ Ghost::Ghost() : Character() {
     blue_sprite_[1] = {20, 195, 16, 16};
     white_sprite_[0] = {36, 195, 16, 16};
     white_sprite_[1] = {53, 195, 16, 16};
-    /* right */
+
     eyes_sprite_[0] = {71, 195, 16, 16};
-    /* left */
     eyes_sprite_[1] = {88, 195, 16, 16};
-    /* up */
     eyes_sprite_[2] = {105, 195, 16, 16};
-    /* down */
     eyes_sprite_[3] = {122, 195, 16, 16};
 
 
     jail_position_={0,0,0,0};
+    corner_=jail_position_;
+    goal_={jail_position_.x,jail_position_.y,jail_position_.w,jail_position_.h};
 
-    eyes = false;
+    out_jail=false;
+    status_=Status::chase;
 }
 
-void Ghost::move(ThePacman *pacman, int animation, std::vector<std::vector<Tile>> map, SDL_Rect bg){
+void Ghost::move(int animation,  Map *map, SDL_Rect bg){
+
+    // tailles d'une case de la carte
+    int tailleCaseX = map->getWidth();
+    int tailleCaseY = map->getHeight();
+
+    // taille de la case du sprite
+    int size = (position_.w);
+
+    // origine = centre de la case du sprite et pas son coin gauche
+    int origineX = position_.x + (size / 2);
+    int origineY = position_.y + (size / 2);
+
+    int ligne=origineX/map->getWidth();
+    int colonne=origineY/map->getHeight();
+
+
+    std::vector<std::vector<Tile>> Map=map->getMap();
+
+    std::vector<Tile> directions = {Map[colonne + 1][ligne], Map[colonne - 1][ligne], Map[colonne][ligne + 1], Map[colonne][ligne - 1]};
+
+    bool inter{intersection(tailleCaseX, tailleCaseY, directions)};
+
+    if(Map[colonne][ligne]==Tile::GhostHouse){
+        if(!out_jail && (status_!=Status::stay_jail) && position_.x==(10*tailleCaseX)){
+            goal_.x=10*tailleCaseX;
+            goal_.y=10*tailleCaseY;
+            goal_.w=tailleCaseX;
+            goal_.h=tailleCaseY;
+        }else if (out_jail){
+            goal_.x=10*tailleCaseX;
+            goal_.y=13*tailleCaseY;
+            goal_.w=tailleCaseX;
+            goal_.h=tailleCaseY;
+        }
+        else if(position_.y > init_position_.y-tailleCaseY && prec_key!=SDL_SCANCODE_DOWN){
+            prec_key=SDL_SCANCODE_UP;
+        }else {
+            prec_key=SDL_SCANCODE_DOWN;
+        }
+        choosePath(goal_,directions,(float)bg.h);
+    }
+
+    // on choisit une nouvelle direction si on est a une intersection (3 directions possible) ou si on a arrêté de bouger
+    else if( inter || prec_key== SDL_SCANCODE_UNKNOWN){
+        out_jail=true;
+
+        if(idle){
+            goal_.x=position_.x;
+            goal_.y=position_.y;
+            goal_.w=position_.w;
+            goal_.h=position_.h;
+        }else if(status_==Status::eyes){ // on a été mangé on retourne à sa position initiale
+            if( !( sqrt( pow( float(position_.x-init_position_.x),2 ) + pow( float(position_.y-init_position_.y),2) )<60 ) ){
+                goal_.x=init_position_.x;
+                goal_.y=init_position_.y;
+                goal_.w=init_position_.w;
+                goal_.h=init_position_.h;
+            }else{
+                status_=Status::chase;
+            }
+        }
+        choosePath(goal_,directions,(float)bg.h);
+
+    }
+
+    dontStopMoving(animation, Map,bg);   
+
 }
 
 void Ghost::dontStopMoving(int animation, std::vector<std::vector<Tile>> map, SDL_Rect bg) {
@@ -34,7 +101,7 @@ void Ghost::dontStopMoving(int animation, std::vector<std::vector<Tile>> map, SD
     int mv_x{0};
     int mv_y{0};
 
-    if (eyes) {
+    if (status_==Status::eyes) {
         switch (prec_key) {
         case SDL_SCANCODE_RIGHT:
             cur_sprite_ = eyes_sprite_[0];
@@ -98,23 +165,25 @@ void Ghost::dontStopMoving(int animation, std::vector<std::vector<Tile>> map, SD
     this->changePosition(position_.x + mv_x, position_.y + mv_y, map, bg);
 }
 
-void Ghost::chase(int animation, ThePacman *pacman, std::vector<std::vector<Tile>> map, SDL_Rect bg) {}
+void Ghost::chase(int animation, ThePacman *pacman, std::vector<std::vector<Tile>> map, SDL_Rect bg) {
+    std::cout<<"ne devrait pas apparaitre"<<std::endl;
+}
 
-bool Ghost::intersection(float tailleCaseX, float tailleCaseY, std::vector<Tile> directions) {
+bool Ghost::intersection(int tailleCaseX, int tailleCaseY, std::vector<Tile> directions) {
 
     // bien aligné sur une case => est ce qu'on est sur une intersection?
-    int rondeur{4};
+    int rondeur{2};
     int intersection{0};
 
-    int cornerX = static_cast<int>((position_.x + rondeur) / tailleCaseX);
-    int cornerXX = static_cast<int>((position_.x + position_.w - rondeur) / tailleCaseX);
+    int cornerX = (position_.x + rondeur) / tailleCaseX;
+    int cornerXX = (position_.x + position_.w - rondeur) / tailleCaseX;
 
-    int cornerY = static_cast<int>(position_.y + rondeur) / tailleCaseY;
-    int cornerYY = static_cast<int>(position_.y + position_.h - rondeur) / tailleCaseY;
+    int cornerY = (position_.y + rondeur) / tailleCaseY;
+    int cornerYY = (position_.y + position_.h - rondeur) / tailleCaseY;
 
     if (cornerX == cornerXX && cornerY == cornerYY) { // aligné sur une case
         for (int i{0}; i < 4; i++) {
-            if (directions[i] != Tile::Wall && directions[i] != Tile::GhostHouseDoor) { // intersection
+            if (directions[i] != Tile::Wall) { // intersection
                 intersection++;
             }
         }
@@ -122,28 +191,26 @@ bool Ghost::intersection(float tailleCaseX, float tailleCaseY, std::vector<Tile>
 
     if (intersection >= 3) {
         return true;
+        std::cout<<"inter "<<std::endl;
     }
     return false;
 }
 
-void Ghost::choosePath(SDL_Rect *Goal, std::vector<Tile> directions, std::vector<std::vector<Tile>> map, SDL_Rect bg) {
-    // tailles d'une case de la carte
-    float tailleCaseX = float(bg.w) / float(map[0].size());
-    float tailleCaseY = float(bg.h) / float(map.size());
+void Ghost::choosePath(SDL_Rect Goal, std::vector<Tile> directions,float min_init) {
 
     // taille de la case du sprite
-    int size = (position_.w);
+    int size = (position_.w/2);
 
     // origine = centre de la case du sprite et pas son coin gauche
-    int origineX = position_.x + size / 2;
-    int origineY = position_.y + size / 2;
+    int origineX = position_.x + size;
+    int origineY = position_.y + size;
 
     // origine = centre de la case du sprite et pas son coin gauche
-    int GoalOrigineX = Goal->x + Goal->w / 2;
-    int GoalOrigineY = Goal->y + Goal->h / 2;
+    int GoalOrigineX = Goal.x + size;
+    int GoalOrigineY = Goal.y + size;
 
-    float min{(float)bg.h}; // distance min entre le goal et le ghost
-    int best{5};            // meilleur direction possible
+    float min{min_init}; // distance min entre le goal et le ghost
+    int best{5};        // meilleur direction possible
 
     for (int i{0}; i < 4; i++) {
 
@@ -151,29 +218,36 @@ void Ghost::choosePath(SDL_Rect *Goal, std::vector<Tile> directions, std::vector
         int nextY{origineY};
 
         // on teste quelle direction est la meilleur
-        if (directions[i] != Tile::Wall && directions[i] != Tile::GhostHouseDoor) {
+        if (directions[i] != Tile::Wall && (directions[i] != Tile::GhostHouseDoor || !out_jail)) {
+            bool went_here=true;
             switch (i) {
             case 0:
-                nextY = origineY + size;
+                if(last_prec_key==SDL_SCANCODE_UP){went_here=false;}
+                nextY = origineY + size*2;
                 break;
             case 1:
-                nextY = origineY - size;
+                if(last_prec_key==SDL_SCANCODE_DOWN){went_here=false;}
+                nextY = origineY - size*2;
                 break;
             case 2:
-                nextX = origineX + size;
+                if(last_prec_key==SDL_SCANCODE_LEFT){went_here=false;}
+                nextX = origineX + size*2;
                 break;
             case 3:
-                nextX = origineX - size;
+                if(last_prec_key==SDL_SCANCODE_RIGHT){went_here=false;}
+                nextX = origineX - size*2;
                 break;
             }
 
             float dist = sqrt(pow(float(nextX - GoalOrigineX), 2) + pow(float(nextY - GoalOrigineY), 2));
-            if (dist < min) {
+
+            if (went_here && dist < min ) {
                 min = dist;
                 best = i;
             }
         }
     }
+    
     switch (best) {
     case 0:
         // std::cout<<"best:down"<<std::endl;
@@ -192,4 +266,6 @@ void Ghost::choosePath(SDL_Rect *Goal, std::vector<Tile> directions, std::vector
         prec_key = SDL_SCANCODE_LEFT;
         break;
     }
+
+    last_prec_key=prec_key;
 }

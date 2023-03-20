@@ -7,7 +7,7 @@
 class Clyde : public Ghost {
   private:
   public:
-    Clyde();
+    Clyde(int PixelX, int PixelY);
     void chase(int animation,ThePacman *pacman, std::vector<std::vector<Tile>> map, SDL_Rect bg) override;
 };
 

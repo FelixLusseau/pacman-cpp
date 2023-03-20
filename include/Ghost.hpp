@@ -3,34 +3,45 @@
 
 #include "Character.hpp"
 #include "ThePacman.hpp"
+#include "Map.hpp"
+  
+enum class Status{ eyes,chase,flee, stay_jail};
 
 class Ghost : public Character {
   protected:
     SDL_Rect jail_position_;
+    SDL_Rect goal_;
+    SDL_Rect corner_;
     SDL_Rect blue_sprite_[2];
     SDL_Rect white_sprite_[2];
     SDL_Rect eyes_sprite_[4];
-    bool eyes;
+    SDL_Scancode last_prec_key;
+    Status status_;
+    bool out_jail;
 
   public:
     Ghost();
     static bool idle;
 
-    void dontStopMoving(int animation, std::vector<std::vector<Tile>> map, SDL_Rect bg);
+    inline void set_outJail(bool t_f){
+      out_jail=t_f;
+    }
+    inline void setStatus(Status stat){
+      status_=stat;
+    }
 
-    void move(ThePacman *pacman, int animation, std::vector<std::vector<Tile>> map, SDL_Rect bg);
+    void dontStopMoving(int animation,  std::vector<std::vector<Tile>> map, SDL_Rect bg);
 
-    virtual void chase(int animation, ThePacman *pacman, std::vector<std::vector<Tile>> map, SDL_Rect bg);
+    void move(int animation,  Map *map, SDL_Rect bg);
+
+    virtual void chase(int animation, ThePacman *pacman,  std::vector<std::vector<Tile>> map, SDL_Rect bg);
 
     /* est bien placé à une intersection */
-    bool intersection(float tailleCaseX, float tailleCaseY, std::vector<Tile> directions);
+    bool intersection(int tailleCaseX, int tailleCaseY, std::vector<Tile> directions);
 
     /* change key_prec selon la meilleur direction celon si on veut aller au Goal ou s'éloigné de Goal */
-    void choosePath(SDL_Rect *Goal, std::vector<Tile> directions, std::vector<std::vector<Tile>> map, SDL_Rect bg);
+    void choosePath(SDL_Rect Goal,std::vector<Tile> directions, float min_init);
 
-    inline void setEyes(bool eyes) { this->eyes = eyes; }
-
-    inline bool getEyes() { return eyes; }
 };
 
 #endif

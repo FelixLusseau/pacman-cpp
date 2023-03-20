@@ -2,7 +2,8 @@
 #include "../include/Game.hpp"
 #include "../include/Ghost.hpp"
 
-// extern bool idle;
+int Dot::nb_dot_tot_ = 0;
+int Dot::nb_dot_eaten_ = 0;
 
 Dot::Dot(int x, int y, TypeDot typeDot) {
 
@@ -21,6 +22,8 @@ Dot::Dot(int x, int y, TypeDot typeDot) {
     }
 
     position_ = {x, y, sprite_.w * 4, sprite_.h * 4};
+
+    nb_dot_tot_++;
 };
 
 int Dot::getEat(SDL_Rect *pac_position) {
@@ -49,6 +52,8 @@ int Dot::getEat(SDL_Rect *pac_position) {
             Game::timer_begin = clock();
         }
     }
+
+    nb_dot_eaten_++;
 
     return score;
 };

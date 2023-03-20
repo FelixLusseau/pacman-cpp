@@ -24,6 +24,8 @@ class Dot {
     
     public:
 
+    static int nb_dot_tot_,nb_dot_eaten_;
+
     Dot(int x, int y, TypeDot type);
 
     bool inline getExist(void){
