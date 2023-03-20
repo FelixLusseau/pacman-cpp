@@ -2,103 +2,101 @@
 
 Map::Map(SDL_Rect bg) {
     map = {
-        //1
+        // 1
         {Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall,
-        Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall},
-        //2
+         Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall},
+        // 2
         {Tile::Wall, Tile::Dot, Tile::Dot, Tile::Dot, Tile::Dot, Tile::Dot, Tile::Dot, Tile::Dot, Tile::Dot, Tile::Dot, Tile::Wall,
          Tile::Dot,  Tile::Dot, Tile::Dot, Tile::Dot, Tile::Dot, Tile::Dot, Tile::Dot, Tile::Dot, Tile::Dot, Tile::Wall},
-        //3
+        // 3
         {Tile::Wall, Tile::Dot,  Tile::Wall, Tile::Wall, Tile::Wall, Tile::Dot,  Tile::Wall, Tile::Wall, Tile::Wall, Tile::Dot, Tile::Wall,
          Tile::Dot,  Tile::Wall, Tile::Wall, Tile::Wall, Tile::Dot,  Tile::Wall, Tile::Wall, Tile::Wall, Tile::Dot,  Tile::Wall},
-        //4
+        // 4
         {Tile::Wall, Tile::PowerPellet, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Dot,         Tile::Wall,
          Tile::Wall, Tile::Wall,        Tile::Dot,  Tile::Wall, Tile::Dot,  Tile::Wall,        Tile::Wall,
          Tile::Wall, Tile::Dot,         Tile::Wall, Tile::Wall, Tile::Wall, Tile::PowerPellet, Tile::Wall},
-        //5
+        // 5
         {Tile::Wall, Tile::Dot,  Tile::Wall, Tile::Wall, Tile::Wall, Tile::Dot,  Tile::Wall, Tile::Wall, Tile::Wall, Tile::Dot, Tile::Wall,
          Tile::Dot,  Tile::Wall, Tile::Wall, Tile::Wall, Tile::Dot,  Tile::Wall, Tile::Wall, Tile::Wall, Tile::Dot,  Tile::Wall},
-        //6
+        // 6
         {Tile::Wall, Tile::Dot, Tile::Dot, Tile::Dot, Tile::Dot, Tile::Dot, Tile::Dot, Tile::Dot, Tile::Dot, Tile::Dot, Tile::Dot,
          Tile::Dot,  Tile::Dot, Tile::Dot, Tile::Dot, Tile::Dot, Tile::Dot, Tile::Dot, Tile::Dot, Tile::Dot, Tile::Wall},
-        //7
+        // 7
         {Tile::Wall, Tile::Dot,  Tile::Wall, Tile::Wall, Tile::Wall, Tile::Dot,  Tile::Wall, Tile::Dot,  Tile::Wall, Tile::Wall, Tile::Wall,
          Tile::Wall, Tile::Wall, Tile::Dot,  Tile::Wall, Tile::Dot,  Tile::Wall, Tile::Wall, Tile::Wall, Tile::Dot,  Tile::Wall},
-        //8
+        // 8
         {Tile::Wall, Tile::Dot,  Tile::Wall, Tile::Wall, Tile::Wall, Tile::Dot,  Tile::Wall, Tile::Dot,  Tile::Wall, Tile::Wall, Tile::Wall,
          Tile::Wall, Tile::Wall, Tile::Dot,  Tile::Wall, Tile::Dot,  Tile::Wall, Tile::Wall, Tile::Wall, Tile::Dot,  Tile::Wall},
-        //9
+        // 9
         {Tile::Wall, Tile::Dot, Tile::Dot, Tile::Dot,  Tile::Dot, Tile::Dot, Tile::Wall, Tile::Dot, Tile::Dot, Tile::Dot, Tile::Wall,
          Tile::Dot,  Tile::Dot, Tile::Dot, Tile::Wall, Tile::Dot, Tile::Dot, Tile::Dot,  Tile::Dot, Tile::Dot, Tile::Wall},
-        //10
+        // 10
         {Tile::Wall,  Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Dot,  Tile::Wall, Tile::Wall, Tile::Wall, Tile::Empty, Tile::Wall,
          Tile::Empty, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Dot,  Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall},
-        //11
+        // 11
         {Tile::Wall,  Tile::Wall,  Tile::Wall,  Tile::Wall, Tile::Wall, Tile::Dot,  Tile::Wall, Tile::Empty, Tile::Empty, Tile::Empty, Tile::Empty,
          Tile::Empty, Tile::Empty, Tile::Empty, Tile::Wall, Tile::Dot,  Tile::Wall, Tile::Wall, Tile::Wall,  Tile::Wall,  Tile::Wall},
-        //12
+        // 12
         {Tile::Wall,  Tile::Wall, Tile::Wall, Tile::Wall,           Tile::Wall, Tile::Dot,  Tile::Wall,
          Tile::Empty, Tile::Wall, Tile::Wall, Tile::GhostHouseDoor, Tile::Wall, Tile::Wall, Tile::Empty,
          Tile::Wall,  Tile::Dot,  Tile::Wall, Tile::Wall,           Tile::Wall, Tile::Wall, Tile::Wall},
-        //13
+        // 13
         {Tile::Wall,  Tile::Wall, Tile::Wall,       Tile::Wall,       Tile::Wall,       Tile::Dot,  Tile::Wall,
          Tile::Empty, Tile::Wall, Tile::GhostHouse, Tile::GhostHouse, Tile::GhostHouse, Tile::Wall, Tile::Empty,
          Tile::Wall,  Tile::Dot,  Tile::Wall,       Tile::Wall,       Tile::Wall,       Tile::Wall, Tile::Wall},
-        //14
+        // 14
         {Tile::EscapeTunnel, Tile::Empty, Tile::Empty,      Tile::Empty,      Tile::Empty,      Tile::Dot,   Tile::Empty,
          Tile::Empty,        Tile::Wall,  Tile::GhostHouse, Tile::GhostHouse, Tile::GhostHouse, Tile::Wall,  Tile::Empty,
          Tile::Empty,        Tile::Dot,   Tile::Empty,      Tile::Empty,      Tile::Empty,      Tile::Empty, Tile::EscapeTunnel},
-        //15
+        // 15
         {Tile::Wall, Tile::Wall, Tile::Wall,  Tile::Wall, Tile::Wall, Tile::Dot,  Tile::Wall, Tile::Empty, Tile::Wall, Tile::Wall, Tile::Wall,
          Tile::Wall, Tile::Wall, Tile::Empty, Tile::Wall, Tile::Dot,  Tile::Wall, Tile::Wall, Tile::Wall,  Tile::Wall, Tile::Wall},
-        //16
+        // 16
         {Tile::Wall,  Tile::Wall,  Tile::Wall,  Tile::Wall, Tile::Wall, Tile::Dot,  Tile::Wall, Tile::Empty, Tile::Empty, Tile::Empty, Tile::Empty,
          Tile::Empty, Tile::Empty, Tile::Empty, Tile::Wall, Tile::Dot,  Tile::Wall, Tile::Wall, Tile::Wall,  Tile::Wall,  Tile::Wall},
-        //17
+        // 17
         {Tile::Wall, Tile::Wall, Tile::Wall,  Tile::Wall, Tile::Wall, Tile::Dot,  Tile::Wall, Tile::Empty, Tile::Wall, Tile::Wall, Tile::Wall,
          Tile::Wall, Tile::Wall, Tile::Empty, Tile::Wall, Tile::Dot,  Tile::Wall, Tile::Wall, Tile::Wall,  Tile::Wall, Tile::Wall},
-        //18
+        // 18
         {Tile::Wall, Tile::Wall, Tile::Wall,  Tile::Wall, Tile::Wall, Tile::Dot,  Tile::Wall, Tile::Empty, Tile::Wall, Tile::Wall, Tile::Wall,
          Tile::Wall, Tile::Wall, Tile::Empty, Tile::Wall, Tile::Dot,  Tile::Wall, Tile::Wall, Tile::Wall,  Tile::Wall, Tile::Wall},
-        //19
+        // 19
         {Tile::Wall, Tile::Dot, Tile::Dot, Tile::Dot, Tile::Dot, Tile::Dot, Tile::Dot, Tile::Dot, Tile::Dot, Tile::Dot, Tile::Wall,
          Tile::Dot,  Tile::Dot, Tile::Dot, Tile::Dot, Tile::Dot, Tile::Dot, Tile::Dot, Tile::Dot, Tile::Dot, Tile::Wall},
-        //20
+        // 20
         {Tile::Wall, Tile::Dot,  Tile::Wall, Tile::Wall, Tile::Wall, Tile::Dot,  Tile::Wall, Tile::Wall, Tile::Wall, Tile::Dot, Tile::Wall,
          Tile::Dot,  Tile::Wall, Tile::Wall, Tile::Wall, Tile::Dot,  Tile::Wall, Tile::Wall, Tile::Wall, Tile::Dot,  Tile::Wall},
-        //21
+        // 21
         {Tile::Wall, Tile::PowerPellet, Tile::Dot, Tile::Dot, Tile::Wall, Tile::Dot,  Tile::Dot, Tile::Dot, Tile::Dot,         Tile::Dot, Tile::Empty,
          Tile::Dot,  Tile::Dot,         Tile::Dot, Tile::Dot, Tile::Dot,  Tile::Wall, Tile::Dot, Tile::Dot, Tile::PowerPellet, Tile::Wall},
-        //22
+        // 22
         {Tile::Wall, Tile::Wall, Tile::Wall, Tile::Dot,  Tile::Wall, Tile::Dot,  Tile::Wall, Tile::Dot,  Tile::Wall, Tile::Wall, Tile::Wall,
          Tile::Wall, Tile::Wall, Tile::Dot,  Tile::Wall, Tile::Dot,  Tile::Wall, Tile::Dot,  Tile::Wall, Tile::Wall, Tile::Wall},
-        //23
+        // 23
         {Tile::Wall, Tile::Wall, Tile::Wall, Tile::Dot,  Tile::Wall, Tile::Dot,  Tile::Wall, Tile::Dot,  Tile::Wall, Tile::Wall, Tile::Wall,
          Tile::Wall, Tile::Wall, Tile::Dot,  Tile::Wall, Tile::Dot,  Tile::Wall, Tile::Dot,  Tile::Wall, Tile::Wall, Tile::Wall},
-        //24
+        // 24
         {Tile::Wall, Tile::Dot, Tile::Dot, Tile::Dot,  Tile::Dot, Tile::Dot, Tile::Wall, Tile::Dot, Tile::Dot, Tile::Dot, Tile::Wall,
          Tile::Dot,  Tile::Dot, Tile::Dot, Tile::Wall, Tile::Dot, Tile::Dot, Tile::Dot,  Tile::Dot, Tile::Dot, Tile::Wall},
-        //25
+        // 25
         {Tile::Wall, Tile::Dot,  Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Dot, Tile::Wall,
          Tile::Dot,  Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Dot,  Tile::Wall},
-        //26
+        // 26
         {Tile::Wall, Tile::Dot, Tile::Dot, Tile::Dot, Tile::Dot, Tile::Dot, Tile::Dot, Tile::Dot, Tile::Dot, Tile::Dot, Tile::Dot,
          Tile::Dot,  Tile::Dot, Tile::Dot, Tile::Dot, Tile::Dot, Tile::Dot, Tile::Dot, Tile::Dot, Tile::Dot, Tile::Wall},
-        //27
+        // 27
         {Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall,
-         Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall}
-    };
+         Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall}};
 
     /* tailles cases */
     float pixelX = float(bg.w) / float(map[0].size());
     float pixelY = float(bg.h) / float(map.size());
 
-    width_=static_cast<int>(pixelX);
-    height_=static_cast<int>(pixelY);
+    width_ = static_cast<int>(pixelX);
+    height_ = static_cast<int>(pixelY);
 
-    ligne_=map.size();
-    colonne_=map[0].size();
-    
-    std::cout<<"ligne: "<<ligne_<<" colonne: "<<colonne_<<std::endl;
+    ligne_ = map.size();
+    colonne_ = map[0].size();
+
+    // std::cout<<"lignes: "<<ligne_<<" colonnes: "<<colonne_<<std::endl;
 };
-

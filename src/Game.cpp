@@ -6,7 +6,8 @@ clock_t Game::timer_end = 0;
 
 Game::Game() {
 
-    pWindow = SDL_CreateWindow("PacMan", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 700, 900, SDL_WINDOW_SHOWN);
+    pWindow =
+        SDL_CreateWindow("PacMan", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 680, 900, SDL_WINDOW_SHOWN); // 680 à vérifier (initialement 700)
     win_surf = SDL_GetWindowSurface(pWindow);
 
     plancheSprites = SDL_LoadBMP("./pacman_sprites.bmp");
@@ -24,17 +25,17 @@ Game::Game() {
 
     map = new Map{bg};
 
-    int pX=map->getWidth();
-    int pY=map->getHeight();
+    int pX = map->getWidth();
+    int pY = map->getHeight();
 
-    std::cout<<"map: "<<pX<<" "<<pY<<std::endl;
+    // std::cout << "map: " << pX << " " << pY << std::endl;
 
-    pacman = new ThePacman{pX,  pY };
+    pacman = new ThePacman{pX, pY};
 
-    ghosts[0] = new Blinky{pX,pY};
-    ghosts[1] = new Pinky{pX,pY};
-    ghosts[2] = new Clyde{pX,pY};
-    ghosts[3] = new Inky{pX,pY,ghosts[0]};
+    ghosts[0] = new Blinky{pX, pY};
+    ghosts[1] = new Pinky{pX, pY};
+    ghosts[2] = new Clyde{pX, pY};
+    ghosts[3] = new Inky{pX, pY, ghosts[0]};
 
     score = {0};
 
@@ -48,15 +49,15 @@ Game::Game() {
             if (thisMap[i][j] == Tile::Dot) {
 
                 int y = i * pY + (pY / 4);
-                int x = j* pX + (pX / 4);
+                int x = j * pX + (pX / 4);
                 dots.push_back(new Dot{x, y, TypeDot::Simple});
 
                 // std::cout << "dot: " << i << " " << j << " " << x << " " << y << std::endl;
 
             } else if (thisMap[i][j] == Tile::PowerPellet) {
 
-                int y = i * pY + (pY / 4)-4;
-                int x = j* pX + (pX / 4)-4;
+                int y = i * pY + (pY / 4) - 4;
+                int x = j * pX + (pX / 4) - 4;
 
                 dots.push_back(new Dot{x, y, TypeDot::Big});
 
@@ -72,8 +73,41 @@ int Game::start() {
         return 1;
     }
 
+    SDL_FillRect(win_surf, NULL, 0x000000);
+    SDL_Rect title{3, 3, 184, 50};
+    SDL_Rect titleScale{60, 20, 552, 150};
+    SDL_BlitScaled(plancheSprites, &title, win_surf, &titleScale);
+
+    bool start{false};
+    SDL_SetColorKey(plancheSprites, false, 0);
+    dictionary = new Write{};
+    std::map<char, SDL_Rect> my_dictionary = dictionary->getDictionary();
+    SDL_Rect press_pos = {50, 400, 28, 28};
+    std::string press_str = "PRESS S TO START !";
+    dictionary->drawText(plancheSprites, win_surf, &press_pos, press_str);
+    SDL_UpdateWindowSurface(pWindow);
+    SDL_Delay(500);
+    while (!start) {
+        SDL_Event event;
+        while (!start && SDL_PollEvent(&event)) {
+            int nbk;
+            const Uint8 *keys = SDL_GetKeyboardState(&nbk);
+            if (keys[SDL_SCANCODE_S]) {
+                start = true;
+            }
+            switch (event.type) {
+            case SDL_QUIT:
+                start = true;
+                break;
+            default:
+                break;
+            }
+        }
+        // std::cout << "Appuyer sur une touche pour commencer" << std::endl;
+    }
+
     // BOUCLE PRINCIPALE
-    bool quit = false;
+    bool quit{false};
     while (!quit) {
         SDL_Event event;
         while (!quit && SDL_PollEvent(&event)) {
@@ -99,7 +133,7 @@ int Game::start() {
                 if (Ghost::idle) {
                     score += 200;
                     fantom->setStatus(Status::eyes);
-                    //fantom->set_speed(2);
+                    // fantom->set_speed(2);
                     break;
                 }
                 quit = gameOver();
@@ -169,7 +203,7 @@ void Game::draw() {
     // choix du fantome
     for (Ghost *fantom : ghosts) {
 
-        fantom->chase(animation,pacman, map->getMap(), bg);
+        fantom->chase(animation, pacman, map->getMap(), bg);
         fantom->move(animation, map, bg);
 
         // affichage fantome
@@ -197,8 +231,10 @@ int Game::changeSprite() {
 
 bool Game::gameOver() {
 
-    std::cout << "GAME OVER" << std::endl;
-    std::cout << "score: " << score << std::endl;
+    if (pacman->getLives() == 0) {
+        std::cout << "GAME OVER" << std::endl;
+        std::cout << "score: " << score << std::endl;
+    }
 
     SDL_FillRect(win_surf, NULL, 0x000000);
     SDL_BlitScaled(plancheSprites, &src_bg_dotless, win_surf, &bg);
@@ -230,6 +266,7 @@ void Game::resetPositions(Ghost **ghosts, ThePacman *pacman, std::vector<std::ve
     pacman->setPosition(*(pacman->get_initPosition()));
     for (int i{0}; i < 4; i++) {
         ghosts[i]->setPosition(*(ghosts[i]->get_initPosition()));
+        ghosts[i]->setStatus(Status::chase);
         ghosts[i]->set_outJail(false);
     }
     ghosts[0]->set_outJail(true); // blinky déjà dehors

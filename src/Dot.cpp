@@ -47,7 +47,7 @@ int Dot::getEat(SDL_Rect *pac_position) {
         // std::cout << "get eaten!, +" << score << " x:" << position_.x << " y:" << position_.y << std::endl;
         // std::cout << "pacman x:" << origineX << " y:" << origineY << std::endl;
         if (type == TypeDot::Big) {
-            std::cout << "big dot eaten" << std::endl;
+            // std::cout << "big dot eaten" << std::endl;
             Ghost::idle = true;
             Game::timer_begin = clock();
         }

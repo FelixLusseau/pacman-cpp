@@ -55,6 +55,6 @@ void Write::drawText(SDL_Surface *plancheSprites, SDL_Surface *win_surf, SDL_Rec
     for (auto e : text) {
 
         SDL_BlitScaled(plancheSprites, &dictionary[e], win_surf, pos);
-        pos->x += 18;
+        pos->x += pos->w + 4;
     }
 }
