@@ -39,6 +39,8 @@ Game::Game() {
 
     score = {0};
 
+    bool launched{false};
+
     /* création de tout les points à partir de la map fournit */
     std::vector<std::vector<Tile>> thisMap = map->getMap();
 
@@ -83,8 +85,17 @@ int Game::start() {
     dictionary = new Write{};
     std::map<char, SDL_Rect> my_dictionary = dictionary->getDictionary();
     SDL_Rect press_pos = {50, 400, 28, 28};
-    std::string press_str = "PRESS S TO START !";
+    std::string press_str{"PRESS S TO START !"};
     dictionary->drawText(plancheSprites, win_surf, &press_pos, press_str);
+
+    SDL_Rect namco{27, 77, 61, 9};
+    SDL_Rect namcoScale{215, 700, 244, 36};
+    SDL_BlitScaled(plancheSprites, &namco, win_surf, &namcoScale);
+
+    SDL_Rect authors{10, 850, 10, 10};
+    std::string authors_str{"BY LOUISE COUTURE AND FELIX LUSSEAU"};
+    dictionary->drawText(plancheSprites, win_surf, &authors, authors_str);
+
     SDL_UpdateWindowSurface(pWindow);
     SDL_Delay(500);
     while (!start) {
@@ -151,6 +162,25 @@ int Game::start() {
         // AFFICHAGE
         draw();
 
+        /* Waiting for the launch of the PacMan */
+        while (!launched) {
+            SDL_Event event;
+            while (!launched && SDL_PollEvent(&event)) {
+                int nbk;
+                const Uint8 *keys = SDL_GetKeyboardState(&nbk);
+                if (keys[SDL_SCANCODE_LEFT] || keys[SDL_SCANCODE_RIGHT] || keys[SDL_SCANCODE_UP] || keys[SDL_SCANCODE_DOWN]) {
+                    launched = true;
+                }
+                switch (event.type) {
+                case SDL_QUIT:
+                    launched = true;
+                    break;
+                default:
+                    break;
+                }
+            }
+        }
+
         if (keys[SDL_SCANCODE_ESCAPE]) {
             quit = gameOver();
         }
@@ -171,6 +201,12 @@ void Game::draw() {
     SDL_Rect score_pos = {34, 870, 14, 14};
     std::string score_str = "SCORE " + std::to_string(score) + " PT" + (score > 1 ? "S" : "");
     dictionary->drawText(plancheSprites, win_surf, &score_pos, score_str);
+
+    if (!launched) {
+        SDL_Rect ready_pos = {265, 485, 20, 20};
+        std::string ready_str{"READY!"};
+        dictionary->drawText(plancheSprites, win_surf, &ready_pos, ready_str);
+    }
 
     SDL_Rect lives_pos = {580, 865, 28, 28};
     SDL_Rect lives = {168, 75, 14, 14};
