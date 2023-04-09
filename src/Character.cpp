@@ -10,10 +10,11 @@ Character::Character(int px, int py) {
     prec_key = SDL_SCANCODE_UNKNOWN;
     speed = 1;
 
-    height=py;
-    width=px;
-
+    height = py;
+    width = px;
 };
+
+inline bool operator==(const SDL_Rect &a, const SDL_Rect &b) { return a.x == b.x && a.y == b.y && a.w == b.w && a.h == b.h; }
 
 void Character::changePosition(int x, int y, std::vector<std::vector<Tile>> map, SDL_Rect bg) {
 
@@ -50,7 +51,29 @@ void Character::changePosition(int x, int y, std::vector<std::vector<Tile>> map,
         (futurY < origineY && map[(futurY - halfWidth) / tailleCaseY][futurX / tailleCaseX] == Tile::Wall) ||
         (futurY > origineY && map[(futurY + halfWidth) / tailleCaseY][(futurX) / tailleCaseX] == Tile::Wall) ||
         (futurX > origineX && map[(futurY) / tailleCaseY][(futurX + halfWidth) / tailleCaseX] == Tile::Wall)) {
-        
+
+        prec_key = SDL_SCANCODE_UNKNOWN;
+        return;
+    }
+
+    // collision porte fantome
+    float pixelX = float(bg.w) / float(map[0].size());
+    float pixelY = float(bg.h) / float(map.size());
+
+    int pX = static_cast<int>(pixelX);
+    int pY = static_cast<int>(pixelY);
+
+    SDL_Rect initial_pacman_position = {10 * pX, 20 * pY, 32, 32};
+
+    if ((futurX < origineX && map[futurY / tailleCaseY][(futurX - halfWidth) / tailleCaseX] == Tile::GhostHouseDoor &&
+         init_position_ == initial_pacman_position) ||
+        (futurY < origineY && map[(futurY - halfWidth) / tailleCaseY][futurX / tailleCaseX] == Tile::GhostHouseDoor &&
+         init_position_ == initial_pacman_position) ||
+        (futurY > origineY && map[(futurY + halfWidth) / tailleCaseY][(futurX) / tailleCaseX] == Tile::GhostHouseDoor &&
+         init_position_ == initial_pacman_position) ||
+        (futurX > origineX && map[(futurY) / tailleCaseY][(futurX + halfWidth) / tailleCaseX] == Tile::GhostHouseDoor &&
+         init_position_ == initial_pacman_position)) {
+
         prec_key = SDL_SCANCODE_UNKNOWN;
         return;
     }
