@@ -76,7 +76,7 @@ int Game::start() {
     }
 
     SDL_FillRect(win_surf, NULL, 0x000000);
-    SDL_Rect title{3, 3, 184, 50};
+    SDL_Rect title{3, 3, 184, 49};
     SDL_Rect titleScale{60, 20, 552, 150};
     SDL_BlitScaled(plancheSprites, &title, win_surf, &titleScale);
 
@@ -84,7 +84,7 @@ int Game::start() {
     SDL_SetColorKey(plancheSprites, false, 0);
     dictionary = new Write{};
     std::map<char, SDL_Rect> my_dictionary = dictionary->getDictionary();
-    SDL_Rect press_pos = {50, 400, 28, 28};
+    SDL_Rect press_pos = {110, 400, 22, 22};
     std::string press_str{"PRESS S TO START !"};
     dictionary->drawText(plancheSprites, win_surf, &press_pos, press_str);
 
@@ -181,7 +181,7 @@ int Game::start() {
             }
         }
 
-        if (keys[SDL_SCANCODE_ESCAPE]) {
+        if (keys[SDL_SCANCODE_ESCAPE]) { // bug sur la page de fin avec ce if
             quit = gameOver();
         }
 
@@ -267,11 +267,6 @@ int Game::changeSprite() {
 
 bool Game::gameOver() {
 
-    if (pacman->getLives() == 0) {
-        std::cout << "GAME OVER" << std::endl;
-        std::cout << "score: " << score << std::endl;
-    }
-
     SDL_FillRect(win_surf, NULL, 0x000000);
     SDL_BlitScaled(plancheSprites, &src_bg_dotless, win_surf, &bg);
     SDL_UpdateWindowSurface(pWindow);
@@ -295,6 +290,77 @@ bool Game::gameOver() {
 
     SDL_Delay(500);
 
+    if (pacman->getLives() == 0) {
+        std::cout << "GAME OVER" << std::endl;
+        std::cout << "Score: " << score << std::endl;
+
+        SDL_FillRect(win_surf, NULL, 0x000000);
+        SDL_Rect title{3, 3, 184, 49};
+        SDL_Rect titleScale{60, 20, 552, 150};
+        SDL_BlitScaled(plancheSprites, &title, win_surf, &titleScale);
+
+        bool key_pressed{false};
+        SDL_SetColorKey(plancheSprites, false, 0);
+        dictionary = new Write{};
+        std::map<char, SDL_Rect> my_dictionary = dictionary->getDictionary();
+        SDL_Rect game_over_pos = {100, 300, 42, 42};
+        std::string game_over_str{"GAME OVER !"};
+        dictionary->drawText(plancheSprites, win_surf, &game_over_pos, game_over_str);
+
+        int x_score;
+        switch (std::to_string(score).length()) {
+        case 2:
+            x_score = 110;
+            break;
+        case 3:
+            x_score = 100;
+            break;
+        case 4:
+            x_score = 90;
+            break;
+        case 5:
+            x_score = 80;
+            break;
+        }
+        SDL_Rect score_pos = {x_score, 450, 16, 16};
+        std::string score_str{"YOUR SCORE IS " + std::to_string(score) + " POINT" + (score > 1 ? "S" : "")};
+        dictionary->drawText(plancheSprites, win_surf, &score_pos, score_str);
+
+        SDL_Rect exit_pos = {170, 580, 12, 12};
+        std::string exit_str{"PRESS ANY KEY TO EXIT"};
+        dictionary->drawText(plancheSprites, win_surf, &exit_pos, exit_str);
+
+        SDL_Rect namco{27, 77, 61, 9};
+        SDL_Rect namcoScale{215, 700, 244, 36};
+        SDL_BlitScaled(plancheSprites, &namco, win_surf, &namcoScale);
+
+        SDL_Rect authors{10, 850, 10, 10};
+        std::string authors_str{"BY LOUISE COUTURE AND FELIX LUSSEAU"};
+        dictionary->drawText(plancheSprites, win_surf, &authors, authors_str);
+
+        SDL_UpdateWindowSurface(pWindow);
+        SDL_Delay(500);
+        while (!key_pressed) {
+            SDL_Event event;
+            while (!key_pressed && SDL_PollEvent(&event)) {
+                int nbk;
+                const Uint8 *keys = SDL_GetKeyboardState(&nbk);
+                for (int i{0}; i < nbk; i++) {
+                    if (keys[i]) {
+                        key_pressed = true;
+                        break;
+                    }
+                }
+                switch (event.type) {
+                case SDL_QUIT:
+                    key_pressed = true;
+                    break;
+                default:
+                    break;
+                }
+            }
+        }
+    }
     return true;
 }
 
