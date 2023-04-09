@@ -16,7 +16,7 @@ Character::Character(int px, int py) {
 
 inline bool operator==(const SDL_Rect &a, const SDL_Rect &b) { return a.x == b.x && a.y == b.y && a.w == b.w && a.h == b.h; }
 
-void Character::changePosition(int x, int y, std::vector<std::vector<Tile>> map, SDL_Rect bg) {
+int Character::changePosition(int x, int y, std::vector<std::vector<Tile>> map, SDL_Rect bg) {
 
     // tailles d'une case de la carte
     float tailleCaseX = float(bg.w) / float(map[0].size());
@@ -38,12 +38,12 @@ void Character::changePosition(int x, int y, std::vector<std::vector<Tile>> map,
         position_.x = x + 19 * tailleCaseX;
         position_.y = y;
 
-        return;
+        return 0;
     }
     if ((futurX > origineX && map[futurY / tailleCaseY][(futurX + halfWidth) / tailleCaseX] == Tile::EscapeTunnel)) {
         position_.x = x - 19 * tailleCaseX;
         position_.y = y;
-        return;
+        return 0;
     }
 
     // collision mur
@@ -53,7 +53,7 @@ void Character::changePosition(int x, int y, std::vector<std::vector<Tile>> map,
         (futurX > origineX && map[(futurY) / tailleCaseY][(futurX + halfWidth) / tailleCaseX] == Tile::Wall)) {
 
         prec_key = SDL_SCANCODE_UNKNOWN;
-        return;
+        return 0;
     }
 
     // collision porte fantome
@@ -75,7 +75,7 @@ void Character::changePosition(int x, int y, std::vector<std::vector<Tile>> map,
          init_position_ == initial_pacman_position)) {
 
         prec_key = SDL_SCANCODE_UNKNOWN;
-        return;
+        return 0;
     }
 
     // collision aux coins avec un sprite ayant une certaine rondeur
@@ -85,9 +85,10 @@ void Character::changePosition(int x, int y, std::vector<std::vector<Tile>> map,
         map[(y + position_.w - rondeur) / tailleCaseY][(x + rondeur) / tailleCaseX] == Tile::Wall ||
         map[(y + position_.w - rondeur) / tailleCaseY][(x + position_.h - rondeur) / tailleCaseX] == Tile::Wall) {
         prec_key = SDL_SCANCODE_UNKNOWN;
-        return;
+        return 0;
     }
 
     position_.x = x;
     position_.y = y;
+    return 1;
 }

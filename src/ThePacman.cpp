@@ -16,8 +16,8 @@ ThePacman::ThePacman(int x, int y) : Character() {
 
     cur_sprite_ = {4, 90, 16, 16};
 
-    position_ = {10*x, 20 *y, 32, 32};
-    init_position_ = {10*x, 20 *y, 32, 32};
+    position_ = {10 * x, 20 * y, 32, 32};
+    init_position_ = {10 * x, 20 * y, 32, 32};
 
     lives_ = 3;
 
@@ -43,26 +43,31 @@ void ThePacman::move(const Uint8 *keys, int animation, std::vector<std::vector<T
 
     if (keys[SDL_SCANCODE_RIGHT] || prec_key == SDL_SCANCODE_RIGHT) {
         prec_key = SDL_SCANCODE_RIGHT;
-        cur_sprite_ = sprite_[0 + animation];
+        // if (map[position_.y][position_.x + 1] != Tile::Wall)
         mv_x = 2;
+        if (changePosition(position_.x + mv_x, position_.y + mv_y, map, bg))
+            cur_sprite_ = sprite_[0 + animation];
     }
     if (keys[SDL_SCANCODE_LEFT] || prec_key == SDL_SCANCODE_LEFT) {
         prec_key = SDL_SCANCODE_LEFT;
-        cur_sprite_ = sprite_[2 + animation];
         mv_x = -2;
+        if (changePosition(position_.x + mv_x, position_.y + mv_y, map, bg))
+            cur_sprite_ = sprite_[2 + animation];
     }
     if (keys[SDL_SCANCODE_DOWN] || prec_key == SDL_SCANCODE_DOWN) {
         prec_key = SDL_SCANCODE_DOWN;
-        cur_sprite_ = sprite_[4 + animation];
         mv_y = 2;
+        if (changePosition(position_.x + mv_x, position_.y + mv_y, map, bg))
+            cur_sprite_ = sprite_[4 + animation];
     }
     if (keys[SDL_SCANCODE_UP] || prec_key == SDL_SCANCODE_UP) {
         prec_key = SDL_SCANCODE_UP;
-        cur_sprite_ = sprite_[6 + animation];
         mv_y = -2;
+        if (changePosition(position_.x + mv_x, position_.y + mv_y, map, bg))
+            cur_sprite_ = sprite_[6 + animation];
     }
     // cur_sprite_=sp;
-    this->changePosition(position_.x + mv_x, position_.y + mv_y, map, bg);
+    // this->changePosition(position_.x + mv_x, position_.y + mv_y, map, bg);
 
     // std::cout<<position_.x<<" "<<position_.y<<std::endl;
 }

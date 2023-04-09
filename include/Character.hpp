@@ -43,10 +43,10 @@ class Character {
     inline SDL_Rect *get_currSprite() { return &cur_sprite_; };
 
     inline SDL_Scancode get_key() { return prec_key; };
-    
+
     inline void set_speed(int newSpeed) { speed = newSpeed; };
 
-    void changePosition(int x, int y, std::vector<std::vector<Tile>> map, SDL_Rect bg);
+    int changePosition(int x, int y, std::vector<std::vector<Tile>> map, SDL_Rect bg);
     inline SDL_Rect *get_initPosition() { return &init_position_; };
 };
 
