@@ -89,8 +89,8 @@ Map::Map(SDL_Rect bg) {
          Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall}};
 
     /* tailles cases */
-    float pixelX = float(bg.w) / float(map[0].size());
-    float pixelY = float(bg.h) / float(map.size());
+    float pixelX{float(bg.w) / float(map[0].size())};
+    float pixelY{float(bg.h) / float(map.size())};
 
     width_ = static_cast<int>(pixelX);
     height_ = static_cast<int>(pixelY);

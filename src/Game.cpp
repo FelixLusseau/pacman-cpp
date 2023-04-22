@@ -25,8 +25,8 @@ Game::Game() {
 
     map = new Map{bg};
 
-    int pX = map->getWidth();
-    int pY = map->getHeight();
+    int pX{map->getWidth()};
+    int pY{map->getHeight()};
 
     // std::cout << "map: " << pX << " " << pY << std::endl;
 
@@ -50,16 +50,16 @@ Game::Game() {
 
             if (thisMap[i][j] == Tile::Dot) {
 
-                int y = i * pY + (pY / 4);
-                int x = j * pX + (pX / 4);
+                int y{i * pY + (pY / 4)};
+                int x{j * pX + (pX / 4)};
                 dots.push_back(new Dot{x, y, TypeDot::Simple});
 
                 // std::cout << "dot: " << i << " " << j << " " << x << " " << y << std::endl;
 
             } else if (thisMap[i][j] == Tile::PowerPellet) {
 
-                int y = i * pY + (pY / 4) - 4;
-                int x = j * pX + (pX / 4) - 4;
+                int y{i * pY + (pY / 4) - 4};
+                int x{j * pX + (pX / 4) - 4};
 
                 dots.push_back(new Dot{x, y, TypeDot::Big});
 
@@ -84,7 +84,7 @@ int Game::start() {
     SDL_SetColorKey(plancheSprites, false, 0);
     dictionary = new Write{};
     std::map<char, SDL_Rect> my_dictionary = dictionary->getDictionary();
-    SDL_Rect press_pos = {110, 400, 22, 22};
+    SDL_Rect press_pos{110, 400, 22, 22};
     std::string press_str{"PRESS S TO START !"};
     dictionary->drawText(plancheSprites, win_surf, &press_pos, press_str);
 
@@ -133,7 +133,7 @@ int Game::start() {
 
         // Gestion du clavier
         int nbk;
-        const Uint8 *keys = SDL_GetKeyboardState(&nbk);
+        const Uint8 *keys{SDL_GetKeyboardState(&nbk)};
 
         pacman->move(keys, this->changeSprite(), map->getMap(), bg);
 
@@ -167,7 +167,7 @@ int Game::start() {
             SDL_Event event;
             while (!launched && SDL_PollEvent(&event)) {
                 int nbk;
-                const Uint8 *keys = SDL_GetKeyboardState(&nbk);
+                const Uint8 *keys{SDL_GetKeyboardState(&nbk)};
                 if (keys[SDL_SCANCODE_LEFT] || keys[SDL_SCANCODE_RIGHT] || keys[SDL_SCANCODE_UP] || keys[SDL_SCANCODE_DOWN]) {
                     launched = true;
                 }
@@ -198,8 +198,8 @@ void Game::draw() {
 
     dictionary = new Write{};
     std::map<char, SDL_Rect> my_dictionary = dictionary->getDictionary();
-    SDL_Rect score_pos = {34, 870, 14, 14};
-    std::string score_str = "SCORE " + std::to_string(score) + " PT" + (score > 1 ? "S" : "");
+    SDL_Rect score_pos{34, 870, 14, 14};
+    std::string score_str{"SCORE " + std::to_string(score) + " PT" + (score > 1 ? "S" : "")};
     dictionary->drawText(plancheSprites, win_surf, &score_pos, score_str);
 
     if (!launched) {
@@ -208,8 +208,8 @@ void Game::draw() {
         dictionary->drawText(plancheSprites, win_surf, &ready_pos, ready_str);
     }
 
-    SDL_Rect lives_pos = {580, 865, 28, 28};
-    SDL_Rect lives = {168, 75, 14, 14};
+    SDL_Rect lives_pos{580, 865, 28, 28};
+    SDL_Rect lives{168, 75, 14, 14};
     SDL_BlitScaled(plancheSprites, &lives, win_surf, &lives_pos);
 
     if (pacman->getLives() >= 2) {
@@ -234,7 +234,7 @@ void Game::draw() {
         }
     }
 
-    int animation = this->changeSprite();
+    int animation{this->changeSprite()};
 
     // choix du fantome
     for (Ghost *fantom : ghosts) {
@@ -303,7 +303,7 @@ bool Game::gameOver() {
         SDL_SetColorKey(plancheSprites, false, 0);
         dictionary = new Write{};
         std::map<char, SDL_Rect> my_dictionary = dictionary->getDictionary();
-        SDL_Rect game_over_pos = {100, 300, 42, 42};
+        SDL_Rect game_over_pos{100, 300, 42, 42};
         std::string game_over_str{"GAME OVER !"};
         dictionary->drawText(plancheSprites, win_surf, &game_over_pos, game_over_str);
 
@@ -322,11 +322,11 @@ bool Game::gameOver() {
             x_score = 80;
             break;
         }
-        SDL_Rect score_pos = {x_score, 450, 16, 16};
+        SDL_Rect score_pos{x_score, 450, 16, 16};
         std::string score_str{"YOUR SCORE IS " + std::to_string(score) + " POINT" + (score > 1 ? "S" : "")};
         dictionary->drawText(plancheSprites, win_surf, &score_pos, score_str);
 
-        SDL_Rect exit_pos = {170, 580, 12, 12};
+        SDL_Rect exit_pos{170, 580, 12, 12};
         std::string exit_str{"PRESS ANY KEY TO EXIT"};
         dictionary->drawText(plancheSprites, win_surf, &exit_pos, exit_str);
 
@@ -344,7 +344,7 @@ bool Game::gameOver() {
             SDL_Event event;
             while (!key_pressed && SDL_PollEvent(&event)) {
                 int nbk;
-                const Uint8 *keys = SDL_GetKeyboardState(&nbk);
+                const Uint8 *keys{SDL_GetKeyboardState(&nbk)};
                 for (int i{0}; i < nbk; i++) {
                     if (keys[i]) {
                         key_pressed = true;

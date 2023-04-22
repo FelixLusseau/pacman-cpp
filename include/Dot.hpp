@@ -1,19 +1,17 @@
 #ifndef DOT_HPP
 #define DOT_HPP
 
+#include <SDL.h>
 #include <iostream>
 #include <vector>
-#include <SDL.h>
-
 
 enum class TypeDot { Simple, Big, Fruit };
 
 class Dot {
-    private:
-
+  private:
     TypeDot type;
 
-    /* combien de point il vaut */
+    /* combien de points il vaut */
     int point;
     bool exist;
 
@@ -21,29 +19,19 @@ class Dot {
 
     /* position dans la fenètre de jeu */
     SDL_Rect position_;
-    
-    public:
 
-    static int nb_dot_tot_,nb_dot_eaten_;
+  public:
+    static int nb_dot_tot_, nb_dot_eaten_;
 
     Dot(int x, int y, TypeDot type);
 
-    bool inline getExist(void){
-        return exist;
-    }
-    inline SDL_Rect* getPosition(void){
-        return &position_;
-    }
-    inline SDL_Rect* getSprite(void){
-        return &sprite_;
-    } 
-    inline int getPoint(void){
-        return point;
-    }
+    bool inline getExist(void) { return exist; }
+    inline SDL_Rect *getPosition(void) { return &position_; }
+    inline SDL_Rect *getSprite(void) { return &sprite_; }
+    inline int getPoint(void) { return point; }
 
     /* fonction pour manger les points: renvoit 0 si pas mangé, son nombre de point sinon */
-    int getEat(SDL_Rect*pac_position);
-
+    int getEat(SDL_Rect *pac_position);
 };
 
 #endif

@@ -36,7 +36,7 @@ ThePacman::ThePacman(int x, int y) : Character() {
 
 void ThePacman::move(const Uint8 *keys, int animation, std::vector<std::vector<Tile>> map, SDL_Rect bg) {
 
-    SDL_Rect sp = cur_sprite_;
+    SDL_Rect sp{cur_sprite_};
 
     int mv_x{0};
     int mv_y{0};
