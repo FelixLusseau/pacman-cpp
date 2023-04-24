@@ -48,27 +48,28 @@ void Ghost::move(int animation,  Map *map, SDL_Rect bg){
     bool inter{intersection(tailleCaseX, tailleCaseY, directions)};
 
     if(Map[colonne][ligne]==Tile::GhostHouse){
-        if(!out_jail && (status_!=Status::stay_jail) && position_.x==(10*tailleCaseX)){
+        if( (status_!=Status::stay_jail) && position_.x==(10*tailleCaseX)){
             goal_.x=10*tailleCaseX;
             goal_.y=10*tailleCaseY;
             goal_.w=tailleCaseX;
             goal_.h=tailleCaseY;
-        }else if (out_jail){
+            choosePath(goal_,directions,(float)bg.h);
+        }else if (status_!=Status::stay_jail){
             goal_.x=10*tailleCaseX;
-            goal_.y=13*tailleCaseY;
+            goal_.y=12*tailleCaseY;
             goal_.w=tailleCaseX;
             goal_.h=tailleCaseY;
+            choosePath(goal_,directions,(float)bg.h);
         }
-        else if(position_.y > init_position_.y-tailleCaseY && prec_key!=SDL_SCANCODE_DOWN){
+        else if(position_.y > (init_position_.y-tailleCaseY) && prec_key!=SDL_SCANCODE_DOWN){
             prec_key=SDL_SCANCODE_UP;
         }else {
             prec_key=SDL_SCANCODE_DOWN;
         }
-        choosePath(goal_,directions,(float)bg.h);
     }
 
     // on choisit une nouvelle direction si on est a une intersection (3 directions possible) ou si on a arrêté de bouger
-    else if( inter || prec_key== SDL_SCANCODE_UNKNOWN){
+    else if(  (inter || prec_key== SDL_SCANCODE_UNKNOWN)){
         out_jail=true;
 
         if(idle){

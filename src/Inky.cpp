@@ -44,6 +44,7 @@ Inky::Inky(int PixelX, int PixelY,Ghost *blinky) : Ghost(){
     prec_key=SDL_SCANCODE_UP;
 
     corner_={PixelX*18,PixelY*22,PixelX,PixelY};
+    status_=Status::stay_jail;
 }
 
 void Inky::chase(int animation, ThePacman *pacman, std::vector<std::vector<Tile>> map, SDL_Rect bg) {

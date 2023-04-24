@@ -21,7 +21,7 @@ class Dot {
 
     /* position dans la fenètre de jeu */
     SDL_Rect position_;
-    
+
     public:
 
     static int nb_dot_tot_,nb_dot_eaten_;
