@@ -25,6 +25,7 @@ class Ghost : public Character {
 
     inline void set_outJail(bool t_f) { out_jail = t_f; }
     inline void setStatus(Status stat) { status_ = stat; }
+    inline Status getStatus() { return status_; }
 
     void dontStopMoving(int animation, std::vector<std::vector<Tile>> map, SDL_Rect bg);
 

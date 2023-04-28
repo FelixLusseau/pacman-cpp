@@ -147,6 +147,9 @@ int Game::start() {
                     // fantom->set_speed(2);
                     break;
                 }
+                if (fantom->getStatus() == Status::eyes) {
+                    break;
+                }
                 quit = gameOver();
                 if (pacman->getLives() != 0) {
                     quit = false;
