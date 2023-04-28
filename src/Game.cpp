@@ -38,6 +38,7 @@ Game::Game() {
     ghosts[1] = new Pinky{pX, pY};
     ghosts[2] = new Clyde{pX, pY};
     ghosts[3] = new Inky{pX, pY, ghosts[0]};
+    Ghost::timer_begin_ghost = clock();
 
     score = {0};
 
@@ -266,8 +267,10 @@ void Game::draw() {
 
     // choix du fantome
     for (Ghost *fantom : ghosts) {
-
-        fantom->chase(animation, pacman, map->getMap(), bg);
+        
+        if(fantom->getStatus()==Status::chase){
+            fantom->chase(animation, pacman, map->getMap(), bg);
+        }
         fantom->move(animation, map, bg);
 
         // affichage fantome

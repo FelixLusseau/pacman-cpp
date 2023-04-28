@@ -24,7 +24,11 @@ class Ghost : public Character {
     bool out_jail_;
     int eaten_score_timer_;
 
+
   public:
+  
+    static clock_t timer_begin_ghost, timer_end_ghost;
+
     Ghost();
     static bool idle;
 
