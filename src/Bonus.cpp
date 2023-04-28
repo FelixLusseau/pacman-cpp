@@ -1,4 +1,5 @@
 #include "../include/Bonus.hpp"
+#include "../include/Game.hpp"
 
 Bonus::Bonus() {
     switch (Game::level) {

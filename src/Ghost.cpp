@@ -15,12 +15,19 @@ Ghost::Ghost() : Character() {
     eyes_sprite_[2] = {105, 195, 16, 16};
     eyes_sprite_[3] = {122, 195, 16, 16};
 
+    two_hundreds_sprite_ = {154, 175, 15, 8};
+    four_hundreds_sprite_ = {154, 184, 15, 8};
+    eight_hundreds_sprite_ = {154, 193, 15, 8};
+    sixteen_hundreds_sprite_ = {153, 202, 16, 8};
+
     jail_position_ = {0, 0, 0, 0};
     corner_ = jail_position_;
     goal_ = {jail_position_.x, jail_position_.y, jail_position_.w, jail_position_.h};
 
-    out_jail = false;
+    out_jail_ = false;
     status_ = Status::chase;
+
+    eaten_score_timer_ = 0;
 }
 
 void Ghost::move(int animation, Map *map, SDL_Rect bg) {
@@ -46,12 +53,12 @@ void Ghost::move(int animation, Map *map, SDL_Rect bg) {
     bool inter{intersection(tailleCaseX, tailleCaseY, directions)};
 
     if (Map[colonne][ligne] == Tile::GhostHouse) {
-        if (!out_jail && (status_ != Status::stay_jail) && position_.x == (10 * tailleCaseX)) {
+        if (!out_jail_ && (status_ != Status::stay_jail) && position_.x == (10 * tailleCaseX)) {
             goal_.x = 10 * tailleCaseX;
             goal_.y = 10 * tailleCaseY;
             goal_.w = tailleCaseX;
             goal_.h = tailleCaseY;
-        } else if (out_jail) {
+        } else if (out_jail_) {
             goal_.x = 10 * tailleCaseX;
             goal_.y = 13 * tailleCaseY;
             goal_.w = tailleCaseX;
@@ -66,7 +73,7 @@ void Ghost::move(int animation, Map *map, SDL_Rect bg) {
 
     // on choisit une nouvelle direction si on est a une intersection (3 directions possible) ou si on a arrêté de bouger
     else if (inter || prec_key == SDL_SCANCODE_UNKNOWN) {
-        out_jail = true;
+        out_jail_ = true;
 
         if (idle) {
             goal_.x = position_.x;
@@ -81,6 +88,7 @@ void Ghost::move(int animation, Map *map, SDL_Rect bg) {
                 goal_.h = init_position_.h;
             } else {
                 status_ = Status::chase;
+                // speed = 1;
             }
         }
         choosePath(goal_, directions, (float)bg.h);
@@ -96,7 +104,27 @@ void Ghost::dontStopMoving(int animation, std::vector<std::vector<Tile>> map, SD
     int mv_x{0};
     int mv_y{0};
 
-    if (status_ == Status::eyes) {
+    if (status_ == Status::eaten) {
+        switch (Game::ghosts_eaten) {
+        case 1:
+            cur_sprite_ = two_hundreds_sprite_;
+            break;
+        case 2:
+            cur_sprite_ = four_hundreds_sprite_;
+            break;
+        case 3:
+            cur_sprite_ = eight_hundreds_sprite_;
+            break;
+        case 4:
+            cur_sprite_ = sixteen_hundreds_sprite_;
+            break;
+        }
+        eaten_score_timer_++;
+        if (eaten_score_timer_ == 8) {
+            status_ = Status::eyes;
+            eaten_score_timer_ = 0;
+        }
+    } else if (status_ == Status::eyes) {
         switch (prec_key) {
         case SDL_SCANCODE_RIGHT:
             cur_sprite_ = eyes_sprite_[0];
@@ -152,8 +180,10 @@ void Ghost::dontStopMoving(int animation, std::vector<std::vector<Tile>> map, SD
             if (Game::timer_end - Game::timer_begin > 1900000) {
                 cur_sprite_ = white_sprite_[0 + animation];
             }
-            if (Game::timer_end - Game::timer_begin > 2000000)
+            if (Game::timer_end - Game::timer_begin > 2000000) {
                 idle = false;
+                Game::ghosts_eaten = 0;
+            }
         }
     }
 
@@ -213,7 +243,7 @@ void Ghost::choosePath(SDL_Rect Goal, std::vector<Tile> directions, float min_in
         int nextY{origineY};
 
         // on teste quelle direction est la meilleur
-        if (directions[i] != Tile::Wall && (directions[i] != Tile::GhostHouseDoor || !out_jail)) {
+        if (directions[i] != Tile::Wall && (directions[i] != Tile::GhostHouseDoor || !out_jail_)) {
             bool went_here{true};
             switch (i) {
             case 0:

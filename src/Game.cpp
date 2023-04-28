@@ -3,6 +3,7 @@
 
 clock_t Game::timer_begin = 0;
 clock_t Game::timer_end = 0;
+int Game::ghosts_eaten = 0;
 
 Game::Game() {
     level = 1;
@@ -143,13 +144,28 @@ int Game::start() {
             if (abs(pacman->getPosition()->x - fantom->getPosition()->x) < fantom->getPosition()->w &&
                 abs(pacman->getPosition()->y - fantom->getPosition()->y) < fantom->getPosition()->h) {
                 if (Ghost::idle && fantom->getStatus() == Status::chase) {
-                    // std::cout << score << std::endl;
-                    score += 200;
-                    fantom->setStatus(Status::eyes);
-                    fantom->set_speed(2);
+                    std::cout << score;
+                    ghosts_eaten++;
+                    switch (ghosts_eaten) {
+                    case 1:
+                        score += 200;
+                        break;
+                    case 2:
+                        score += 400;
+                        break;
+                    case 3:
+                        score += 800;
+                        break;
+                    case 4:
+                        score += 1600;
+                        break;
+                    }
+                    std::cout << " " << score << std::endl;
+                    fantom->setStatus(Status::eaten);
+                    // fantom->set_speed(2);
                     break;
                 }
-                if (fantom->getStatus() == Status::eyes) {
+                if (fantom->getStatus() == Status::eyes || fantom->getStatus() == Status::eaten) {
                     break;
                 }
                 quit = gameOver();
