@@ -5,6 +5,7 @@ clock_t Game::timer_begin = 0;
 clock_t Game::timer_end = 0;
 
 Game::Game() {
+    level = 1;
 
     pWindow =
         SDL_CreateWindow("PacMan", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 680, 900, SDL_WINDOW_SHOWN); // 680 à vérifier (initialement 700)
@@ -41,7 +42,7 @@ Game::Game() {
 
     bool launched{false};
 
-    /* création de tout les points à partir de la map fournit */
+    /* création de tout les points à partir de la map fournie */
     std::vector<std::vector<Tile>> thisMap = map->getMap();
 
     for (int i{0}; i < thisMap.size(); i++) {
@@ -141,10 +142,14 @@ int Game::start() {
             // std::cout << fantom->getPosition()->x << " " << fantom->getPosition()->y << std::endl;
             if (abs(pacman->getPosition()->x - fantom->getPosition()->x) < fantom->getPosition()->w &&
                 abs(pacman->getPosition()->y - fantom->getPosition()->y) < fantom->getPosition()->h) {
-                if (Ghost::idle) {
+                if (Ghost::idle && fantom->getStatus() == Status::chase) {
+                    // std::cout << score << std::endl;
                     score += 200;
                     fantom->setStatus(Status::eyes);
-                    // fantom->set_speed(2);
+                    fantom->set_speed(2);
+                    break;
+                }
+                if (fantom->getStatus() == Status::eyes) {
                     break;
                 }
                 quit = gameOver();
