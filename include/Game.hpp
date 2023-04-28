@@ -32,6 +32,7 @@ class Game {
 
     int count;
     int score;
+    bool launched;
 
   public:
     Game();
