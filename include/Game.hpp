@@ -2,6 +2,7 @@
 #define GAME_HPP
 
 #include "../include/Blinky.hpp"
+#include "../include/Bonus.hpp"
 #include "../include/Clyde.hpp"
 #include "../include/Dot.hpp"
 #include "../include/Inky.hpp"
@@ -34,10 +35,12 @@ class Game {
     int score;
     bool launched;
 
+    Bonus *bonus;
+
   public:
     Game();
-    int level;
-    static int ghosts_eaten;
+    static int ghosts_eaten, level;
+    static bool next_level;
 
     void draw();
     int start();
@@ -48,6 +51,7 @@ class Game {
     static clock_t timer_begin, timer_end;
     bool gameOver(void);
     void resetPositions(Ghost **ghosts, ThePacman *pacman, std::vector<std::vector<Tile>> map, SDL_Rect bg);
+    void nextLevel(Ghost **ghosts, ThePacman *pacman, std::vector<std::vector<Tile>> map, SDL_Rect bg);
 };
 
 #endif

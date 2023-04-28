@@ -13,7 +13,7 @@ class Dot {
 
     /* combien de points il vaut */
     int point;
-    bool exist;
+    bool exist_;
 
     SDL_Rect sprite_;
 
@@ -25,10 +25,11 @@ class Dot {
 
     Dot(int x, int y, TypeDot type);
 
-    bool inline getExist(void) { return exist; }
+    bool inline getExist(void) { return exist_; }
     inline SDL_Rect *getPosition(void) { return &position_; }
     inline SDL_Rect *getSprite(void) { return &sprite_; }
     inline int getPoint(void) { return point; }
+    inline void setExist(bool exist) { exist_ = exist; }
 
     /* fonction pour manger les points: renvoit 0 si pas mangé, son nombre de point sinon */
     int getEat(SDL_Rect *pac_position);

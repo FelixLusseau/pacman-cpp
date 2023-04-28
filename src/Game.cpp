@@ -4,9 +4,10 @@
 clock_t Game::timer_begin = 0;
 clock_t Game::timer_end = 0;
 int Game::ghosts_eaten = 0;
+int Game::level = 1;
+bool Game::next_level = false;
 
 Game::Game() {
-    level = 1;
 
     pWindow =
         SDL_CreateWindow("PacMan", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 680, 900, SDL_WINDOW_SHOWN); // 680 à vérifier (initialement 700)
@@ -145,7 +146,7 @@ int Game::start() {
             if (abs(pacman->getPosition()->x - fantom->getPosition()->x) < fantom->getPosition()->w &&
                 abs(pacman->getPosition()->y - fantom->getPosition()->y) < fantom->getPosition()->h) {
                 if (Ghost::idle && fantom->getStatus() == Status::chase) {
-                    std::cout << score;
+                    // std::cout << score;
                     ghosts_eaten++;
                     switch (ghosts_eaten) {
                     case 1:
@@ -161,7 +162,7 @@ int Game::start() {
                         score += 1600;
                         break;
                     }
-                    std::cout << " " << score << std::endl;
+                    // std::cout << " " << score << std::endl;
                     fantom->setStatus(Status::eaten);
                     // fantom->set_speed(2);
                     break;
@@ -179,6 +180,10 @@ int Game::start() {
                     break;
                 }
             }
+        }
+        if (next_level) {
+            nextLevel(ghosts, pacman, map->getMap(), bg);
+            next_level = false;
         }
 
         // AFFICHAGE
@@ -243,6 +248,24 @@ void Game::draw() {
         SDL_BlitScaled(plancheSprites, &lives, win_surf, &lives_pos);
     }
 
+    if (count >= 2000) {
+        if (count == 2000) {
+            bonus = new Bonus();
+            bonus->setExists(true);
+        }
+        SDL_Rect bonus_pos = bonus->getPosition();
+        SDL_Rect bonus_sprite = bonus->getSprite();
+        SDL_Rect bonus_sprite_points = bonus->getSpritePoints();
+        if (bonus->getExists()) {
+            SDL_BlitScaled(plancheSprites, &bonus_sprite, win_surf, &bonus_pos);
+            score += bonus->getEat(pacman->getPosition());
+        }
+        if (bonus->bonus_score_timer && bonus->bonus_score_timer < 16) {
+            SDL_BlitScaled(plancheSprites, &bonus_sprite_points, win_surf, &bonus_pos);
+            bonus->bonus_score_timer++;
+        }
+    }
+
     // couleur transparente
     SDL_SetColorKey(plancheSprites, true, 0);
 
@@ -256,10 +279,10 @@ void Game::draw() {
         }
     }
     // sortie de inky et clyde
-    if(dots[0]->nb_dot_eaten_>=30 && ghosts[3]->getStatus()==Status::stay_jail){
+    if (dots[0]->nb_dot_eaten_ >= 30 && ghosts[3]->getStatus() == Status::stay_jail) {
         ghosts[3]->setStatus(Status::chase);
     }
-    if(dots[0]->nb_dot_eaten_>=60 && ghosts[2]->getStatus()==Status::stay_jail){
+    if (dots[0]->nb_dot_eaten_ >= 60 && ghosts[2]->getStatus() == Status::stay_jail) {
         ghosts[2]->setStatus(Status::chase);
     }
 
@@ -282,7 +305,8 @@ void Game::draw() {
 
     SDL_UpdateWindowSurface(pWindow);
 
-    count = (count + 1) % (512);
+    count++;
+    // std::cout << count << std::endl;
 }
 
 int Game::changeSprite() {
@@ -403,4 +427,15 @@ void Game::resetPositions(Ghost **ghosts, ThePacman *pacman, std::vector<std::ve
         ghosts[i]->set_outJail(false);
     }
     ghosts[0]->set_outJail(true); // blinky déjà dehors
+    launched = false;
+    count = 0;
+}
+
+void Game::nextLevel(Ghost **ghosts, ThePacman *pacman, std::vector<std::vector<Tile>> map, SDL_Rect bg) {
+    level++;
+    resetPositions(ghosts, pacman, map, bg);
+    for (int i{0}; i < dots.size(); i++) {
+        dots[i]->setExist(true);
+    }
+    Dot::nb_dot_eaten_ = 0;
 }
