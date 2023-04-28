@@ -244,7 +244,7 @@ void Ghost::choosePath(SDL_Rect Goal, std::vector<Tile> directions, float min_in
         int nextY{origineY};
 
         // on teste quelle direction est la meilleur
-        if (directions[i] != Tile::Wall && ((directions[i] != Tile::GhostHouseDoor || status_ == Status::eyes ) || !out_jail)) {
+        if (directions[i] != Tile::Wall && ((directions[i] != Tile::GhostHouseDoor || status_ == Status::eyes) || !out_jail_)) {
             bool went_here{true};
             switch (i) {
             case 0:

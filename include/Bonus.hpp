@@ -8,7 +8,7 @@ enum class TypeBonus { Cherry, Strawberry, Orange, Apple, Melon, Galaxian, Bell,
 class Bonus {
   private:
     TypeBonus type;
-    int point;
+    int points;
     bool exist;
     SDL_Rect sprite_;
     SDL_Rect sprite_points_;
@@ -33,10 +33,13 @@ class Bonus {
 
   public:
     Bonus();
+    int bonus_score_timer;
     inline SDL_Rect getSprite() { return sprite_; }
     inline SDL_Rect getPosition() { return position_; }
+    inline SDL_Rect getSpritePoints() { return sprite_points_; }
     inline bool getExists() { return exist; }
     inline void setExists(bool e) { exist = e; }
+    int getEat(SDL_Rect *pac_position);
 };
 
 #endif

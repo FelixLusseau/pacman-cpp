@@ -247,10 +247,16 @@ void Game::draw() {
             bonus = new Bonus();
             bonus->setExists(true);
         }
+        SDL_Rect bonus_pos = bonus->getPosition();
+        SDL_Rect bonus_sprite = bonus->getSprite();
+        SDL_Rect bonus_sprite_points = bonus->getSpritePoints();
         if (bonus->getExists()) {
-            SDL_Rect bonus_pos = bonus->getPosition();
-            SDL_Rect bonus_sprite = bonus->getSprite();
             SDL_BlitScaled(plancheSprites, &bonus_sprite, win_surf, &bonus_pos);
+            score += bonus->getEat(pacman->getPosition());
+        }
+        if (bonus->bonus_score_timer && bonus->bonus_score_timer < 16) {
+            SDL_BlitScaled(plancheSprites, &bonus_sprite_points, win_surf, &bonus_pos);
+            bonus->bonus_score_timer++;
         }
     }
 
@@ -414,4 +420,5 @@ void Game::resetPositions(Ghost **ghosts, ThePacman *pacman, std::vector<std::ve
     }
     ghosts[0]->set_outJail(true); // blinky déjà dehors
     launched = false;
+    count = 0;
 }
