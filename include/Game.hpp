@@ -2,6 +2,7 @@
 #define GAME_HPP
 
 #include "../include/Blinky.hpp"
+#include "../include/Bonus.hpp"
 #include "../include/Clyde.hpp"
 #include "../include/Dot.hpp"
 #include "../include/Inky.hpp"
@@ -34,10 +35,11 @@ class Game {
     int score;
     bool launched;
 
+    Bonus *bonus;
+
   public:
     Game();
-    int level;
-    static int ghosts_eaten;
+    static int ghosts_eaten, level;
 
     void draw();
     int start();
