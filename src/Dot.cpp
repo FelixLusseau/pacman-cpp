@@ -51,9 +51,9 @@ int Dot::getEat(SDL_Rect *pac_position) {
             Ghost::idle = true;
             Game::timer_begin = clock();
         }
-    }
 
-    nb_dot_eaten_++;
+        nb_dot_eaten_++;
+    }
 
     /* if (nb_dot_eaten_ == nb_dot_tot_) {
         next_level();

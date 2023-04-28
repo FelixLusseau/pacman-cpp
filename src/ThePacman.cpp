@@ -36,36 +36,48 @@ ThePacman::ThePacman(int x, int y) : Character() {
 
 void ThePacman::move(const Uint8 *keys, int animation, std::vector<std::vector<Tile>> map, SDL_Rect bg) {
 
+
+    // tailles d'une case de la carte
+    float tailleCaseX{float(bg.w) / float(map[0].size())};
+    float tailleCaseY{float(bg.h) / float(map.size())};
+
+    // collision aux coins avec un sprite ayant une certaine rondeur
+    int rondeur{6};
+
+    // coordonnées des coins du sprite
+    int coinX[2]={(int)((position_.x+rondeur)/tailleCaseX), (int)((position_.x + position_.w-rondeur)/tailleCaseX)};
+    int coinY[2]={(int)((position_.y+rondeur)/tailleCaseY), (int)((position_.y + position_.w-rondeur)/tailleCaseY)};
+
     SDL_Rect sp{cur_sprite_};
 
     int mv_x{0};
     int mv_y{0};
 
-    if (keys[SDL_SCANCODE_RIGHT] || prec_key == SDL_SCANCODE_RIGHT) {
+    if ((keys[SDL_SCANCODE_RIGHT] || prec_key == SDL_SCANCODE_RIGHT) && map[coinY[0]][coinX[0] + 1] != Tile::Wall) {
         prec_key = SDL_SCANCODE_RIGHT;
-        // if (map[position_.y][position_.x + 1] != Tile::Wall)
         mv_x = 2;
         if (changePosition(position_.x + mv_x, position_.y + mv_y, map, bg))
             cur_sprite_ = sprite_[0 + animation];
     }
-    if (keys[SDL_SCANCODE_LEFT] || prec_key == SDL_SCANCODE_LEFT) {
+    if ((keys[SDL_SCANCODE_LEFT] || prec_key == SDL_SCANCODE_LEFT) && map[coinY[0]][coinX[1] - 1] != Tile::Wall) {
         prec_key = SDL_SCANCODE_LEFT;
         mv_x = -2;
         if (changePosition(position_.x + mv_x, position_.y + mv_y, map, bg))
             cur_sprite_ = sprite_[2 + animation];
     }
-    if (keys[SDL_SCANCODE_DOWN] || prec_key == SDL_SCANCODE_DOWN) {
+    if ((keys[SDL_SCANCODE_DOWN] || prec_key == SDL_SCANCODE_DOWN) && map[coinY[0]+ 1][coinX[0]] != Tile::Wall) {
         prec_key = SDL_SCANCODE_DOWN;
         mv_y = 2;
         if (changePosition(position_.x + mv_x, position_.y + mv_y, map, bg))
             cur_sprite_ = sprite_[4 + animation];
     }
-    if (keys[SDL_SCANCODE_UP] || prec_key == SDL_SCANCODE_UP) {
+    if ((keys[SDL_SCANCODE_UP] || prec_key == SDL_SCANCODE_UP) && map[coinY[1] - 1][coinX[0]] != Tile::Wall) {
         prec_key = SDL_SCANCODE_UP;
         mv_y = -2;
         if (changePosition(position_.x + mv_x, position_.y + mv_y, map, bg))
             cur_sprite_ = sprite_[6 + animation];
     }
+    
     // cur_sprite_=sp;
     // this->changePosition(position_.x + mv_x, position_.y + mv_y, map, bg);
 

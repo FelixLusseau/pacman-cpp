@@ -254,6 +254,13 @@ void Game::draw() {
             SDL_BlitScaled(plancheSprites, dots[i]->getSprite(), win_surf, dots[i]->getPosition());
         }
     }
+    // sortie de inky et clyde
+    if(dots[0]->nb_dot_eaten_>=30 && ghosts[3]->getStatus()==Status::stay_jail){
+        ghosts[3]->setStatus(Status::chase);
+    }
+    if(dots[0]->nb_dot_eaten_>=60 && ghosts[2]->getStatus()==Status::stay_jail){
+        ghosts[2]->setStatus(Status::chase);
+    }
 
     int animation{this->changeSprite()};
 
