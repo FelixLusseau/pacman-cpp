@@ -42,7 +42,7 @@ void ThePacman::move(const Uint8 *keys, int animation, std::vector<std::vector<T
     float tailleCaseY{float(bg.h) / float(map.size())};
 
     // collision aux coins avec un sprite ayant une certaine rondeur
-    int rondeur{6};
+    int rondeur{3};
 
     // coordonnées des coins du sprite
     int coinX[2]={(int)((position_.x+rondeur)/tailleCaseX), (int)((position_.x + position_.w-rondeur)/tailleCaseX)};
@@ -103,7 +103,7 @@ void ThePacman::die(SDL_Surface *plancheSprites, SDL_Rect *src_bg, SDL_Surface *
         SDL_BlitScaled(plancheSprites, src_bg, win_surf, bg);
         SDL_BlitScaled(plancheSprites, &die_animation[i], win_surf, &position_);
         SDL_UpdateWindowSurface(pWindow);
-        SDL_Delay(200);
+        SDL_Delay(150);
     }
 
     SDL_UpdateWindowSurface(pWindow);

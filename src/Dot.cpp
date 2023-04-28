@@ -36,18 +36,21 @@ int Dot::getEat(SDL_Rect *pac_position) {
 
     float side{(float(pac_position->w) / 2)};
 
-    float origineX{float(pac_position->x) + float(pac_position->w) / 2};
-    float origineY{float(pac_position->y) + float(pac_position->w) / 2};
+    float origineX{float(pac_position->x + (pac_position->w/ 2)) };
+    float origineY{float(pac_position->y + (pac_position->h/ 2)) };
 
-    // float distance=sqrt( pow(float(position_.x)-origineX,2) + pow(float(position_.y)-origineY,2) );
+    float dotOrigineX{float(position_.x+ (pac_position->w/ 2))};
+    float dotOrigineY{float(position_.y+ (pac_position->w/ 2))};
 
-    if (abs(origineX - position_.x) < side && abs(origineY - position_.y) < side) {
+    float distance=sqrt( pow(dotOrigineX-origineX,2) + pow(dotOrigineY-origineY,2) );
+
+    if (distance < (pac_position->w/ 2.25)) {
         exist = false;
         score = point;
-        // std::cout << "get eaten!, +" << score << " x:" << position_.x << " y:" << position_.y << std::endl;
-        // std::cout << "pacman x:" << origineX << " y:" << origineY << std::endl;
+        //std::cout << "get eaten!, +" << score << " x:" << position_.x << " y:" << position_.y << std::endl;
+        //std::cout << "pacman x:" << origineX << " y:" << origineY << std::endl;
         if (type == TypeDot::Big) {
-            // std::cout << "big dot eaten" << std::endl;
+            //std::cout << "big dot eaten" << std::endl;
             Ghost::idle = true;
             Game::timer_begin = clock();
         }

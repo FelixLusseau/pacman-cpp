@@ -62,7 +62,7 @@ void Inky::chase(int animation, ThePacman *pacman, std::vector<std::vector<Tile>
     int origineX{position_.x + size};
     int origineY{position_.y + size};
 
-    // pinky cherches à aller devant pacman
+    // Inky cherches à aller devant pacman en utilisant la possition de blinky
     SDL_Scancode pacMove{pacman->get_key()};
     int coeff{4}; // nombre de case devant pacman
     SDL_Rect Goal{PacPosition->x + size, PacPosition->y + size, tailleCaseX, tailleCaseY};
