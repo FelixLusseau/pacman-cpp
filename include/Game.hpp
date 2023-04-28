@@ -36,6 +36,7 @@ class Game {
 
   public:
     Game();
+    int level;
 
     void draw();
     int start();
