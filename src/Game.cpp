@@ -5,6 +5,7 @@ clock_t Game::timer_begin = 0;
 clock_t Game::timer_end = 0;
 int Game::ghosts_eaten = 0;
 int Game::level = 1;
+bool Game::next_level = false;
 
 Game::Game() {
 
@@ -144,7 +145,7 @@ int Game::start() {
             if (abs(pacman->getPosition()->x - fantom->getPosition()->x) < fantom->getPosition()->w &&
                 abs(pacman->getPosition()->y - fantom->getPosition()->y) < fantom->getPosition()->h) {
                 if (Ghost::idle && fantom->getStatus() == Status::chase) {
-                    std::cout << score;
+                    // std::cout << score;
                     ghosts_eaten++;
                     switch (ghosts_eaten) {
                     case 1:
@@ -160,7 +161,7 @@ int Game::start() {
                         score += 1600;
                         break;
                     }
-                    std::cout << " " << score << std::endl;
+                    // std::cout << " " << score << std::endl;
                     fantom->setStatus(Status::eaten);
                     // fantom->set_speed(2);
                     break;
@@ -178,6 +179,10 @@ int Game::start() {
                     break;
                 }
             }
+        }
+        if (next_level) {
+            nextLevel(ghosts, pacman, map->getMap(), bg);
+            next_level = false;
         }
 
         // AFFICHAGE
@@ -421,4 +426,13 @@ void Game::resetPositions(Ghost **ghosts, ThePacman *pacman, std::vector<std::ve
     ghosts[0]->set_outJail(true); // blinky déjà dehors
     launched = false;
     count = 0;
+}
+
+void Game::nextLevel(Ghost **ghosts, ThePacman *pacman, std::vector<std::vector<Tile>> map, SDL_Rect bg) {
+    level++;
+    resetPositions(ghosts, pacman, map, bg);
+    for (int i{0}; i < dots.size(); i++) {
+        dots[i]->setExist(true);
+    }
+    Dot::nb_dot_eaten_ = 0;
 }

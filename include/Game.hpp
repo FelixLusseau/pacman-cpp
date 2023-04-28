@@ -40,6 +40,7 @@ class Game {
   public:
     Game();
     static int ghosts_eaten, level;
+    static bool next_level;
 
     void draw();
     int start();
@@ -50,6 +51,7 @@ class Game {
     static clock_t timer_begin, timer_end;
     bool gameOver(void);
     void resetPositions(Ghost **ghosts, ThePacman *pacman, std::vector<std::vector<Tile>> map, SDL_Rect bg);
+    void nextLevel(Ghost **ghosts, ThePacman *pacman, std::vector<std::vector<Tile>> map, SDL_Rect bg);
 };
 
 #endif

@@ -7,7 +7,7 @@ int Dot::nb_dot_eaten_{0};
 
 Dot::Dot(int x, int y, TypeDot typeDot) {
 
-    exist = true;
+    exist_ = true;
     type = typeDot;
 
     switch (type) {
@@ -28,7 +28,7 @@ Dot::Dot(int x, int y, TypeDot typeDot) {
 
 int Dot::getEat(SDL_Rect *pac_position) {
 
-    if (!exist) {
+    if (!exist_) {
         return 0;
     }
 
@@ -36,21 +36,21 @@ int Dot::getEat(SDL_Rect *pac_position) {
 
     float side{(float(pac_position->w) / 2)};
 
-    float origineX{float(pac_position->x + (pac_position->w/ 2)) };
-    float origineY{float(pac_position->y + (pac_position->h/ 2)) };
+    float origineX{float(pac_position->x + (pac_position->w / 2))};
+    float origineY{float(pac_position->y + (pac_position->h / 2))};
 
-    float dotOrigineX{float(position_.x+ (pac_position->w/ 2))};
-    float dotOrigineY{float(position_.y+ (pac_position->w/ 2))};
+    float dotOrigineX{float(position_.x + (pac_position->w / 2))};
+    float dotOrigineY{float(position_.y + (pac_position->w / 2))};
 
-    float distance=sqrt( pow(dotOrigineX-origineX,2) + pow(dotOrigineY-origineY,2) );
+    float distance = sqrt(pow(dotOrigineX - origineX, 2) + pow(dotOrigineY - origineY, 2));
 
-    if (distance < (pac_position->w/ 2.25)) {
-        exist = false;
+    if (distance < (pac_position->w / 2.25)) {
+        exist_ = false;
         score = point;
-        //std::cout << "get eaten!, +" << score << " x:" << position_.x << " y:" << position_.y << std::endl;
-        //std::cout << "pacman x:" << origineX << " y:" << origineY << std::endl;
+        // std::cout << "get eaten!, +" << score << " x:" << position_.x << " y:" << position_.y << std::endl;
+        // std::cout << "pacman x:" << origineX << " y:" << origineY << std::endl;
         if (type == TypeDot::Big) {
-            //std::cout << "big dot eaten" << std::endl;
+            // std::cout << "big dot eaten" << std::endl;
             Ghost::idle = true;
             Game::timer_begin = clock();
         }
@@ -58,9 +58,9 @@ int Dot::getEat(SDL_Rect *pac_position) {
         nb_dot_eaten_++;
     }
 
-    /* if (nb_dot_eaten_ == nb_dot_tot_) {
-        next_level();
-    } */
+    if (nb_dot_eaten_ == nb_dot_tot_) {
+        Game::next_level = true;
+    }
 
     return score;
 };
