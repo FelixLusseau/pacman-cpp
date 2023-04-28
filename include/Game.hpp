@@ -37,6 +37,7 @@ class Game {
   public:
     Game();
     int level;
+    static int ghosts_eaten;
 
     void draw();
     int start();

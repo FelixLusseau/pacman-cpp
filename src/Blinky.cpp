@@ -19,7 +19,7 @@ Blinky::Blinky(int PixelX, int PixelY) : Ghost() {
     init_position_ = {10 * PixelX, 10 * PixelY, 32, 32};
 
     corner_ = {PixelX * 17, -PixelY, PixelX, PixelY};
-    out_jail = true;
+    out_jail_ = true;
 }
 
 void Blinky::chase(int animation, ThePacman *pacman, std::vector<std::vector<Tile>> map, SDL_Rect bg) {

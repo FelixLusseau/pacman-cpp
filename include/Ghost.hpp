@@ -5,7 +5,7 @@
 #include "Map.hpp"
 #include "ThePacman.hpp"
 
-enum class Status { eyes, chase, flee, stay_jail };
+enum class Status { eyes, chase, flee, stay_jail, eaten };
 
 class Ghost : public Character {
   protected:
@@ -15,15 +15,20 @@ class Ghost : public Character {
     SDL_Rect blue_sprite_[2];
     SDL_Rect white_sprite_[2];
     SDL_Rect eyes_sprite_[4];
+    SDL_Rect two_hundreds_sprite_;
+    SDL_Rect four_hundreds_sprite_;
+    SDL_Rect eight_hundreds_sprite_;
+    SDL_Rect sixteen_hundreds_sprite_;
     SDL_Scancode last_prec_key;
     Status status_;
-    bool out_jail;
+    bool out_jail_;
+    int eaten_score_timer_;
 
   public:
     Ghost();
     static bool idle;
 
-    inline void set_outJail(bool t_f) { out_jail = t_f; }
+    inline void set_outJail(bool t_f) { out_jail_ = t_f; }
     inline void setStatus(Status stat) { status_ = stat; }
     inline Status getStatus() { return status_; }
 
