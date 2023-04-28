@@ -242,8 +242,8 @@ void Game::draw() {
         SDL_BlitScaled(plancheSprites, &lives, win_surf, &lives_pos);
     }
 
-    if (count >= 200) {
-        if (count == 200) {
+    if (count >= 2000) {
+        if (count == 2000) {
             bonus = new Bonus();
             bonus->setExists(true);
         }
