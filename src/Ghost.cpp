@@ -57,10 +57,11 @@ void Ghost::move(int animation, Map *map, SDL_Rect bg) {
 
     bool inter{intersection(tailleCaseX, tailleCaseY, directions)};
 
+    // si fantome dans prison
     if (Map[colonne][ligne] == Tile::GhostHouse) {
-        if(status_ == Status::eyes){
+        speed=1;
+        if(status_ == Status::eyes  && position_.x == (10 * tailleCaseX)){
             status_=Status::chase;
-            prec_key=SDL_SCANCODE_UP;
             out_jail_=false;
         }
         if ((status_ != Status::stay_jail) && position_.x == (10 * tailleCaseX)) {
@@ -69,13 +70,16 @@ void Ghost::move(int animation, Map *map, SDL_Rect bg) {
             goal_.w = tailleCaseX;
             goal_.h = tailleCaseY;
             choosePath(goal_, directions, (float)bg.h);
-        } else if (status_ != Status::stay_jail) {
+        } else if (status_ != Status::stay_jail && status_ != Status::eyes) {
             goal_.x = 10 * tailleCaseX;
             goal_.y = 12 * tailleCaseY;
             goal_.w = tailleCaseX;
             goal_.h = tailleCaseY;
             choosePath(goal_, directions, (float)bg.h);
-        } else if (position_.y > (init_position_.y - tailleCaseY) && prec_key != SDL_SCANCODE_DOWN) {
+        } 
+        
+        // ne sort pas tout de suite -> animation haut en bas
+        else if (position_.y > (init_position_.y - tailleCaseY) && prec_key != SDL_SCANCODE_DOWN) {
             prec_key = SDL_SCANCODE_UP;
         } else {
             prec_key = SDL_SCANCODE_DOWN;
@@ -89,14 +93,13 @@ void Ghost::move(int animation, Map *map, SDL_Rect bg) {
 
         timer_end_ghost = clock();
         if ( status_==Status::flee || (timer_end_ghost - timer_begin_ghost)%12000000 < 3000000  || idle)  {
-            if(!idle && status_!=Status::eyes){
+            if( status_!=Status::eyes){
                 status_=Status::flee;
             }
             goal_.x = corner_.x;
             goal_.y = corner_.y;
             goal_.w = corner_.w;
             goal_.h = corner_.h;
-            std::cout<< "fleeeeeeeeeeeeee: "<<timer_end_ghost<<std::endl;
 
         }
         if((timer_end_ghost - timer_begin_ghost)%12000000 >3000000 && !idle && status_==Status::flee){
@@ -108,10 +111,11 @@ void Ghost::move(int animation, Map *map, SDL_Rect bg) {
                 goal_.y = init_position_.y;
                 goal_.w = init_position_.w;
                 goal_.h = init_position_.h;
+                speed=2;
             } else {
                 status_ = Status::chase;
                 out_jail_=false;
-                // speed = 1;
+                speed = 1;
             }
         }
         choosePath(goal_, directions, (float)bg.h);

@@ -139,13 +139,25 @@ int Game::start() {
         int nbk;
         const Uint8 *keys{SDL_GetKeyboardState(&nbk)};
 
-        pacman->move(keys, this->changeSprite(), map->getMap(), bg);
+        int animation{this->changeSprite()};
+
+        pacman->move(keys, animation, map->getMap(), bg);
 
         for (Ghost *fantom : ghosts) {
+        
+            if(fantom->getStatus()==Status::chase){
+                fantom->chase(animation, pacman, map->getMap(), bg);
+            }
+            fantom->move(animation, map, bg);   
+
             // std::cout << fantom->getPosition()->x << " " << fantom->getPosition()->y << std::endl;
+
+            //collison fantome / pacman
             if (abs(pacman->getPosition()->x - fantom->getPosition()->x) < fantom->getPosition()->w &&
                 abs(pacman->getPosition()->y - fantom->getPosition()->y) < fantom->getPosition()->h) {
-                if (Ghost::idle && fantom->getStatus() == Status::chase) {
+                
+                //fantome vulnérable
+                if (Ghost::idle ) {
                     // std::cout << score;
                     ghosts_eaten++;
                     switch (ghosts_eaten) {
@@ -167,10 +179,14 @@ int Game::start() {
                     // fantom->set_speed(2);
                     break;
                 }
+                
                 if (fantom->getStatus() == Status::eyes || fantom->getStatus() == Status::eaten) {
                     break;
                 }
+
+                // pacman meurt
                 quit = gameOver();
+
                 if (pacman->getLives() != 0) {
                     quit = false;
                     resetPositions(ghosts, pacman, map->getMap(), bg);
@@ -248,6 +264,7 @@ void Game::draw() {
         SDL_BlitScaled(plancheSprites, &lives, win_surf, &lives_pos);
     }
 
+    //score
     if (count >= 2000) {
         if (count == 2000) {
             bonus = new Bonus();
@@ -290,12 +307,6 @@ void Game::draw() {
 
     // choix du fantome
     for (Ghost *fantom : ghosts) {
-        
-        if(fantom->getStatus()==Status::chase){
-            fantom->chase(animation, pacman, map->getMap(), bg);
-        }
-        fantom->move(animation, map, bg);
-
         // affichage fantome
         SDL_BlitScaled(plancheSprites, fantom->get_currSprite(), win_surf, fantom->getPosition());
     }
@@ -425,6 +436,7 @@ void Game::resetPositions(Ghost **ghosts, ThePacman *pacman, std::vector<std::ve
         ghosts[i]->setPosition(*(ghosts[i]->get_initPosition()));
         ghosts[i]->setStatus(Status::chase);
         ghosts[i]->set_outJail(false);
+        ghosts[i]->set_speed(1);
     }
     ghosts[0]->set_outJail(true); // blinky déjà dehors
     launched = false;
