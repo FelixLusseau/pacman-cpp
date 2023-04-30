@@ -6,6 +6,7 @@
 /* rouge */
 class Inky : public Ghost {
   private:
+    /* inky utlise la position de blinky pour sa stratégie de chasse*/
     Ghost *blinky_;
 
   public:

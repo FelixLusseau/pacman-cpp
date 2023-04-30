@@ -8,7 +8,7 @@
 class ThePacman : public Character {
   private:
     SDL_Rect die_animation[11];
-    int lives_;
+    int lives_; // nombre de vies
 
   public:
     ThePacman(int x, int y);

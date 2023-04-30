@@ -9,7 +9,7 @@
 class Character {
   protected:
     /* sprite pour bouger dans les 4 directions (2 images par directions)
-    right-left-down-up */
+       ordre: right-left-down-up */
     SDL_Rect sprite_[8];
 
     /* sprite actuellement dessiné */
@@ -18,6 +18,7 @@ class Character {
     /* position dans la fenètre de jeu */
     SDL_Rect position_;
 
+    /*position initial */
     SDL_Rect init_position_;
 
     /* dernière touche du clavier pressé (pacman) / direction prise (ghost)*/
@@ -40,13 +41,16 @@ class Character {
 
     inline void setPosition(SDL_Rect newPosition) { position_ = newPosition; };
 
+    /* sprite actuel */
     inline SDL_Rect *get_currSprite() { return &cur_sprite_; };
 
+    /* renvoit la dernière touche du clavier pressé = direction*/
     inline SDL_Scancode get_key() { return prec_key; };
 
     inline void set_speed(int newSpeed) { speed = newSpeed; };
 
     int changePosition(int x, int y, std::vector<std::vector<Tile>> map, SDL_Rect bg);
+
     inline SDL_Rect *get_initPosition() { return &init_position_; };
 };
 
