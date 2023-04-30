@@ -11,6 +11,7 @@
 #include "../include/ThePacman.hpp"
 #include "../include/Write.hpp"
 #include <SDL.h>
+#include <array>
 #include <ctime>
 #include <iostream>
 
@@ -52,6 +53,8 @@ class Game {
     bool gameOver(void);
     void resetPositions(Ghost **ghosts, ThePacman *pacman, std::vector<std::vector<Tile>> map, SDL_Rect bg);
     void nextLevel(Ghost **ghosts, ThePacman *pacman, std::vector<std::vector<Tile>> map, SDL_Rect bg);
+
+    void level2To3();
 };
 
 #endif

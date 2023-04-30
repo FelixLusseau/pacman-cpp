@@ -79,6 +79,12 @@ int Game::start() {
         return 1;
     }
 
+    // Pour faciliter travail sur les animations
+    /* // for (int i{0}; i < 10; i++) {
+    level2To3();
+    // }
+    return 0; */
+
     SDL_FillRect(win_surf, NULL, 0x000000);
     SDL_Rect title{3, 3, 184, 49};
     SDL_Rect titleScale{60, 20, 552, 150};
@@ -450,4 +456,76 @@ void Game::nextLevel(Ghost **ghosts, ThePacman *pacman, std::vector<std::vector<
         dots[i]->setExist(true);
     }
     Dot::nb_dot_eaten_ = 0;
+    SDL_FillRect(win_surf, NULL, 0x000000);
+    SDL_Delay(500);
+
+    // couleur transparente
+    SDL_SetColorKey(plancheSprites, true, 0);
+
+    for (int i{0}; i < 3; i++) {
+
+        SDL_BlitScaled(plancheSprites, &src_bg_dotless, win_surf, &bg);
+        SDL_UpdateWindowSurface(pWindow);
+        SDL_Delay(250);
+
+        SDL_BlitScaled(plancheSprites, &src_bg_white, win_surf, &bg);
+        SDL_UpdateWindowSurface(pWindow);
+        SDL_Delay(250);
+    }
+
+    SDL_Delay(500);
+    switch (level) {
+    case 3:
+        level2To3();
+        break;
+    default:
+        break;
+    }
+}
+
+void Game::level2To3() {
+    std::array<SDL_Rect, 2> pacman_left{SDL_Rect{48, 90, 16, 16}, SDL_Rect{62, 90, 14, 16}};
+    std::array<SDL_Rect, 2> blinky_left{SDL_Rect{36, 123, 16, 16}, SDL_Rect{53, 123, 16, 16}};
+    int xp{700}, xb{1020};
+    SDL_Rect pacman;
+    SDL_Rect blinky;
+    int j{0};
+
+    for (int i{0}; i < 300; i++) {
+        SDL_FillRect(win_surf, NULL, 0x000000);
+        if (i % 4 == 0) {
+            j = (j + 1) % 2;
+        }
+        pacman = {xp, 446, 58, 58};
+        blinky = {xb, 450, 48, 48};
+        SDL_BlitScaled(plancheSprites, &pacman_left[j], win_surf, &pacman);
+        SDL_BlitScaled(plancheSprites, &blinky_left[j], win_surf, &blinky);
+        SDL_UpdateWindowSurface(pWindow);
+        SDL_Delay(20);
+        xp -= 3;
+        xb -= 4;
+    }
+
+    std::array<SDL_Rect, 3> big_pacman{SDL_Rect{3, 218, 31, 31}, SDL_Rect{37, 218, 31, 31}, SDL_Rect{69, 218, 31, 31}};
+    std::array<SDL_Rect, 2> blue_ghost{SDL_Rect{3, 195, 16, 16}, SDL_Rect{20, 195, 16, 16}};
+    SDL_Rect blue;
+    xp = -750;
+    xb = -100;
+    int k{0};
+
+    for (int i{0}; i < 300; i++) {
+        SDL_FillRect(win_surf, NULL, 0x000000);
+        if (i % 4 == 0) {
+            j = (j + 1) % 3;
+            k = (k + 1) % 2;
+        }
+        pacman = {xp, 405, 100, 100};
+        blue = {xb, 450, 48, 48};
+        SDL_BlitScaled(plancheSprites, &big_pacman[j], win_surf, &pacman);
+        SDL_BlitScaled(plancheSprites, &blue_ghost[k], win_surf, &blue);
+        SDL_UpdateWindowSurface(pWindow);
+        SDL_Delay(20);
+        xp += 5;
+        xb += 3;
+    }
 }
