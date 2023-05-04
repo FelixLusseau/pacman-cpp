@@ -15,7 +15,7 @@ class Inky : public Ghost {
     Inky(int PixelX, int PixelY);
     Inky(int PixelX, int PixelY, Ghost *blinky);
 
-    void chase(int animation, std::unique_ptr<ThePacman> &pacman, std::vector<std::vector<Tile>> map, SDL_Rect bg) override;
+    void chase(std::unique_ptr<ThePacman> &pacman, std::vector<std::vector<Tile>> map, SDL_Rect bg) override;
 };
 
 #endif

@@ -166,6 +166,8 @@ void Ghost::dontStopMoving(int animation, std::vector<std::vector<Tile>> map, SD
             cur_sprite_ = eyes_sprite_[3];
             mv_y = speed;
             break;
+        default: // à check
+            break;
         }
     } else {
         switch (prec_key) {
@@ -184,6 +186,8 @@ void Ghost::dontStopMoving(int animation, std::vector<std::vector<Tile>> map, SD
         case SDL_SCANCODE_DOWN:
             cur_sprite_ = sprite_[6 + animation];
             mv_y = speed;
+            break;
+        default: // à check
             break;
         }
         if (idle) {
@@ -214,7 +218,7 @@ void Ghost::dontStopMoving(int animation, std::vector<std::vector<Tile>> map, SD
     this->changePosition(position_.x + mv_x, position_.y + mv_y, map, bg);
 }
 
-void Ghost::chase(int animation, std::unique_ptr<ThePacman> &pacman, std::vector<std::vector<Tile>> map, SDL_Rect bg) {
+void Ghost::chase(std::unique_ptr<ThePacman> &pacman, std::vector<std::vector<Tile>> map, SDL_Rect bg) {
     std::cout << "ne devrait pas apparaitre" << std::endl;
 }
 

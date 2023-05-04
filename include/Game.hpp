@@ -52,7 +52,7 @@ class Game {
 
     static clock_t timer_begin, timer_end;
     bool gameOver(void);
-    void resetPositions(Ghost **ghosts, std::unique_ptr<ThePacman> &pacman, std::vector<std::vector<Tile>> map, SDL_Rect bg);
+    void resetPositions(Ghost **ghosts, std::unique_ptr<ThePacman> &pacman, std::vector<std::vector<Tile>> map);
     void nextLevel(Ghost **ghosts, std::unique_ptr<ThePacman> &pacman, std::vector<std::vector<Tile>> map, SDL_Rect bg);
 
     void level2To3();

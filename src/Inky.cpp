@@ -46,7 +46,7 @@ Inky::Inky(int PixelX, int PixelY, Ghost *blinky) : Ghost() {
     status_ = Status::stay_jail;
 }
 
-void Inky::chase(int animation, std::unique_ptr<ThePacman> &pacman, std::vector<std::vector<Tile>> map, SDL_Rect bg) {
+void Inky::chase(std::unique_ptr<ThePacman> &pacman, std::vector<std::vector<Tile>> map, SDL_Rect bg) {
 
     SDL_Rect *PacPosition{pacman->getPosition()};
     SDL_Rect *BlyPosition{blinky_->getPosition()};
@@ -59,8 +59,8 @@ void Inky::chase(int animation, std::unique_ptr<ThePacman> &pacman, std::vector<
     int size{(position_.w) / 2};
 
     // origine = centre de la case du sprite et pas son coin gauche
-    int origineX{position_.x + size};
-    int origineY{position_.y + size};
+    /* int origineX{position_.x + size};
+    int origineY{position_.y + size}; */
 
     // Inky cherches à aller devant pacman en utilisant la possition de blinky
     SDL_Scancode pacMove{pacman->get_key()};
@@ -81,6 +81,8 @@ void Inky::chase(int animation, std::unique_ptr<ThePacman> &pacman, std::vector<
         break;
     case SDL_SCANCODE_DOWN:
         Goal.y += (caseT * coeff);
+        break;
+    default: // à check
         break;
     }
 

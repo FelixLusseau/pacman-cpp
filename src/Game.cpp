@@ -48,22 +48,22 @@ Game::Game() {
     /* création de tout les points à partir de la map fournie */
     std::vector<std::vector<Tile>> thisMap = map->getMap();
 
-    for (int i{0}; i < thisMap.size(); i++) {
+    for (long unsigned int i{0}; i < thisMap.size(); i++) {
 
-        for (int j{0}; j < thisMap[0].size(); j++) {
+        for (long unsigned int j{0}; j < thisMap[0].size(); j++) {
 
             if (thisMap[i][j] == Tile::Dot) {
 
-                int y{i * pY + (pY / 4)};
-                int x{j * pX + (pX / 4)};
+                int y = static_cast<int>(i * pY + (pY / 4));
+                int x = static_cast<int>(j * pX + (pX / 4));
                 dots.push_back(new Dot{x, y, TypeDot::Simple});
 
                 // std::cout << "dot: " << i << " " << j << " " << x << " " << y << std::endl;
 
             } else if (thisMap[i][j] == Tile::PowerPellet) {
 
-                int y{i * pY + (pY / 4) - 4};
-                int x{j * pX + (pX / 4) - 4};
+                int y = static_cast<int>(i * pY + (pY / 4) - 4);
+                int x = static_cast<int>(j * pX + (pX / 4) - 4);
 
                 dots.push_back(new Dot{x, y, TypeDot::Big});
 
@@ -152,7 +152,7 @@ int Game::start() {
         for (Ghost *fantom : ghosts) {
 
             if (fantom->getStatus() == Status::chase) {
-                fantom->chase(animation, pacman, map->getMap(), bg);
+                fantom->chase(pacman, map->getMap(), bg);
             }
             fantom->move(animation, map, bg);
 
@@ -195,7 +195,7 @@ int Game::start() {
 
                 if (pacman->getLives() != 0) {
                     quit = false;
-                    resetPositions(ghosts, pacman, map->getMap(), bg);
+                    resetPositions(ghosts, pacman, map->getMap());
                     break;
                 }
                 if (quit) {
@@ -294,7 +294,7 @@ void Game::draw() {
     SDL_SetColorKey(plancheSprites, true, 0);
 
     /* gestion des points */
-    for (int i{0}; i < dots.size(); i++) {
+    for (long unsigned int i{0}; i < dots.size(); i++) {
 
         score += dots[i]->getEat(pacman->getPosition());
 
@@ -437,7 +437,7 @@ bool Game::gameOver() {
     return true;
 }
 
-void Game::resetPositions(Ghost **ghosts, std::unique_ptr<ThePacman> &pacman, std::vector<std::vector<Tile>> map, SDL_Rect bg) {
+void Game::resetPositions(Ghost **ghosts, std::unique_ptr<ThePacman> &pacman, std::vector<std::vector<Tile>> map) {
     pacman->setPosition(*(pacman->get_initPosition()));
     for (int i{0}; i < 4; i++) {
         ghosts[i]->setPosition(*(ghosts[i]->get_initPosition()));
@@ -452,8 +452,8 @@ void Game::resetPositions(Ghost **ghosts, std::unique_ptr<ThePacman> &pacman, st
 
 void Game::nextLevel(Ghost **ghosts, std::unique_ptr<ThePacman> &pacman, std::vector<std::vector<Tile>> map, SDL_Rect bg) {
     level++;
-    resetPositions(ghosts, pacman, map, bg);
-    for (int i{0}; i < dots.size(); i++) {
+    resetPositions(ghosts, pacman, map);
+    for (long unsigned int i{0}; i < dots.size(); i++) {
         dots[i]->setExist(true);
     }
     Dot::nb_dot_eaten_ = 0;
