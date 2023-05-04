@@ -42,11 +42,11 @@ Inky::Inky(int PixelX, int PixelY, Ghost *blinky) : Ghost() {
     init_position_ = {9 * PixelX, 13 * PixelY, 32, 32}; // ici scale x2
     prec_key = SDL_SCANCODE_UP;
 
-    corner_={PixelX*18,PixelY*22,PixelX,PixelY};
-    status_=Status::stay_jail;
+    corner_ = {PixelX * 18, PixelY * 22, PixelX, PixelY};
+    status_ = Status::stay_jail;
 }
 
-void Inky::chase(int animation, ThePacman *pacman, std::vector<std::vector<Tile>> map, SDL_Rect bg) {
+void Inky::chase(int animation, std::unique_ptr<ThePacman> &pacman, std::vector<std::vector<Tile>> map, SDL_Rect bg) {
 
     SDL_Rect *PacPosition{pacman->getPosition()};
     SDL_Rect *BlyPosition{blinky_->getPosition()};

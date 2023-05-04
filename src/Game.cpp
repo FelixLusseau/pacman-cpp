@@ -33,7 +33,7 @@ Game::Game() {
 
     // std::cout << "map: " << pX << " " << pY << std::endl;
 
-    pacman = new ThePacman{pX, pY};
+    pacman = std::make_unique<ThePacman>(pX, pY);
 
     ghosts[0] = new Blinky{pX, pY};
     ghosts[1] = new Pinky{pX, pY};
@@ -150,20 +150,20 @@ int Game::start() {
         pacman->move(keys, animation, map->getMap(), bg);
 
         for (Ghost *fantom : ghosts) {
-        
-            if(fantom->getStatus()==Status::chase){
+
+            if (fantom->getStatus() == Status::chase) {
                 fantom->chase(animation, pacman, map->getMap(), bg);
             }
-            fantom->move(animation, map, bg);   
+            fantom->move(animation, map, bg);
 
             // std::cout << fantom->getPosition()->x << " " << fantom->getPosition()->y << std::endl;
 
-            //collison fantome / pacman
+            // collison fantome / pacman
             if (abs(pacman->getPosition()->x - fantom->getPosition()->x) < fantom->getPosition()->w &&
                 abs(pacman->getPosition()->y - fantom->getPosition()->y) < fantom->getPosition()->h) {
-                
-                //fantome vulnérable
-                if (Ghost::idle ) {
+
+                // fantome vulnérable
+                if (Ghost::idle) {
                     // std::cout << score;
                     ghosts_eaten++;
                     switch (ghosts_eaten) {
@@ -185,7 +185,7 @@ int Game::start() {
                     // fantom->set_speed(2);
                     break;
                 }
-                
+
                 if (fantom->getStatus() == Status::eyes || fantom->getStatus() == Status::eaten) {
                     break;
                 }
@@ -237,6 +237,7 @@ int Game::start() {
         // LIMITE A 60 FPS
         SDL_Delay(16); // utiliser SDL_GetTicks64() pour plus de precisions
     }
+    SDL_FreeSurface(plancheSprites);
     SDL_Quit(); // ON SORT
     return 0;
 }
@@ -270,7 +271,7 @@ void Game::draw() {
         SDL_BlitScaled(plancheSprites, &lives, win_surf, &lives_pos);
     }
 
-    //score
+    // score
     if (count >= 2000) {
         if (count == 2000) {
             bonus = new Bonus();
@@ -436,7 +437,7 @@ bool Game::gameOver() {
     return true;
 }
 
-void Game::resetPositions(Ghost **ghosts, ThePacman *pacman, std::vector<std::vector<Tile>> map, SDL_Rect bg) {
+void Game::resetPositions(Ghost **ghosts, std::unique_ptr<ThePacman> &pacman, std::vector<std::vector<Tile>> map, SDL_Rect bg) {
     pacman->setPosition(*(pacman->get_initPosition()));
     for (int i{0}; i < 4; i++) {
         ghosts[i]->setPosition(*(ghosts[i]->get_initPosition()));
@@ -449,7 +450,7 @@ void Game::resetPositions(Ghost **ghosts, ThePacman *pacman, std::vector<std::ve
     count = 0;
 }
 
-void Game::nextLevel(Ghost **ghosts, ThePacman *pacman, std::vector<std::vector<Tile>> map, SDL_Rect bg) {
+void Game::nextLevel(Ghost **ghosts, std::unique_ptr<ThePacman> &pacman, std::vector<std::vector<Tile>> map, SDL_Rect bg) {
     level++;
     resetPositions(ghosts, pacman, map, bg);
     for (int i{0}; i < dots.size(); i++) {

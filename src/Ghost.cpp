@@ -3,7 +3,7 @@
 
 bool Ghost::idle = false;
 
-//horloge des ghost pour si status=chase ou status=flee
+// horloge des ghost pour si status=chase ou status=flee
 clock_t Ghost::timer_begin_ghost = 0;
 clock_t Ghost::timer_end_ghost = 0;
 
@@ -59,10 +59,10 @@ void Ghost::move(int animation, Map *map, SDL_Rect bg) {
 
     // si fantome dans prison
     if (Map[colonne][ligne] == Tile::GhostHouse) {
-        speed=1;
-        if(status_ == Status::eyes  && position_.x == (10 * tailleCaseX)){
-            status_=Status::chase;
-            out_jail_=false;
+        speed = 1;
+        if (status_ == Status::eyes && position_.x == (10 * tailleCaseX)) {
+            status_ = Status::chase;
+            out_jail_ = false;
         }
         if ((status_ != Status::stay_jail) && position_.x == (10 * tailleCaseX)) {
             goal_.x = 10 * tailleCaseX;
@@ -76,8 +76,8 @@ void Ghost::move(int animation, Map *map, SDL_Rect bg) {
             goal_.w = tailleCaseX;
             goal_.h = tailleCaseY;
             choosePath(goal_, directions, (float)bg.h);
-        } 
-        
+        }
+
         // ne sort pas tout de suite -> animation haut en bas
         else if (position_.y > (init_position_.y - tailleCaseY) && prec_key != SDL_SCANCODE_DOWN) {
             prec_key = SDL_SCANCODE_UP;
@@ -90,31 +90,28 @@ void Ghost::move(int animation, Map *map, SDL_Rect bg) {
     else if (inter || prec_key == SDL_SCANCODE_UNKNOWN) {
         out_jail_ = true;
 
-
         timer_end_ghost = clock();
-        if ( status_==Status::flee || (timer_end_ghost - timer_begin_ghost)%12000000 < 3000000  || idle)  {
-            if( status_!=Status::eyes){
-                status_=Status::flee;
+        if (status_ == Status::flee || (timer_end_ghost - timer_begin_ghost) % 12000000 < 3000000 || idle) {
+            if (status_ != Status::eyes) {
+                status_ = Status::flee;
             }
             goal_.x = corner_.x;
             goal_.y = corner_.y;
             goal_.w = corner_.w;
             goal_.h = corner_.h;
-
         }
-        if((timer_end_ghost - timer_begin_ghost)%12000000 >3000000 && !idle && status_==Status::flee){
-            status_=Status::chase;
-        }
-        else if (status_ == Status::eyes) { // on a été mangé on retourne à sa position initiale
-            if (!(sqrt(pow(float(position_.x - init_position_.x), 2) + pow(float(position_.y - init_position_.y), 2)) < (size/2)) ) {
+        if ((timer_end_ghost - timer_begin_ghost) % 12000000 > 3000000 && !idle && status_ == Status::flee) {
+            status_ = Status::chase;
+        } else if (status_ == Status::eyes) { // on a été mangé on retourne à sa position initiale
+            if (!(sqrt(pow(float(position_.x - init_position_.x), 2) + pow(float(position_.y - init_position_.y), 2)) < (size / 2))) {
                 goal_.x = init_position_.x;
                 goal_.y = init_position_.y;
                 goal_.w = init_position_.w;
                 goal_.h = init_position_.h;
-                speed=2;
+                speed = 2;
             } else {
                 status_ = Status::chase;
-                out_jail_=false;
+                out_jail_ = false;
                 speed = 1;
             }
         }
@@ -217,7 +214,7 @@ void Ghost::dontStopMoving(int animation, std::vector<std::vector<Tile>> map, SD
     this->changePosition(position_.x + mv_x, position_.y + mv_y, map, bg);
 }
 
-void Ghost::chase(int animation, ThePacman *pacman, std::vector<std::vector<Tile>> map, SDL_Rect bg) {
+void Ghost::chase(int animation, std::unique_ptr<ThePacman> &pacman, std::vector<std::vector<Tile>> map, SDL_Rect bg) {
     std::cout << "ne devrait pas apparaitre" << std::endl;
 }
 
@@ -270,7 +267,7 @@ void Ghost::choosePath(SDL_Rect Goal, std::vector<Tile> directions, float min_in
         int nextY{origineY};
 
         // on teste quelle direction est la meilleur
-        if (directions[i] != Tile::Wall && ((directions[i] != Tile::GhostHouseDoor || status_ == Status::eyes ) || !out_jail_)) {
+        if (directions[i] != Tile::Wall && ((directions[i] != Tile::GhostHouseDoor || status_ == Status::eyes) || !out_jail_)) {
             bool went_here{true};
             switch (i) {
             case 0:

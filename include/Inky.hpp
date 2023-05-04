@@ -2,6 +2,7 @@
 #define INKY_HPP
 
 #include "Ghost.hpp"
+#include <memory>
 
 /* rouge */
 class Inky : public Ghost {
@@ -13,7 +14,7 @@ class Inky : public Ghost {
     Inky(int PixelX, int PixelY);
     Inky(int PixelX, int PixelY, Ghost *blinky);
 
-    void chase(int animation, ThePacman *pacman, std::vector<std::vector<Tile>> map, SDL_Rect bg) override;
+    void chase(int animation, std::unique_ptr<ThePacman> &pacman, std::vector<std::vector<Tile>> map, SDL_Rect bg) override;
 };
 
 #endif

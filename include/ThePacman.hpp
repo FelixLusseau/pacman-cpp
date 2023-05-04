@@ -2,12 +2,13 @@
 #define THEPACMAN_HPP
 
 #include "../include/Character.hpp"
+#include <array>
 #include <iostream>
 #include <vector>
 
 class ThePacman : public Character {
   private:
-    SDL_Rect die_animation[11];
+    std::array<SDL_Rect, 11> die_animation;
     int lives_; // nombre de vies
 
   public:

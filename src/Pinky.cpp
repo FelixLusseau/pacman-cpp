@@ -22,7 +22,7 @@ Pinky::Pinky(int PixelX, int PixelY) : Ghost() {
     corner_ = {PixelX * 2, -PixelY * 2, PixelX, PixelY};
 }
 
-void Pinky::chase(int animation, ThePacman *pacman, std::vector<std::vector<Tile>> map, SDL_Rect bg) {
+void Pinky::chase(int animation, std::unique_ptr<ThePacman> &pacman, std::vector<std::vector<Tile>> map, SDL_Rect bg) {
 
     SDL_Rect *PacPosition = pacman->getPosition();
 

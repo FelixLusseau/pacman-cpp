@@ -3,6 +3,7 @@
 
 #include "Map.hpp"
 #include <SDL.h>
+#include <array>
 #include <iostream>
 #include <vector>
 
@@ -10,7 +11,7 @@ class Character {
   protected:
     /* sprite pour bouger dans les 4 directions (2 images par directions)
        ordre: right-left-down-up */
-    SDL_Rect sprite_[8];
+    std::array<SDL_Rect, 8> sprite_;
 
     /* sprite actuellement dessiné */
     SDL_Rect cur_sprite_;
