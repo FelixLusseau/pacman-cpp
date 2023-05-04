@@ -26,7 +26,7 @@ Game::Game() {
     SDL_SetColorKey(plancheSprites, false, 0);
     SDL_BlitScaled(plancheSprites, &src_bg, win_surf, &bg);
 
-    map = new Map{bg};
+    map = std::make_unique<Map>(bg);
 
     int pX{map->getWidth()};
     int pY{map->getHeight()};
@@ -92,7 +92,7 @@ int Game::start() {
 
     bool start{false};
     SDL_SetColorKey(plancheSprites, false, 0);
-    dictionary = new Write{};
+    dictionary = std::make_unique<Write>();
     std::map<char, SDL_Rect> my_dictionary = dictionary->getDictionary();
     SDL_Rect press_pos{110, 400, 22, 22};
     std::string press_str{"PRESS S TO START !"};
@@ -246,7 +246,7 @@ void Game::draw() {
     SDL_SetColorKey(plancheSprites, false, 0);
     SDL_BlitScaled(plancheSprites, &src_bg, win_surf, &bg);
 
-    dictionary = new Write{};
+    dictionary = std::make_unique<Write>();
     std::map<char, SDL_Rect> my_dictionary = dictionary->getDictionary();
     SDL_Rect score_pos{34, 870, 14, 14};
     std::string score_str{"SCORE " + std::to_string(score) + " PT" + (score > 1 ? "S" : "")};
@@ -374,7 +374,7 @@ bool Game::gameOver() {
 
         bool key_pressed{false};
         SDL_SetColorKey(plancheSprites, false, 0);
-        dictionary = new Write{};
+        dictionary = std::make_unique<Write>();
         std::map<char, SDL_Rect> my_dictionary = dictionary->getDictionary();
         SDL_Rect game_over_pos{100, 300, 42, 42};
         std::string game_over_str{"GAME OVER !"};

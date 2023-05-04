@@ -8,6 +8,7 @@
 class Inky : public Ghost {
   private:
     /* inky utlise la position de blinky pour sa stratégie de chasse*/
+    // std::unique_ptr<Ghost> blinky_;
     Ghost *blinky_;
 
   public:

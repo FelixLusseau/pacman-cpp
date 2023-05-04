@@ -21,8 +21,8 @@ class Game {
     Ghost *ghosts[4];
     std::unique_ptr<ThePacman> pacman;
 
-    Map *map;
-    Write *dictionary;
+    std::unique_ptr<Map> map;
+    std::unique_ptr<Write> dictionary;
     std::vector<Dot *> dots;
 
     SDL_Window *pWindow;
