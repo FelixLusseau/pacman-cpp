@@ -45,9 +45,9 @@ Map::Map(SDL_Rect bg) {
          Tile::Empty, Tile::Wall, Tile::GhostHouse, Tile::GhostHouse, Tile::GhostHouse, Tile::Wall, Tile::Empty,
          Tile::Wall,  Tile::Dot,  Tile::Wall,       Tile::Wall,       Tile::Wall,       Tile::Wall, Tile::Wall},
         // 14
-        {Tile::EscapeTunnel, Tile::Empty, Tile::Empty,      Tile::Empty,      Tile::Empty,      Tile::Dot,   Tile::Empty,
-         Tile::Empty,        Tile::Wall,  Tile::GhostHouse, Tile::GhostHouse, Tile::GhostHouse, Tile::Wall,  Tile::Empty,
-         Tile::Empty,        Tile::Dot,   Tile::Empty,      Tile::Empty,      Tile::Empty,      Tile::Empty, Tile::EscapeTunnel},
+        {Tile::EscapeTunnel, Tile::Corridor, Tile::Corridor,   Tile::Corridor,   Tile::Empty,      Tile::Dot,      Tile::Empty,
+         Tile::Empty,        Tile::Wall,     Tile::GhostHouse, Tile::GhostHouse, Tile::GhostHouse, Tile::Wall,     Tile::Empty,
+         Tile::Empty,        Tile::Dot,      Tile::Empty,      Tile::Corridor,   Tile::Corridor,   Tile::Corridor, Tile::EscapeTunnel},
         // 15
         {Tile::Wall, Tile::Wall, Tile::Wall,  Tile::Wall, Tile::Wall, Tile::Dot,  Tile::Wall, Tile::Empty, Tile::Wall, Tile::Wall, Tile::Wall,
          Tile::Wall, Tile::Wall, Tile::Empty, Tile::Wall, Tile::Dot,  Tile::Wall, Tile::Wall, Tile::Wall,  Tile::Wall, Tile::Wall},

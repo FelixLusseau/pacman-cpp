@@ -5,7 +5,7 @@
 #include <iostream>
 #include <vector>
 
-enum class Tile { Wall, Empty, Dot, PowerPellet, GhostHouse, GhostHouseDoor, EscapeTunnel };
+enum class Tile { Wall, Empty, Dot, PowerPellet, GhostHouse, GhostHouseDoor, EscapeTunnel, Corridor };
 
 class Map {
   private:
