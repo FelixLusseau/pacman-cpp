@@ -1,7 +1,7 @@
 
 #include "../include/Pinky.hpp"
 
-Pinky::Pinky(int PixelX, int PixelY) : Ghost() {
+Pinky::Pinky(const int PixelX, const int PixelY) : Ghost() {
     /* right */
     sprite_[0] = {3, 141, 16, 16};
     sprite_[1] = {20, 141, 16, 16};

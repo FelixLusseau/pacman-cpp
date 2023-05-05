@@ -1,7 +1,7 @@
 
 #include "../include/Clyde.hpp"
 
-Clyde::Clyde(int PixelX, int PixelY) : Ghost() {
+Clyde::Clyde(const int PixelX, const int PixelY) : Ghost() {
     /* right */
     sprite_[0] = {3, 177, 16, 16};
     sprite_[1] = {20, 177, 16, 16};

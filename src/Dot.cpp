@@ -5,7 +5,7 @@
 int Dot::nb_dot_tot_{0};
 int Dot::nb_dot_eaten_{0};
 
-Dot::Dot(int x, int y, TypeDot typeDot) {
+Dot::Dot(const int x, const int y, const TypeDot typeDot) {
 
     exist_ = true;
     type = typeDot;

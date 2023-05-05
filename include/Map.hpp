@@ -16,7 +16,7 @@ class Map {
     long unsigned int ligne_;
 
   public:
-    Map(SDL_Rect bg);
+    Map(const SDL_Rect bg);
 
     inline std::vector<std::vector<Tile>> &getMap(void) { return map; }
 

@@ -35,7 +35,7 @@ Ghost::Ghost() : Character() {
     eaten_score_timer_ = 0;
 }
 
-void Ghost::move(const Uint8 *keys, int animation, std::unique_ptr<Map> &map, SDL_Rect bg) {
+void Ghost::move(const Uint8 *keys, const int animation, const std::unique_ptr<Map> &map, const SDL_Rect bg) {
     (void)keys;
 
     // tailles d'une case de la carte
@@ -128,7 +128,7 @@ void Ghost::move(const Uint8 *keys, int animation, std::unique_ptr<Map> &map, SD
     dontStopMoving(animation, Map, bg);
 }
 
-void Ghost::dontStopMoving(int animation, std::vector<std::vector<Tile>> &map, SDL_Rect bg) {
+void Ghost::dontStopMoving(const int animation, const std::vector<std::vector<Tile>> &map, const SDL_Rect bg) {
 
     int mv_x{0};
     int mv_y{0};
@@ -223,7 +223,7 @@ void Ghost::dontStopMoving(int animation, std::vector<std::vector<Tile>> &map, S
     this->changePosition(position_.x + mv_x, position_.y + mv_y, map, bg);
 }
 
-bool Ghost::intersection(int tailleCaseX, int tailleCaseY, std::vector<Tile> directions) {
+bool Ghost::intersection(const int tailleCaseX, const int tailleCaseY, const std::vector<Tile> directions) {
 
     // bien aligné sur une case => est ce qu'on est sur une intersection?
     int rondeur{2};
@@ -250,7 +250,7 @@ bool Ghost::intersection(int tailleCaseX, int tailleCaseY, std::vector<Tile> dir
     return false;
 }
 
-void Ghost::choosePath(SDL_Rect Goal, std::vector<Tile> directions, float min_init) {
+void Ghost::choosePath(const SDL_Rect Goal, const std::vector<Tile> directions, float min) {
 
     // taille de la case du sprite
     int size{position_.w / 2};
@@ -263,8 +263,8 @@ void Ghost::choosePath(SDL_Rect Goal, std::vector<Tile> directions, float min_in
     int GoalOrigineX{Goal.x + size};
     int GoalOrigineY{Goal.y + size};
 
-    float min{min_init}; // distance min entre le goal et le ghost
-    int best{5};         // meilleur direction possible
+    // float min{min_init}; // distance min entre le goal et le ghost
+    int best{5}; // meilleur direction possible
 
     for (int i{0}; i < 4; i++) {
 

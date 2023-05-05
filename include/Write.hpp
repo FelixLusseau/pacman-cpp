@@ -12,7 +12,7 @@ class Write {
   public:
     Write();
     inline std::map<char, SDL_Rect> getDictionary(void) const { return dictionary; }
-    void drawText(SDL_Surface *plancheSprites, SDL_Surface *win_surf, SDL_Rect *pos, std::string text);
+    void drawText(SDL_Surface *plancheSprites, SDL_Surface *win_surf, SDL_Rect *pos, const std::string text);
 };
 
 #endif

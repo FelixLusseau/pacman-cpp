@@ -1,7 +1,7 @@
 
 #include "../include/Inky.hpp"
 
-Inky::Inky(int PixelX, int PixelY) : Ghost() {
+Inky::Inky(const int PixelX, const int PixelY) : Ghost() {
     /* right */
     sprite_[0] = {3, 159, 16, 16};
     sprite_[1] = {20, 159, 16, 16};
@@ -22,7 +22,7 @@ Inky::Inky(int PixelX, int PixelY) : Ghost() {
     corner_ = {PixelX * 18, PixelY * 22, PixelX, PixelY};
 }
 
-Inky::Inky(int PixelX, int PixelY, Ghost *blinky) : Ghost() {
+Inky::Inky(const int PixelX, const int PixelY, Ghost *blinky) : Ghost() {
     blinky_ = blinky;
 
     /* right */

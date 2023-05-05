@@ -40,24 +40,24 @@ class Ghost : public Character {
     Ghost();
     static bool idle;
 
-    inline void set_outJail(bool t_f) { out_jail_ = t_f; }
+    inline void set_outJail(const bool t_f) { out_jail_ = t_f; }
 
-    inline void setStatus(Status stat) { status_ = stat; }
+    inline void setStatus(const Status stat) { status_ = stat; }
     inline Status getStatus() const { return status_; }
 
     /* gère l'animation des fantomes celon le mode dans lequel il est*/
-    void dontStopMoving(int animation, std::vector<std::vector<Tile>> &map, SDL_Rect bg);
+    void dontStopMoving(const int animation, const std::vector<std::vector<Tile>> &map, const SDL_Rect bg);
 
-    void move(const Uint8 *keys, int animation, std::unique_ptr<Map> &map, SDL_Rect bg);
+    void move(const Uint8 *keys, const int animation, const std::unique_ptr<Map> &map, const SDL_Rect bg);
 
     /* stratégie pour pousuivre pacman */
     virtual void chase(const std::unique_ptr<ThePacman> &pacman, const std::vector<std::vector<Tile>> &map, const SDL_Rect bg) = 0;
 
     /* est bien placé à une intersection */
-    bool intersection(int tailleCaseX, int tailleCaseY, std::vector<Tile> directions);
+    bool intersection(const int tailleCaseX, const int tailleCaseY, const std::vector<Tile> directions);
 
     /* change key_prec selon la meilleur direction celon si on veut aller au Goal ou s'éloigné de Goal */
-    void choosePath(SDL_Rect Goal, std::vector<Tile> directions, float min_init);
+    void choosePath(const SDL_Rect Goal, const std::vector<Tile> directions, float min_init);
 };
 
 #endif

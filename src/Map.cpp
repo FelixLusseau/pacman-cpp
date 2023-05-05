@@ -1,6 +1,6 @@
 #include "../include/Map.hpp"
 
-Map::Map(SDL_Rect bg) {
+Map::Map(const SDL_Rect bg) {
     map = {
         // 1
         {Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall,
@@ -97,6 +97,4 @@ Map::Map(SDL_Rect bg) {
 
     ligne_ = map.size();
     colonne_ = map[0].size();
-
-    // std::cout<<"lignes: "<<ligne_<<" colonnes: "<<colonne_<<std::endl;
 };

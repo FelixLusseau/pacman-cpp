@@ -12,10 +12,10 @@ class ThePacman : public Character {
     int lives_; // nombre de vies
 
   public:
-    ThePacman(int x, int y);
+    ThePacman(const int x, const int y);
 
     /* pacman bouge */
-    void move(const Uint8 *keys, int animation, std::unique_ptr<Map> &map, SDL_Rect bg);
+    void move(const Uint8 *keys, const int animation, const std::unique_ptr<Map> &map, const SDL_Rect bg);
 
     /* pacman meurt */
     void die(SDL_Surface *plancheSprites, SDL_Rect *src_bg, SDL_Surface *win_surf, SDL_Rect *bg, SDL_Window *pWindow);

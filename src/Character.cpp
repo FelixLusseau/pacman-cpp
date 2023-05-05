@@ -6,7 +6,7 @@ Character::Character() {
     speed = 1;
 };
 
-Character::Character(int px, int py) {
+Character::Character(const int px, const int py) {
     prec_key = SDL_SCANCODE_UNKNOWN;
     speed = 1;
 
@@ -18,7 +18,7 @@ Character::~Character() {}
 
 inline bool operator==(const SDL_Rect &a, const SDL_Rect &b) { return a.x == b.x && a.y == b.y && a.w == b.w && a.h == b.h; }
 
-int Character::changePosition(int x, int y, std::vector<std::vector<Tile>> &map, SDL_Rect bg) {
+int Character::changePosition(const int x, const int y, const std::vector<std::vector<Tile>> &map, const SDL_Rect bg) {
 
     // tailles d'une case de la carte
     float tailleCaseX{float(bg.w) / float(map[0].size())};
@@ -50,10 +50,10 @@ int Character::changePosition(int x, int y, std::vector<std::vector<Tile>> &map,
 
     // Corridors
     // if (futurX < origineX && map[futurY / tailleCaseY][(futurX - halfWidth) / tailleCaseX] == Tile::Corridor)
-    //     speed = 0.5;
+    //     speed = speed / 2;
 
     // if (futurX > origineX && map[futurY / tailleCaseY][(futurX + halfWidth) / tailleCaseX] == Tile::Corridor)
-    //     speed = 0.5;
+    //     speed = speed / 2;
 
     // collision mur
     if ((futurX < origineX && map[futurY / tailleCaseY][(futurX - halfWidth) / tailleCaseX] == Tile::Wall) ||
