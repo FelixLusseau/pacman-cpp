@@ -328,7 +328,6 @@ void Game::draw() {
     SDL_UpdateWindowSurface(pWindow);
 
     count++;
-    // std::cout << count << std::endl;
 }
 
 int Game::changeSprite() {

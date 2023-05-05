@@ -44,23 +44,56 @@ class Game {
     static int ghosts_eaten, level;
     static bool next_level;
 
-    /* réalise l'affichage du jeu*/
+    /**
+     * @brief Display of the game
+     *
+     */
     void draw();
 
+    /**
+     * @brief Main function of the game
+     *
+     */
     int start();
 
-    /* renvoit 1 ou 0 pour determiner l'animation des sprites */
+    /**
+     * @brief Calculate the sprite in the array of sprites to display for the animation
+     *
+     * @return int
+     */
     int changeSprite(void);
 
     static clock_t timer_begin, timer_end;
 
+    /**
+     * @brief Function executed when Pacman dies
+     *
+     * @return true
+     * @return false
+     */
     bool gameOver(void);
 
+    /**
+     * @brief Reset the position of the ghosts and Pacman in case of death or level change
+     *
+     * @param ghosts
+     * @param pacman
+     */
     void resetPositions(Ghost **ghosts, std::unique_ptr<ThePacman> &pacman);
 
-    /* passe au niveau suivant*/
+    /**
+     * @brief Change the level of the game
+     *
+     * @param ghosts
+     * @param pacman
+     * @param bg
+     */
     void nextLevel(Ghost **ghosts, std::unique_ptr<ThePacman> &pacman, SDL_Rect bg);
-    /* petite animation du entre les niveaux 2 et 3*/
+
+    /**
+     * @brief An animation between level 2 and 3
+     *
+     */
     void level2To3();
 };
 
