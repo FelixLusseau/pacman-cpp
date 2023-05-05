@@ -26,14 +26,14 @@ Game::Game() {
     SDL_SetColorKey(plancheSprites, false, 0);
     SDL_BlitScaled(plancheSprites, &src_bg, win_surf, &bg);
 
-    map = new Map{bg};
+    map = std::make_unique<Map>(bg);
 
     int pX{map->getWidth()};
     int pY{map->getHeight()};
 
     // std::cout << "map: " << pX << " " << pY << std::endl;
 
-    pacman = new ThePacman{pX, pY};
+    pacman = std::make_unique<ThePacman>(pX, pY);
 
     ghosts[0] = new Blinky{pX, pY};
     ghosts[1] = new Pinky{pX, pY};
@@ -48,22 +48,22 @@ Game::Game() {
     /* création de tout les points à partir de la map fournie */
     std::vector<std::vector<Tile>> thisMap = map->getMap();
 
-    for (int i{0}; i < thisMap.size(); i++) {
+    for (long unsigned int i{0}; i < thisMap.size(); i++) {
 
-        for (int j{0}; j < thisMap[0].size(); j++) {
+        for (long unsigned int j{0}; j < thisMap[0].size(); j++) {
 
             if (thisMap[i][j] == Tile::Dot) {
 
-                int y{i * pY + (pY / 4)};
-                int x{j * pX + (pX / 4)};
+                int y = static_cast<int>(i * pY + (pY / 4));
+                int x = static_cast<int>(j * pX + (pX / 4));
                 dots.push_back(new Dot{x, y, TypeDot::Simple});
 
                 // std::cout << "dot: " << i << " " << j << " " << x << " " << y << std::endl;
 
             } else if (thisMap[i][j] == Tile::PowerPellet) {
 
-                int y{i * pY + (pY / 4) - 4};
-                int x{j * pX + (pX / 4) - 4};
+                int y = static_cast<int>(i * pY + (pY / 4) - 4);
+                int x = static_cast<int>(j * pX + (pX / 4) - 4);
 
                 dots.push_back(new Dot{x, y, TypeDot::Big});
 
@@ -92,7 +92,7 @@ int Game::start() {
 
     bool start{false};
     SDL_SetColorKey(plancheSprites, false, 0);
-    dictionary = new Write{};
+    dictionary = std::make_unique<Write>();
     std::map<char, SDL_Rect> my_dictionary = dictionary->getDictionary();
     SDL_Rect press_pos{110, 400, 22, 22};
     std::string press_str{"PRESS S TO START !"};
@@ -150,20 +150,25 @@ int Game::start() {
         pacman->move(keys, animation, map, bg);
 
         for (Ghost *fantom : ghosts) {
-        
-            if(fantom->getStatus()==Status::chase){
-                fantom->chase(animation, pacman, map->getMap(), bg);
+
+            if (fantom->getStatus() == Status::chase) {
+                fantom->chase(pacman, map->getMap(), bg);
             }
             fantom->move(NULL,animation, map, bg);   
 
             // std::cout << fantom->getPosition()->x << " " << fantom->getPosition()->y << std::endl;
 
-            //collison fantome / pacman
+            // collison fantome / pacman
             if (abs(pacman->getPosition()->x - fantom->getPosition()->x) < fantom->getPosition()->w &&
                 abs(pacman->getPosition()->y - fantom->getPosition()->y) < fantom->getPosition()->h) {
-                
-                //fantome vulnérable
-                if (Ghost::idle ) {
+
+                // fantomes non touchable
+                if (fantom->getStatus() == Status::eyes || fantom->getStatus() == Status::eaten) {
+                    break;
+                }
+
+                // fantome vulnérable
+                if (Ghost::idle) {
                     // std::cout << score;
                     ghosts_eaten++;
                     switch (ghosts_eaten) {
@@ -185,17 +190,13 @@ int Game::start() {
                     // fantom->set_speed(2);
                     break;
                 }
-                
-                if (fantom->getStatus() == Status::eyes || fantom->getStatus() == Status::eaten) {
-                    break;
-                }
 
                 // pacman meurt
                 quit = gameOver();
 
                 if (pacman->getLives() != 0) {
                     quit = false;
-                    resetPositions(ghosts, pacman, map->getMap(), bg);
+                    resetPositions(ghosts, pacman, map->getMap());
                     break;
                 }
                 if (quit) {
@@ -237,6 +238,7 @@ int Game::start() {
         // LIMITE A 60 FPS
         SDL_Delay(16); // utiliser SDL_GetTicks64() pour plus de precisions
     }
+    SDL_FreeSurface(plancheSprites);
     SDL_Quit(); // ON SORT
     return 0;
 }
@@ -245,7 +247,7 @@ void Game::draw() {
     SDL_SetColorKey(plancheSprites, false, 0);
     SDL_BlitScaled(plancheSprites, &src_bg, win_surf, &bg);
 
-    dictionary = new Write{};
+    dictionary = std::make_unique<Write>();
     std::map<char, SDL_Rect> my_dictionary = dictionary->getDictionary();
     SDL_Rect score_pos{34, 870, 14, 14};
     std::string score_str{"SCORE " + std::to_string(score) + " PT" + (score > 1 ? "S" : "")};
@@ -270,7 +272,7 @@ void Game::draw() {
         SDL_BlitScaled(plancheSprites, &lives, win_surf, &lives_pos);
     }
 
-    //score
+    // score
     if (count >= 2000) {
         if (count == 2000) {
             bonus = new Bonus();
@@ -293,7 +295,7 @@ void Game::draw() {
     SDL_SetColorKey(plancheSprites, true, 0);
 
     /* gestion des points */
-    for (int i{0}; i < dots.size(); i++) {
+    for (long unsigned int i{0}; i < dots.size(); i++) {
 
         score += dots[i]->getEat(pacman->getPosition());
 
@@ -373,7 +375,7 @@ bool Game::gameOver() {
 
         bool key_pressed{false};
         SDL_SetColorKey(plancheSprites, false, 0);
-        dictionary = new Write{};
+        dictionary = std::make_unique<Write>();
         std::map<char, SDL_Rect> my_dictionary = dictionary->getDictionary();
         SDL_Rect game_over_pos{100, 300, 42, 42};
         std::string game_over_str{"GAME OVER !"};
@@ -436,7 +438,7 @@ bool Game::gameOver() {
     return true;
 }
 
-void Game::resetPositions(Ghost **ghosts, ThePacman *pacman, std::vector<std::vector<Tile>> map, SDL_Rect bg) {
+void Game::resetPositions(Ghost **ghosts, std::unique_ptr<ThePacman> &pacman, std::vector<std::vector<Tile>> map) {
     pacman->setPosition(*(pacman->get_initPosition()));
     for (int i{0}; i < 4; i++) {
         ghosts[i]->setPosition(*(ghosts[i]->get_initPosition()));
@@ -449,10 +451,10 @@ void Game::resetPositions(Ghost **ghosts, ThePacman *pacman, std::vector<std::ve
     count = 0;
 }
 
-void Game::nextLevel(Ghost **ghosts, ThePacman *pacman, std::vector<std::vector<Tile>> map, SDL_Rect bg) {
+void Game::nextLevel(Ghost **ghosts, std::unique_ptr<ThePacman> &pacman, std::vector<std::vector<Tile>> map, SDL_Rect bg) {
     level++;
-    resetPositions(ghosts, pacman, map, bg);
-    for (int i{0}; i < dots.size(); i++) {
+    resetPositions(ghosts, pacman, map);
+    for (long unsigned int i{0}; i < dots.size(); i++) {
         dots[i]->setExist(true);
     }
     Dot::nb_dot_eaten_ = 0;

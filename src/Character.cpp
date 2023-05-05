@@ -93,6 +93,6 @@ int Character::changePosition(int x, int y, std::vector<std::vector<Tile>> map, 
     return 1;
 }
 
-void Character::move(const Uint8 *keys, int animation,  Map *map, SDL_Rect bg) {
+void Character::move(const Uint8 *keys, int animation,  std::unique_ptr<Map> & map, SDL_Rect bg) {
     std::cout << "character_move: ne devrait pas apparaitre" << std::endl;
 }

@@ -32,9 +32,11 @@ ThePacman::ThePacman(int x, int y) : Character() {
     die_animation[8] = {129, 106, 6, 16};
     die_animation[9] = {138, 106, 2, 16};
     die_animation[10] = {143, 106, 16, 16};
+
+    speed=2;
 }
 
-void ThePacman::move(const Uint8 *keys, int animation,  Map *map, SDL_Rect bg) {
+void ThePacman::move(const Uint8 *keys, int animation,  std::unique_ptr<Map> & map, SDL_Rect bg) {
 
 
     // tailles d'une case de la carte

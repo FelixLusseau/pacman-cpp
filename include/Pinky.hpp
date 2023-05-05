@@ -2,6 +2,7 @@
 #define PINKY_HPP
 
 #include "Ghost.hpp"
+#include <memory>
 
 /* rouge */
 class Pinky : public Ghost {
@@ -9,7 +10,7 @@ class Pinky : public Ghost {
   public:
     Pinky(int PixelX, int PixelY);
 
-    void chase(int animation, ThePacman *pacman, std::vector<std::vector<Tile>> map, SDL_Rect bg) override;
+    void chase( std::unique_ptr<ThePacman> &pacman, std::vector<std::vector<Tile>> map, SDL_Rect bg) override;
 };
 
 #endif

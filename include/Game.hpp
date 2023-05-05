@@ -14,14 +14,15 @@
 #include <array>
 #include <ctime>
 #include <iostream>
+#include <memory>
 
 class Game {
   protected:
     Ghost *ghosts[4];
-    ThePacman *pacman;
+    std::unique_ptr<ThePacman> pacman;
 
-    Map *map;
-    Write *dictionary;
+    std::unique_ptr<Map> map;
+    std::unique_ptr<Write> dictionary;
     std::vector<Dot *> dots;
 
     SDL_Window *pWindow;
@@ -42,19 +43,25 @@ class Game {
     Game();
     static int ghosts_eaten, level;
     static bool next_level;
-
+    
+    /* réalise l'affichage du jeu*/
     void draw();
+
     int start();
 
     /* renvoit 1 ou 0 pour determiner l'animation des sprites */
     int changeSprite(void);
 
     static clock_t timer_begin, timer_end;
-    bool gameOver(void);
-    void resetPositions(Ghost **ghosts, ThePacman *pacman, std::vector<std::vector<Tile>> map, SDL_Rect bg);
-    void nextLevel(Ghost **ghosts, ThePacman *pacman, std::vector<std::vector<Tile>> map, SDL_Rect bg);
 
-    void level2To3();
+    bool gameOver(void);
+
+    void resetPositions(Ghost **ghosts, std::unique_ptr<ThePacman> &pacman, std::vector<std::vector<Tile>> map);
+
+    /* passe au niveau suivant*/
+    void nextLevel(Ghost **ghosts, std::unique_ptr<ThePacman> &pacman, std::vector<std::vector<Tile>> map, SDL_Rect bg);
+    /* petite animation du entre les niveaux 2 et 3*/
+    void level2To3(); 
 };
 
 #endif

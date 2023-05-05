@@ -19,11 +19,11 @@ Clyde::Clyde(int PixelX, int PixelY) : Ghost() {
     init_position_ = {11 * PixelX, 13 * PixelY, 32, 32}; // ici scale x2
     prec_key = SDL_SCANCODE_UP;
 
-    corner_={PixelX*1,PixelY*27,PixelX,PixelY};
-    status_=Status::stay_jail;
+    corner_ = {PixelX * 1, PixelY * 27, PixelX, PixelY};
+    status_ = Status::stay_jail;
 }
 
-void Clyde::chase(int animation, ThePacman *pacman, std::vector<std::vector<Tile>> map, SDL_Rect bg) {
+void Clyde::chase(std::unique_ptr<ThePacman> &pacman, std::vector<std::vector<Tile>> map, SDL_Rect bg) {
 
     SDL_Rect *Goal{pacman->getPosition()};
 

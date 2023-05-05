@@ -2,6 +2,7 @@
 #define BLINKY_HPP
 
 #include "Ghost.hpp"
+#include <memory>
 
 /* rouge */
 class Blinky : public Ghost {
@@ -9,7 +10,7 @@ class Blinky : public Ghost {
   public:
     Blinky(int PixelX, int PixelY);
 
-    void chase(int animation, ThePacman *pacman, std::vector<std::vector<Tile>> map, SDL_Rect bg) override;
+    void chase(std::unique_ptr<ThePacman> &pacman, std::vector<std::vector<Tile>> map, SDL_Rect bg) override;
 };
 
 #endif

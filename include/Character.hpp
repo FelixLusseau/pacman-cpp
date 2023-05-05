@@ -3,14 +3,18 @@
 
 #include "Map.hpp"
 #include <SDL.h>
+#include <array>
 #include <iostream>
 #include <vector>
+
+#include <ctime>
+#include <memory>
 
 class Character {
   protected:
     /* sprite pour bouger dans les 4 directions (2 images par directions)
        ordre: right-left-down-up */
-    SDL_Rect sprite_[8];
+    std::array<SDL_Rect, 8> sprite_;
 
     /* sprite actuellement dessiné */
     SDL_Rect cur_sprite_;
@@ -54,7 +58,7 @@ class Character {
     inline SDL_Rect *get_initPosition() { return &init_position_; };
 
     /*méthode de mouvement */
-    virtual void move(const Uint8 *keys, int animation,  Map *map, SDL_Rect bg);
+    virtual void move(const Uint8 *keys, int animation, std::unique_ptr<Map> & map, SDL_Rect bg);
 };
 
 #endif
