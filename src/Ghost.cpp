@@ -35,7 +35,7 @@ Ghost::Ghost() : Character() {
     eaten_score_timer_ = 0;
 }
 
-void Ghost::move(int animation, Map *map, SDL_Rect bg) {
+void Ghost::move(const Uint8 *keys,int animation, Map *map, SDL_Rect bg) {
 
     // tailles d'une case de la carte
     int tailleCaseX{map->getWidth()};

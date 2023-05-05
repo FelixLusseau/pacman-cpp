@@ -52,6 +52,9 @@ class Character {
     int changePosition(int x, int y, std::vector<std::vector<Tile>> map, SDL_Rect bg);
 
     inline SDL_Rect *get_initPosition() { return &init_position_; };
+
+    /*méthode de mouvement */
+    virtual void move(const Uint8 *keys, int animation,  Map *map, SDL_Rect bg);
 };
 
 #endif

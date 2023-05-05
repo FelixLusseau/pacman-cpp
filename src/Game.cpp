@@ -147,14 +147,14 @@ int Game::start() {
 
         int animation{this->changeSprite()};
 
-        pacman->move(keys, animation, map->getMap(), bg);
+        pacman->move(keys, animation, map, bg);
 
         for (Ghost *fantom : ghosts) {
         
             if(fantom->getStatus()==Status::chase){
                 fantom->chase(animation, pacman, map->getMap(), bg);
             }
-            fantom->move(animation, map, bg);   
+            fantom->move(NULL,animation, map, bg);   
 
             // std::cout << fantom->getPosition()->x << " " << fantom->getPosition()->y << std::endl;
 

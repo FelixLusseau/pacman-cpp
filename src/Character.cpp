@@ -79,7 +79,7 @@ int Character::changePosition(int x, int y, std::vector<std::vector<Tile>> map, 
     }
 
     // collision aux coins avec un sprite ayant une certaine rondeur
-    int rondeur{6};
+    int rondeur{3};
     if ((map[(y + rondeur) / tailleCaseY][(x + rondeur) / tailleCaseX] == Tile::Wall) ||
         map[(y + rondeur) / tailleCaseY][(x + position_.h - rondeur) / tailleCaseX] == Tile::Wall ||
         map[(y + position_.w - rondeur) / tailleCaseY][(x + rondeur) / tailleCaseX] == Tile::Wall ||
@@ -91,4 +91,8 @@ int Character::changePosition(int x, int y, std::vector<std::vector<Tile>> map, 
     position_.x = x;
     position_.y = y;
     return 1;
+}
+
+void Character::move(const Uint8 *keys, int animation,  Map *map, SDL_Rect bg) {
+    std::cout << "character_move: ne devrait pas apparaitre" << std::endl;
 }
