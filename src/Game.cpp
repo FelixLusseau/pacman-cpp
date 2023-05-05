@@ -381,7 +381,7 @@ bool Game::gameOver() {
         std::string game_over_str{"GAME OVER !"};
         dictionary->drawText(plancheSprites, win_surf, &game_over_pos, game_over_str);
 
-        int x_score;
+        int x_score = 0;
         switch (std::to_string(score).length()) {
         case 2:
             x_score = 110;
