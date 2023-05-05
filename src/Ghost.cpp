@@ -104,7 +104,7 @@ void Ghost::move(const Uint8 *keys,int animation, std::unique_ptr<Map> & map, SD
             goal_.h = corner_.h;
         }
         // mode chase
-        else if ((timer_end_ghost - timer_begin_ghost) % 12000000 > 3000000 && !idle && status_ == Status::flee) {
+         if ((timer_end_ghost - timer_begin_ghost) % 12000000 > 3000000 && !idle && status_ == Status::flee) {
             status_ = Status::chase;
         } 
         // on a été mangé on retourne à sa position initiale
