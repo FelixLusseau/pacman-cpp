@@ -34,10 +34,10 @@ class Bonus {
   public:
     Bonus();
     int bonus_score_timer;
-    inline SDL_Rect getSprite() { return sprite_; }
-    inline SDL_Rect getPosition() { return position_; }
-    inline SDL_Rect getSpritePoints() { return sprite_points_; }
-    inline bool getExists() { return exist; }
+    inline SDL_Rect getSprite() const { return sprite_; }
+    inline SDL_Rect getPosition() const { return position_; }
+    inline SDL_Rect getSpritePoints() const { return sprite_points_; }
+    inline bool getExists() const { return exist; }
     inline void setExists(bool e) { exist = e; }
     int getEat(SDL_Rect *pac_position);
 };

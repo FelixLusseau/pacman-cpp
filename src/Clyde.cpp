@@ -23,7 +23,7 @@ Clyde::Clyde(int PixelX, int PixelY) : Ghost() {
     status_ = Status::stay_jail;
 }
 
-void Clyde::chase(std::unique_ptr<ThePacman> &pacman, std::vector<std::vector<Tile>> &map, SDL_Rect bg) {
+void Clyde::chase(const std::unique_ptr<ThePacman> &pacman, const std::vector<std::vector<Tile>> &map, const SDL_Rect bg) {
 
     SDL_Rect *Goal{pacman->getPosition()};
 

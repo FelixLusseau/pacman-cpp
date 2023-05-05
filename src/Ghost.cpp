@@ -128,7 +128,7 @@ void Ghost::move(const Uint8 *keys, int animation, std::unique_ptr<Map> &map, SD
     dontStopMoving(animation, Map, bg);
 }
 
-void Ghost::dontStopMoving(int animation, std::vector<std::vector<Tile>> map, SDL_Rect bg) {
+void Ghost::dontStopMoving(int animation, std::vector<std::vector<Tile>> &map, SDL_Rect bg) {
 
     int mv_x{0};
     int mv_y{0};

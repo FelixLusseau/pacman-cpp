@@ -20,8 +20,8 @@ class Map {
 
     inline std::vector<std::vector<Tile>> &getMap(void) { return map; }
 
-    inline int getWidth(void) { return width_; }
-    inline int getHeight(void) { return height_; }
+    inline int getWidth(void) const { return width_; }
+    inline int getHeight(void) const { return height_; }
 };
 
 #endif

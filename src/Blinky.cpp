@@ -1,7 +1,7 @@
 
 #include "../include/Blinky.hpp"
 
-Blinky::Blinky(int PixelX, int PixelY) : Ghost() {
+Blinky::Blinky(const int PixelX, const int PixelY) : Ghost() {
     /* right */
     sprite_[0] = {3, 123, 16, 16};
     sprite_[1] = {20, 123, 16, 16};
@@ -22,7 +22,7 @@ Blinky::Blinky(int PixelX, int PixelY) : Ghost() {
     out_jail_ = true;
 }
 
-void Blinky::chase(std::unique_ptr<ThePacman> &pacman, std::vector<std::vector<Tile>> &map, SDL_Rect bg) {
+void Blinky::chase(const std::unique_ptr<ThePacman> &pacman, const std::vector<std::vector<Tile>> &map, const SDL_Rect bg) {
     (void)map;
     (void)bg;
     SDL_Rect *Goal = pacman->getPosition();
