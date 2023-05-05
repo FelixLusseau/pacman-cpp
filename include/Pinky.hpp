@@ -10,7 +10,7 @@ class Pinky : public Ghost {
   public:
     Pinky(int PixelX, int PixelY);
 
-    void chase( std::unique_ptr<ThePacman> &pacman, std::vector<std::vector<Tile>> map, SDL_Rect bg) override;
+    void chase(std::unique_ptr<ThePacman> &pacman, std::vector<std::vector<Tile>> &map, SDL_Rect bg) override;
 };
 
 #endif

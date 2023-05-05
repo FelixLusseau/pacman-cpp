@@ -18,12 +18,10 @@ class Map {
   public:
     Map(SDL_Rect bg);
 
-    inline std::vector<std::vector<Tile>> getMap(void) { return map; }
+    inline std::vector<std::vector<Tile>> &getMap(void) { return map; }
 
     inline int getWidth(void) { return width_; }
     inline int getHeight(void) { return height_; }
-    // inline long unsigned int getColonne(void) { return colonne_; }
-    // inline long unsigned int getLigne(void) { return ligne_; }
 };
 
 #endif

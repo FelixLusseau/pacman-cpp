@@ -22,7 +22,7 @@ Blinky::Blinky(int PixelX, int PixelY) : Ghost() {
     out_jail_ = true;
 }
 
-void Blinky::chase(std::unique_ptr<ThePacman> &pacman, std::vector<std::vector<Tile>> map, SDL_Rect bg) {
+void Blinky::chase(std::unique_ptr<ThePacman> &pacman, std::vector<std::vector<Tile>> &map, SDL_Rect bg) {
     (void)map;
     (void)bg;
     SDL_Rect *Goal = pacman->getPosition();

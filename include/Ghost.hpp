@@ -48,10 +48,10 @@ class Ghost : public Character {
     /* gère l'animation des fantomes celon le mode dans lequel il est*/
     void dontStopMoving(int animation, std::vector<std::vector<Tile>> map, SDL_Rect bg);
 
-    void move(const Uint8 *keys, int animation,std::unique_ptr<Map> & map, SDL_Rect bg);
+    void move(const Uint8 *keys, int animation, std::unique_ptr<Map> &map, SDL_Rect bg);
 
     /* stratégie pour pousuivre pacman */
-    virtual void chase(std::unique_ptr<ThePacman> &pacman, std::vector<std::vector<Tile>> map, SDL_Rect bg);
+    virtual void chase(std::unique_ptr<ThePacman> &pacman, std::vector<std::vector<Tile>> &map, SDL_Rect bg);
 
     /* est bien placé à une intersection */
     bool intersection(int tailleCaseX, int tailleCaseY, std::vector<Tile> directions);

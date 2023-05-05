@@ -46,7 +46,7 @@ Inky::Inky(int PixelX, int PixelY, Ghost *blinky) : Ghost() {
     status_ = Status::stay_jail;
 }
 
-void Inky::chase(std::unique_ptr<ThePacman> &pacman, std::vector<std::vector<Tile>> map, SDL_Rect bg) {
+void Inky::chase(std::unique_ptr<ThePacman> &pacman, std::vector<std::vector<Tile>> &map, SDL_Rect bg) {
 
     SDL_Rect *PacPosition{pacman->getPosition()};
     SDL_Rect *BlyPosition{blinky_->getPosition()};

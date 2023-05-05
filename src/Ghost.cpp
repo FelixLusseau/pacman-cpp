@@ -35,7 +35,7 @@ Ghost::Ghost() : Character() {
     eaten_score_timer_ = 0;
 }
 
-void Ghost::move(const Uint8 *keys,int animation, std::unique_ptr<Map> & map, SDL_Rect bg) {
+void Ghost::move(const Uint8 *keys, int animation, std::unique_ptr<Map> &map, SDL_Rect bg) {
 
     // tailles d'une case de la carte
     int tailleCaseX{map->getWidth()};
@@ -65,7 +65,7 @@ void Ghost::move(const Uint8 *keys,int animation, std::unique_ptr<Map> & map, SD
             status_ = Status::chase;
             out_jail_ = false;
         }
-        //sortie de prison
+        // sortie de prison
         if ((status_ != Status::stay_jail) && position_.x == (10 * tailleCaseX)) {
             goal_.x = 10 * tailleCaseX;
             goal_.y = 10 * tailleCaseY;
@@ -106,9 +106,9 @@ void Ghost::move(const Uint8 *keys,int animation, std::unique_ptr<Map> & map, SD
         // mode chase
         else if ((timer_end_ghost - timer_begin_ghost) % 12000000 > 3000000 && !idle && status_ == Status::flee) {
             status_ = Status::chase;
-        } 
+        }
         // on a été mangé on retourne à sa position initiale
-        else if (status_ == Status::eyes) { 
+        else if (status_ == Status::eyes) {
             if (!(sqrt(pow(float(position_.x - init_position_.x), 2) + pow(float(position_.y - init_position_.y), 2)) < (size / 2))) {
                 goal_.x = init_position_.x;
                 goal_.y = init_position_.y;
@@ -224,7 +224,7 @@ void Ghost::dontStopMoving(int animation, std::vector<std::vector<Tile>> map, SD
     this->changePosition(position_.x + mv_x, position_.y + mv_y, map, bg);
 }
 
-void Ghost::chase(std::unique_ptr<ThePacman> &pacman, std::vector<std::vector<Tile>> map, SDL_Rect bg) {
+void Ghost::chase(std::unique_ptr<ThePacman> &pacman, std::vector<std::vector<Tile>> &map, SDL_Rect bg) {
     std::cout << "ne devrait pas apparaitre" << std::endl;
 }
 
