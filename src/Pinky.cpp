@@ -24,7 +24,7 @@ Pinky::Pinky(int PixelX, int PixelY) : Ghost() {
 
 void Pinky::chase(const std::unique_ptr<ThePacman> &pacman, const std::vector<std::vector<Tile>> &map, const SDL_Rect bg) {
 
-    SDL_Rect *PacPosition = pacman->getPosition();
+    SDL_Rect PacPosition = pacman->getPosition();
 
     // tailles d'une case de la carte
     int tailleCaseX{static_cast<int>(bg.w / map[0].size())};
@@ -43,7 +43,7 @@ void Pinky::chase(const std::unique_ptr<ThePacman> &pacman, const std::vector<st
     // pinky cherches à aller devant pacman
     SDL_Scancode pacMove{pacman->get_key()};
     int coeff{4}; // nombre de case devant pacman
-    SDL_Rect Goal{PacPosition->x + size, PacPosition->y + size, tailleCaseX, tailleCaseY};
+    SDL_Rect Goal{PacPosition.x + size, PacPosition.y + size, tailleCaseX, tailleCaseY};
 
     int caseT{tailleCaseX};
 

@@ -25,9 +25,9 @@ Blinky::Blinky(const int PixelX, const int PixelY) : Ghost() {
 void Blinky::chase(const std::unique_ptr<ThePacman> &pacman, const std::vector<std::vector<Tile>> &map, const SDL_Rect bg) {
     (void)map;
     (void)bg;
-    SDL_Rect *Goal = pacman->getPosition();
-    goal_.x = Goal->x;
-    goal_.y = Goal->y;
-    goal_.w = Goal->w;
-    goal_.h = Goal->h;
+    SDL_Rect Goal = pacman->getPosition();
+    goal_.x = Goal.x;
+    goal_.y = Goal.y;
+    goal_.w = Goal.w;
+    goal_.h = Goal.h;
 }

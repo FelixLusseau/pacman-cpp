@@ -25,14 +25,14 @@ class Dot {
 
     Dot(int x, int y, TypeDot type);
 
-    bool inline getExist(void) { return exist_; }
-    inline SDL_Rect *getPosition(void) { return &position_; }
-    inline SDL_Rect *getSprite(void) { return &sprite_; }
-    inline int getPoint(void) { return point; }
+    bool inline getExist(void) const { return exist_; }
+    inline SDL_Rect &getPosition(void) { return position_; }
+    inline SDL_Rect &getSprite(void) { return sprite_; }
+    inline int getPoint(void) const { return point; }
     inline void setExist(bool exist) { exist_ = exist; }
 
     /* fonction pour manger les points: renvoit 0 si pas mangé, son nombre de point sinon */
-    int getEat(SDL_Rect *pac_position);
+    int getEat(const SDL_Rect &pac_position);
 };
 
 #endif

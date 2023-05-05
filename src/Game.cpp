@@ -159,8 +159,8 @@ int Game::start() {
             // std::cout << fantom->getPosition()->x << " " << fantom->getPosition()->y << std::endl;
 
             // collison fantome / pacman
-            if (abs(pacman->getPosition()->x - fantom->getPosition()->x) < fantom->getPosition()->w &&
-                abs(pacman->getPosition()->y - fantom->getPosition()->y) < fantom->getPosition()->h) {
+            if (abs(pacman->getPosition().x - fantom->getPosition().x) < fantom->getPosition().w &&
+                abs(pacman->getPosition().y - fantom->getPosition().y) < fantom->getPosition().h) {
 
                 // fantomes non touchable
                 if (fantom->getStatus() == Status::eyes || fantom->getStatus() == Status::eaten) {
@@ -275,7 +275,7 @@ void Game::draw() {
     // score
     if (count >= 2000) {
         if (count == 2000) {
-            bonus = new Bonus();
+            bonus = std::make_unique<Bonus>();
             bonus->setExists(true);
         }
         SDL_Rect bonus_pos = bonus->getPosition();
@@ -300,7 +300,7 @@ void Game::draw() {
         score += dots[i]->getEat(pacman->getPosition());
 
         if (dots[i]->getExist()) { // affichage
-            SDL_BlitScaled(plancheSprites, dots[i]->getSprite(), win_surf, dots[i]->getPosition());
+            SDL_BlitScaled(plancheSprites, &dots[i]->getSprite(), win_surf, &dots[i]->getPosition());
         }
     }
     // sortie de inky et clyde
@@ -316,11 +316,11 @@ void Game::draw() {
     // choix du fantome
     for (Ghost *fantom : ghosts) {
         // affichage fantome
-        SDL_BlitScaled(plancheSprites, fantom->get_currSprite(), win_surf, fantom->getPosition());
+        SDL_BlitScaled(plancheSprites, &fantom->get_currSprite(), win_surf, &fantom->getPosition());
     }
 
     // affichage pacman
-    SDL_BlitScaled(plancheSprites, pacman->get_currSprite(), win_surf, pacman->getPosition());
+    SDL_BlitScaled(plancheSprites, &pacman->get_currSprite(), win_surf, &pacman->getPosition());
 
     SDL_UpdateWindowSurface(pWindow);
 
@@ -439,9 +439,9 @@ bool Game::gameOver() {
 }
 
 void Game::resetPositions(Ghost **ghosts, std::unique_ptr<ThePacman> &pacman) {
-    pacman->setPosition(*(pacman->get_initPosition()));
+    pacman->setPosition(pacman->get_initPosition());
     for (int i{0}; i < 4; i++) {
-        ghosts[i]->setPosition(*(ghosts[i]->get_initPosition()));
+        ghosts[i]->setPosition(ghosts[i]->get_initPosition());
         ghosts[i]->setStatus(Status::chase);
         ghosts[i]->set_outJail(false);
         ghosts[i]->set_speed(1);

@@ -43,7 +43,7 @@ class Ghost : public Character {
     inline void set_outJail(bool t_f) { out_jail_ = t_f; }
 
     inline void setStatus(Status stat) { status_ = stat; }
-    inline Status getStatus() { return status_; }
+    inline Status getStatus() const { return status_; }
 
     /* gère l'animation des fantomes celon le mode dans lequel il est*/
     void dontStopMoving(int animation, std::vector<std::vector<Tile>> &map, SDL_Rect bg);

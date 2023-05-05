@@ -26,7 +26,7 @@ Dot::Dot(int x, int y, TypeDot typeDot) {
     nb_dot_tot_++;
 };
 
-int Dot::getEat(SDL_Rect *pac_position) {
+int Dot::getEat(const SDL_Rect &pac_position) {
 
     if (!exist_) {
         return 0;
@@ -36,15 +36,15 @@ int Dot::getEat(SDL_Rect *pac_position) {
 
     // float side{(float(pac_position->w) / 2)};
 
-    float origineX{float(pac_position->x + (pac_position->w / 2))};
-    float origineY{float(pac_position->y + (pac_position->h / 2))};
+    float origineX{float(pac_position.x + (pac_position.w / 2))};
+    float origineY{float(pac_position.y + (pac_position.h / 2))};
 
-    float dotOrigineX{float(position_.x + (pac_position->w / 2))};
-    float dotOrigineY{float(position_.y + (pac_position->w / 2))};
+    float dotOrigineX{float(position_.x + (pac_position.w / 2))};
+    float dotOrigineY{float(position_.y + (pac_position.w / 2))};
 
     float distance = sqrt(pow(dotOrigineX - origineX, 2) + pow(dotOrigineY - origineY, 2));
 
-    if (distance < (pac_position->w / 2.25)) {
+    if (distance < (pac_position.w / 2.25)) {
         exist_ = false;
         score = point;
         // std::cout << "get eaten!, +" << score << " x:" << position_.x << " y:" << position_.y << std::endl;

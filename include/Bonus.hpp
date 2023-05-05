@@ -39,7 +39,7 @@ class Bonus {
     inline SDL_Rect getSpritePoints() const { return sprite_points_; }
     inline bool getExists() const { return exist; }
     inline void setExists(bool e) { exist = e; }
-    int getEat(SDL_Rect *pac_position);
+    int getEat(const SDL_Rect &pac_position);
 };
 
 #endif

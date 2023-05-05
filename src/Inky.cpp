@@ -48,8 +48,8 @@ Inky::Inky(int PixelX, int PixelY, Ghost *blinky) : Ghost() {
 
 void Inky::chase(const std::unique_ptr<ThePacman> &pacman, const std::vector<std::vector<Tile>> &map, const SDL_Rect bg) {
 
-    SDL_Rect *PacPosition{pacman->getPosition()};
-    SDL_Rect *BlyPosition{blinky_->getPosition()};
+    SDL_Rect PacPosition{pacman->getPosition()};
+    SDL_Rect BlyPosition{blinky_->getPosition()};
 
     // tailles d'une case de la carte
     int tailleCaseX{static_cast<int>(bg.w / map[0].size())};
@@ -65,7 +65,7 @@ void Inky::chase(const std::unique_ptr<ThePacman> &pacman, const std::vector<std
     // Inky cherches à aller devant pacman en utilisant la possition de blinky
     SDL_Scancode pacMove{pacman->get_key()};
     int coeff{4}; // nombre de case devant pacman
-    SDL_Rect Goal{PacPosition->x + size, PacPosition->y + size, tailleCaseX, tailleCaseY};
+    SDL_Rect Goal{PacPosition.x + size, PacPosition.y + size, tailleCaseX, tailleCaseY};
 
     int caseT{tailleCaseX};
 
@@ -86,8 +86,8 @@ void Inky::chase(const std::unique_ptr<ThePacman> &pacman, const std::vector<std
         break;
     }
 
-    goal_.x = ((BlyPosition->x / tailleCaseX) + ((Goal.x / tailleCaseX) - (BlyPosition->x / tailleCaseX))) * tailleCaseX;
-    goal_.y = ((BlyPosition->y / tailleCaseY) + ((Goal.y / tailleCaseY) - (BlyPosition->y / tailleCaseY))) * tailleCaseY;
+    goal_.x = ((BlyPosition.x / tailleCaseX) + ((Goal.x / tailleCaseX) - (BlyPosition.x / tailleCaseX))) * tailleCaseX;
+    goal_.y = ((BlyPosition.y / tailleCaseY) + ((Goal.y / tailleCaseY) - (BlyPosition.y / tailleCaseY))) * tailleCaseY;
     goal_.w = Goal.w;
     goal_.h = Goal.h;
 }

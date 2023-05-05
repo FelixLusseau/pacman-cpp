@@ -82,7 +82,7 @@ Bonus::Bonus() {
     position_ = {315, 477, 30, 30};
 }
 
-int Bonus::getEat(SDL_Rect *pac_position) {
+int Bonus::getEat(const SDL_Rect &pac_position) {
 
     if (!exist) {
         return 0;
@@ -90,15 +90,15 @@ int Bonus::getEat(SDL_Rect *pac_position) {
 
     int score{0};
 
-    float origineX{float(pac_position->x + (pac_position->w / 2))};
-    float origineY{float(pac_position->y + (pac_position->h / 2))};
+    float origineX{float(pac_position.x + (pac_position.w / 2))};
+    float origineY{float(pac_position.y + (pac_position.h / 2))};
 
-    float bonusOrigineX{float(position_.x + (pac_position->w / 2))};
-    float bonusOrigineY{float(position_.y + (pac_position->w / 2))};
+    float bonusOrigineX{float(position_.x + (pac_position.w / 2))};
+    float bonusOrigineY{float(position_.y + (pac_position.w / 2))};
 
     float distance = sqrt(pow(bonusOrigineX - origineX, 2) + pow(bonusOrigineY - origineY, 2));
 
-    if (distance < (pac_position->w / 2.25)) {
+    if (distance < (pac_position.w / 2.25)) {
         bonus_score_timer++;
         exist = false;
         score = points;

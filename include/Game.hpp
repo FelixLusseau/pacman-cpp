@@ -37,7 +37,7 @@ class Game {
     int score;
     bool launched;
 
-    Bonus *bonus;
+    std::unique_ptr<Bonus> bonus;
 
   public:
     Game();
