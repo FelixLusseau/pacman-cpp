@@ -9,7 +9,7 @@ class Clyde : public Ghost {
   private:
   public:
     Clyde(int PixelX, int PixelY);
-    void chase( std::unique_ptr<ThePacman> &pacman, std::vector<std::vector<Tile>> map, SDL_Rect bg) override;
+    void chase(const std::unique_ptr<ThePacman> &pacman, const std::vector<std::vector<Tile>> &map, const SDL_Rect bg) override;
 };
 
 #endif

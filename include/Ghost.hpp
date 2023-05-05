@@ -28,7 +28,7 @@ class Ghost : public Character {
 
     std::array<SDL_Rect, 2> blue_sprite_;
     std::array<SDL_Rect, 2> white_sprite_;
-    std::array<SDL_Rect, 2> eyes_sprite_;
+    std::array<SDL_Rect, 4> eyes_sprite_;
     SDL_Rect two_hundreds_sprite_;
     SDL_Rect four_hundreds_sprite_;
     SDL_Rect eight_hundreds_sprite_;
@@ -43,15 +43,15 @@ class Ghost : public Character {
     inline void set_outJail(bool t_f) { out_jail_ = t_f; }
 
     inline void setStatus(Status stat) { status_ = stat; }
-    inline Status getStatus() { return status_; }
+    inline Status getStatus() const { return status_; }
 
     /* gère l'animation des fantomes celon le mode dans lequel il est*/
-    void dontStopMoving(int animation, std::vector<std::vector<Tile>> map, SDL_Rect bg);
+    void dontStopMoving(int animation, std::vector<std::vector<Tile>> &map, SDL_Rect bg);
 
-    void move(const Uint8 *keys, int animation,std::unique_ptr<Map> & map, SDL_Rect bg);
+    void move(const Uint8 *keys, int animation, std::unique_ptr<Map> &map, SDL_Rect bg);
 
     /* stratégie pour pousuivre pacman */
-    virtual void chase(std::unique_ptr<ThePacman> &pacman, std::vector<std::vector<Tile>> map, SDL_Rect bg);
+    virtual void chase(const std::unique_ptr<ThePacman> &pacman, const std::vector<std::vector<Tile>> &map, const SDL_Rect bg) = 0;
 
     /* est bien placé à une intersection */
     bool intersection(int tailleCaseX, int tailleCaseY, std::vector<Tile> directions);

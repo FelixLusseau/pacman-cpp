@@ -22,9 +22,9 @@ Pinky::Pinky(int PixelX, int PixelY) : Ghost() {
     corner_ = {PixelX * 2, -PixelY * 2, PixelX, PixelY};
 }
 
-void Pinky::chase(std::unique_ptr<ThePacman> &pacman, std::vector<std::vector<Tile>> map, SDL_Rect bg) {
+void Pinky::chase(const std::unique_ptr<ThePacman> &pacman, const std::vector<std::vector<Tile>> &map, const SDL_Rect bg) {
 
-    SDL_Rect *PacPosition = pacman->getPosition();
+    SDL_Rect PacPosition = pacman->getPosition();
 
     // tailles d'une case de la carte
     int tailleCaseX{static_cast<int>(bg.w / map[0].size())};
@@ -34,16 +34,16 @@ void Pinky::chase(std::unique_ptr<ThePacman> &pacman, std::vector<std::vector<Ti
     int size{(position_.w) / 2};
 
     // origine = centre de la case du sprite et pas son coin gauche
-    int origineX{position_.x + size};
-    int origineY{position_.y + size};
+    // int origineX{position_.x + size};
+    // int origineY{position_.y + size};
 
-    int ligne{origineX / tailleCaseX};
-    int colonne{origineY / tailleCaseY};
+    // int ligne{origineX / tailleCaseX};
+    // int colonne{origineY / tailleCaseY};
 
     // pinky cherches à aller devant pacman
     SDL_Scancode pacMove{pacman->get_key()};
     int coeff{4}; // nombre de case devant pacman
-    SDL_Rect Goal{PacPosition->x + size, PacPosition->y + size, tailleCaseX, tailleCaseY};
+    SDL_Rect Goal{PacPosition.x + size, PacPosition.y + size, tailleCaseX, tailleCaseY};
 
     int caseT{tailleCaseX};
 
@@ -59,6 +59,8 @@ void Pinky::chase(std::unique_ptr<ThePacman> &pacman, std::vector<std::vector<Ti
         break;
     case SDL_SCANCODE_DOWN:
         Goal.y += (caseT * coeff);
+        break;
+    default:
         break;
     }
 

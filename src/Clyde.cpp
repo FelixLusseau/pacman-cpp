@@ -23,23 +23,23 @@ Clyde::Clyde(int PixelX, int PixelY) : Ghost() {
     status_ = Status::stay_jail;
 }
 
-void Clyde::chase(std::unique_ptr<ThePacman> &pacman, std::vector<std::vector<Tile>> map, SDL_Rect bg) {
+void Clyde::chase(const std::unique_ptr<ThePacman> &pacman, const std::vector<std::vector<Tile>> &map, const SDL_Rect bg) {
 
-    SDL_Rect *Goal{pacman->getPosition()};
+    SDL_Rect Goal{pacman->getPosition()};
 
     // tailles d'une case de la carte
     float tailleCaseX{float(bg.w) / float(map[0].size())};
-    float tailleCaseY{float(bg.h) / float(map.size())};
+    // float tailleCaseY{float(bg.h) / float(map.size())};
 
     int dist_min{static_cast<int>(tailleCaseX * 4)};
-    int dist_pac{static_cast<int>(sqrt(pow(float(position_.x - Goal->x), 2) + pow(float(position_.y - Goal->y), 2)))};
+    int dist_pac{static_cast<int>(sqrt(pow(float(position_.x - Goal.x), 2) + pow(float(position_.y - Goal.y), 2)))};
 
     if (dist_pac <= dist_min) {
-        Goal = &corner_;
+        Goal = corner_;
     }
 
-    goal_.x = Goal->x;
-    goal_.y = Goal->y;
-    goal_.w = Goal->w;
-    goal_.h = Goal->h;
+    goal_.x = Goal.x;
+    goal_.y = Goal.y;
+    goal_.w = Goal.w;
+    goal_.h = Goal.h;
 }
