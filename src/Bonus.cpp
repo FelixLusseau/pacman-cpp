@@ -90,11 +90,11 @@ int Bonus::getEat(const SDL_Rect &pac_position) {
 
     int score{0};
 
-    float origineX{float(pac_position.x + (pac_position.w / 2))};
-    float origineY{float(pac_position.y + (pac_position.h / 2))};
+    float origineX{static_cast<float>(pac_position.x + (pac_position.w / 2))};
+    float origineY{static_cast<float>(pac_position.y + (pac_position.h / 2))};
 
-    float bonusOrigineX{float(position_.x + (pac_position.w / 2))};
-    float bonusOrigineY{float(position_.y + (pac_position.w / 2))};
+    float bonusOrigineX{static_cast<float>(position_.x + (pac_position.w / 2))};
+    float bonusOrigineY{static_cast<float>(position_.y + (pac_position.w / 2))};
 
     float distance = sqrt(pow(bonusOrigineX - origineX, 2) + pow(bonusOrigineY - origineY, 2));
 
@@ -103,7 +103,6 @@ int Bonus::getEat(const SDL_Rect &pac_position) {
         exist = false;
         score = points;
     }
-    // std::cout << score << std::endl;
 
     return score;
 };

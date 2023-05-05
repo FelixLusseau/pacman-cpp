@@ -57,7 +57,7 @@ Game::Game() {
 
                 int y = static_cast<int>(i * pY + (pY / 4));
                 int x = static_cast<int>(j * pX + (pX / 4));
-                dots.push_back(new Dot{x, y, TypeDot::Simple});
+                dots.push_back(std::make_unique<Dot>(x, y, TypeDot::Simple));
 
                 // std::cout << "dot: " << i << " " << j << " " << x << " " << y << std::endl;
 
@@ -66,7 +66,7 @@ Game::Game() {
                 int y = static_cast<int>(i * pY + (pY / 4) - 4);
                 int x = static_cast<int>(j * pX + (pX / 4) - 4);
 
-                dots.push_back(new Dot{x, y, TypeDot::Big});
+                dots.push_back(std::make_unique<Dot>(x, y, TypeDot::Big));
 
                 // std::cout << "dot: " << i << " " << j << " " << x << " " << y << std::endl;
             }

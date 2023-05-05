@@ -21,8 +21,8 @@ inline bool operator==(const SDL_Rect &a, const SDL_Rect &b) { return a.x == b.x
 int Character::changePosition(const int x, const int y, const std::vector<std::vector<Tile>> &map, const SDL_Rect bg) {
 
     // tailles d'une case de la carte
-    float tailleCaseX{float(bg.w) / float(map[0].size())};
-    float tailleCaseY{float(bg.h) / float(map.size())};
+    float tailleCaseX{static_cast<float>(bg.w) / static_cast<float>(map[0].size())};
+    float tailleCaseY{static_cast<float>(bg.h) / static_cast<float>(map.size())};
 
     // taille de la case de pacman
     int halfWidth = (position_.w / 2);
@@ -66,8 +66,8 @@ int Character::changePosition(const int x, const int y, const std::vector<std::v
     }
 
     // collision porte fantome
-    float pixelX{float(bg.w) / float(map[0].size())};
-    float pixelY{float(bg.h) / float(map.size())};
+    float pixelX{static_cast<float>(bg.w) / static_cast<float>(map[0].size())};
+    float pixelY{static_cast<float>(bg.h) / static_cast<float>(map.size())};
 
     int pX{static_cast<int>(pixelX)};
     int pY{static_cast<int>(pixelY)};

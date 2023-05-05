@@ -111,7 +111,8 @@ void Ghost::move(const Uint8 *keys, const int animation, const std::unique_ptr<M
         }
         // on a été mangé on retourne à sa position initiale
         else if (status_ == Status::eyes) {
-            if (!(sqrt(pow(float(position_.x - init_position_.x), 2) + pow(float(position_.y - init_position_.y), 2)) < (size / 2))) {
+            if (!(sqrt(pow(static_cast<float>(position_.x - init_position_.x), 2) + pow(static_cast<float>(position_.y - init_position_.y), 2)) <
+                  (size / 2))) {
                 goal_.x = init_position_.x;
                 goal_.y = init_position_.y;
                 goal_.w = init_position_.w;
@@ -302,7 +303,7 @@ void Ghost::choosePath(const SDL_Rect Goal, const std::vector<Tile> directions, 
                 break;
             }
 
-            float dist{static_cast<float>(sqrt(pow(float(nextX - GoalOrigineX), 2) + pow(float(nextY - GoalOrigineY), 2)))};
+            float dist{static_cast<float>(sqrt(pow(static_cast<float>(nextX - GoalOrigineX), 2) + pow(static_cast<float>(nextY - GoalOrigineY), 2)))};
 
             if (went_here && dist < min) {
                 min = dist;

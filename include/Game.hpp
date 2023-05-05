@@ -23,7 +23,7 @@ class Game {
 
     std::unique_ptr<Map> map;
     std::unique_ptr<Write> dictionary;
-    std::vector<Dot *> dots;
+    std::vector<std::unique_ptr<Dot>> dots;
 
     SDL_Window *pWindow;
     SDL_Surface *win_surf;

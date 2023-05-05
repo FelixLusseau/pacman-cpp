@@ -28,11 +28,11 @@ void Clyde::chase(const std::unique_ptr<ThePacman> &pacman, const std::vector<st
     SDL_Rect Goal{pacman->getPosition()};
 
     // tailles d'une case de la carte
-    float tailleCaseX{float(bg.w) / float(map[0].size())};
-    // float tailleCaseY{float(bg.h) / float(map.size())};
+    float tailleCaseX{static_cast<float>(bg.w) / static_cast<float>(map[0].size())};
+    // float tailleCaseY{static_cast<float>(bg.h) / static_cast<float>(map.size())};
 
     int dist_min{static_cast<int>(tailleCaseX * 4)};
-    int dist_pac{static_cast<int>(sqrt(pow(float(position_.x - Goal.x), 2) + pow(float(position_.y - Goal.y), 2)))};
+    int dist_pac{static_cast<int>(sqrt(pow(static_cast<float>(position_.x - Goal.x), 2) + pow(static_cast<float>(position_.y - Goal.y), 2)))};
 
     if (dist_pac <= dist_min) {
         Goal = corner_;
