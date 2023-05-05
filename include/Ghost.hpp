@@ -28,7 +28,7 @@ class Ghost : public Character {
 
     std::array<SDL_Rect, 2> blue_sprite_;
     std::array<SDL_Rect, 2> white_sprite_;
-    std::array<SDL_Rect, 2> eyes_sprite_;
+    std::array<SDL_Rect, 4> eyes_sprite_;
     SDL_Rect two_hundreds_sprite_;
     SDL_Rect four_hundreds_sprite_;
     SDL_Rect eight_hundreds_sprite_;

@@ -168,7 +168,7 @@ int Game::start() {
                 }
 
                 // fantome vulnérable
-                if (Ghost::idle) {
+                if (Ghost::idle && fantom->getStatus() != Status::eaten) {
                     // std::cout << score;
                     ghosts_eaten++;
                     switch (ghosts_eaten) {
