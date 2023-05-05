@@ -33,6 +33,7 @@ Ghost::Ghost() : Character() {
     status_ = Status::chase;
 
     eaten_score_timer_ = 0;
+    last_prec_key = SDL_SCANCODE_UNKNOWN;
 }
 
 void Ghost::move(const Uint8 *keys, const int animation, const std::unique_ptr<Map> &map, const SDL_Rect bg) {
