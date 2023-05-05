@@ -29,7 +29,7 @@ void Clyde::chase(std::unique_ptr<ThePacman> &pacman, std::vector<std::vector<Ti
 
     // tailles d'une case de la carte
     float tailleCaseX{float(bg.w) / float(map[0].size())};
-    float tailleCaseY{float(bg.h) / float(map.size())};
+    // float tailleCaseY{float(bg.h) / float(map.size())};
 
     int dist_min{static_cast<int>(tailleCaseX * 4)};
     int dist_pac{static_cast<int>(sqrt(pow(float(position_.x - Goal->x), 2) + pow(float(position_.y - Goal->y), 2)))};

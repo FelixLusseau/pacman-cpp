@@ -51,7 +51,7 @@ class Ghost : public Character {
     void move(const Uint8 *keys, int animation, std::unique_ptr<Map> &map, SDL_Rect bg);
 
     /* stratégie pour pousuivre pacman */
-    virtual void chase(std::unique_ptr<ThePacman> &pacman, std::vector<std::vector<Tile>> &map, SDL_Rect bg);
+    virtual void chase(std::unique_ptr<ThePacman> &pacman, std::vector<std::vector<Tile>> &map, SDL_Rect bg) = 0;
 
     /* est bien placé à une intersection */
     bool intersection(int tailleCaseX, int tailleCaseY, std::vector<Tile> directions);

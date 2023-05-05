@@ -36,6 +36,7 @@ Ghost::Ghost() : Character() {
 }
 
 void Ghost::move(const Uint8 *keys, int animation, std::unique_ptr<Map> &map, SDL_Rect bg) {
+    (void)keys;
 
     // tailles d'une case de la carte
     int tailleCaseX{map->getWidth()};
@@ -129,8 +130,6 @@ void Ghost::move(const Uint8 *keys, int animation, std::unique_ptr<Map> &map, SD
 
 void Ghost::dontStopMoving(int animation, std::vector<std::vector<Tile>> map, SDL_Rect bg) {
 
-    SDL_Rect sp = cur_sprite_;
-
     int mv_x{0};
     int mv_y{0};
 
@@ -222,10 +221,6 @@ void Ghost::dontStopMoving(int animation, std::vector<std::vector<Tile>> map, SD
     }
 
     this->changePosition(position_.x + mv_x, position_.y + mv_y, map, bg);
-}
-
-void Ghost::chase(std::unique_ptr<ThePacman> &pacman, std::vector<std::vector<Tile>> &map, SDL_Rect bg) {
-    std::cout << "ne devrait pas apparaitre" << std::endl;
 }
 
 bool Ghost::intersection(int tailleCaseX, int tailleCaseY, std::vector<Tile> directions) {

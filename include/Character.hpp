@@ -38,6 +38,7 @@ class Character {
   public:
     Character();
     Character(int px, int py);
+    virtual ~Character();
 
     inline SDL_Rect *getSprite(int i) { return &sprite_[i]; };
 
@@ -53,12 +54,12 @@ class Character {
 
     inline void set_speed(int newSpeed) { speed = newSpeed; };
 
-    int changePosition(int x, int y, std::vector<std::vector<Tile>> map, SDL_Rect bg);
+    int changePosition(int x, int y, std::vector<std::vector<Tile>> &map, SDL_Rect bg);
 
     inline SDL_Rect *get_initPosition() { return &init_position_; };
 
     /*méthode de mouvement */
-    virtual void move(const Uint8 *keys, int animation, std::unique_ptr<Map> & map, SDL_Rect bg);
+    virtual void move(const Uint8 *keys, int animation, std::unique_ptr<Map> &map, SDL_Rect bg) = 0;
 };
 
 #endif

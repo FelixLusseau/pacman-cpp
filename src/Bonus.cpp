@@ -90,8 +90,6 @@ int Bonus::getEat(SDL_Rect *pac_position) {
 
     int score{0};
 
-    float side{(float(pac_position->w) / 2)};
-
     float origineX{float(pac_position->x + (pac_position->w / 2))};
     float origineY{float(pac_position->y + (pac_position->h / 2))};
 

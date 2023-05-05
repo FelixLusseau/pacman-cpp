@@ -33,11 +33,10 @@ ThePacman::ThePacman(int x, int y) : Character() {
     die_animation[9] = {138, 106, 2, 16};
     die_animation[10] = {143, 106, 16, 16};
 
-    speed=2;
+    speed = 2;
 }
 
-void ThePacman::move(const Uint8 *keys, int animation,  std::unique_ptr<Map> & map, SDL_Rect bg) {
-
+void ThePacman::move(const Uint8 *keys, int animation, std::unique_ptr<Map> &map, SDL_Rect bg) {
 
     // tailles d'une case de la carte
     int tailleCaseX{map->getWidth()};
@@ -47,10 +46,10 @@ void ThePacman::move(const Uint8 *keys, int animation,  std::unique_ptr<Map> & m
     int rondeur{3};
 
     // coordonnées des coins du sprite
-    int coinX[2]={(position_.x+rondeur)/tailleCaseX, (position_.x + position_.w-rondeur)/tailleCaseX};
-    int coinY[2]={(position_.y+rondeur)/tailleCaseY, (position_.y + position_.w-rondeur)/tailleCaseY};
+    int coinX[2] = {(position_.x + rondeur) / tailleCaseX, (position_.x + position_.w - rondeur) / tailleCaseX};
+    int coinY[2] = {(position_.y + rondeur) / tailleCaseY, (position_.y + position_.w - rondeur) / tailleCaseY};
 
-    SDL_Rect sp{cur_sprite_};
+    // SDL_Rect sp{cur_sprite_};
 
     int mv_x{0};
     int mv_y{0};
@@ -67,7 +66,7 @@ void ThePacman::move(const Uint8 *keys, int animation,  std::unique_ptr<Map> & m
         if (changePosition(position_.x + mv_x, position_.y + mv_y, map->getMap(), bg))
             cur_sprite_ = sprite_[2 + animation];
     }
-    if ((keys[SDL_SCANCODE_DOWN] || prec_key == SDL_SCANCODE_DOWN) && map->getMap()[coinY[0]+ 1][coinX[0]] != Tile::Wall) {
+    if ((keys[SDL_SCANCODE_DOWN] || prec_key == SDL_SCANCODE_DOWN) && map->getMap()[coinY[0] + 1][coinX[0]] != Tile::Wall) {
         prec_key = SDL_SCANCODE_DOWN;
         mv_y = speed;
         if (changePosition(position_.x + mv_x, position_.y + mv_y, map->getMap(), bg))
@@ -79,7 +78,7 @@ void ThePacman::move(const Uint8 *keys, int animation,  std::unique_ptr<Map> & m
         if (changePosition(position_.x + mv_x, position_.y + mv_y, map->getMap(), bg))
             cur_sprite_ = sprite_[6 + animation];
     }
-    
+
     // cur_sprite_=sp;
     // this->changePosition(position_.x + mv_x, position_.y + mv_y, map, bg);
 
@@ -89,7 +88,7 @@ void ThePacman::move(const Uint8 *keys, int animation,  std::unique_ptr<Map> & m
 void ThePacman::die(SDL_Surface *plancheSprites, SDL_Rect *src_bg, SDL_Surface *win_surf, SDL_Rect *bg, SDL_Window *pWindow) {
 
     int x{position_.x};
-    int y{position_.y};
+    // int y{position_.y};
 
     for (int i{0}; i < 11; i++) { // animation
 

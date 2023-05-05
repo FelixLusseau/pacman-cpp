@@ -1,6 +1,6 @@
 #include "../include/Game.hpp"
 
-int main(int argc, char **argv) {
+int main() {
     Game *pac_man = new Game();
     pac_man->start();
 }

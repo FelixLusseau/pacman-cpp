@@ -14,9 +14,11 @@ Character::Character(int px, int py) {
     width = px;
 };
 
+Character::~Character() {}
+
 inline bool operator==(const SDL_Rect &a, const SDL_Rect &b) { return a.x == b.x && a.y == b.y && a.w == b.w && a.h == b.h; }
 
-int Character::changePosition(int x, int y, std::vector<std::vector<Tile>> map, SDL_Rect bg) {
+int Character::changePosition(int x, int y, std::vector<std::vector<Tile>> &map, SDL_Rect bg) {
 
     // tailles d'une case de la carte
     float tailleCaseX{float(bg.w) / float(map[0].size())};
@@ -98,8 +100,4 @@ int Character::changePosition(int x, int y, std::vector<std::vector<Tile>> map, 
     position_.x = x;
     position_.y = y;
     return 1;
-}
-
-void Character::move(const Uint8 *keys, int animation, std::unique_ptr<Map> &map, SDL_Rect bg) {
-    std::cout << "character_move: ne devrait pas apparaitre" << std::endl;
 }

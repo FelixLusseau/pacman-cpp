@@ -5,7 +5,7 @@
 #include <iostream>
 #include <vector>
 
-enum class TypeDot { Simple, Big, Fruit };
+enum class TypeDot { Simple, Big /* , Fruit */ };
 
 class Dot {
   private:

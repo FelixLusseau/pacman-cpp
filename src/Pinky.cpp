@@ -34,11 +34,11 @@ void Pinky::chase(std::unique_ptr<ThePacman> &pacman, std::vector<std::vector<Ti
     int size{(position_.w) / 2};
 
     // origine = centre de la case du sprite et pas son coin gauche
-    int origineX{position_.x + size};
-    int origineY{position_.y + size};
+    // int origineX{position_.x + size};
+    // int origineY{position_.y + size};
 
-    int ligne{origineX / tailleCaseX};
-    int colonne{origineY / tailleCaseY};
+    // int ligne{origineX / tailleCaseX};
+    // int colonne{origineY / tailleCaseY};
 
     // pinky cherches à aller devant pacman
     SDL_Scancode pacMove{pacman->get_key()};
@@ -59,6 +59,8 @@ void Pinky::chase(std::unique_ptr<ThePacman> &pacman, std::vector<std::vector<Ti
         break;
     case SDL_SCANCODE_DOWN:
         Goal.y += (caseT * coeff);
+        break;
+    default:
         break;
     }
 

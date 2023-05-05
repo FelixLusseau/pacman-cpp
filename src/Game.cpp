@@ -43,7 +43,7 @@ Game::Game() {
 
     score = {0};
 
-    bool launched{false};
+    launched = false;
 
     /* création de tout les points à partir de la map fournie */
     std::vector<std::vector<Tile>> thisMap = map->getMap();
@@ -154,7 +154,7 @@ int Game::start() {
             if (fantom->getStatus() == Status::chase) {
                 fantom->chase(pacman, map->getMap(), bg);
             }
-            fantom->move(NULL,animation, map, bg);   
+            fantom->move(NULL, animation, map, bg);
 
             // std::cout << fantom->getPosition()->x << " " << fantom->getPosition()->y << std::endl;
 
@@ -196,7 +196,7 @@ int Game::start() {
 
                 if (pacman->getLives() != 0) {
                     quit = false;
-                    resetPositions(ghosts, pacman, map->getMap());
+                    resetPositions(ghosts, pacman);
                     break;
                 }
                 if (quit) {
@@ -205,7 +205,7 @@ int Game::start() {
             }
         }
         if (next_level) {
-            nextLevel(ghosts, pacman, map->getMap(), bg);
+            nextLevel(ghosts, pacman, bg);
             next_level = false;
         }
 
@@ -311,7 +311,7 @@ void Game::draw() {
         ghosts[2]->setStatus(Status::chase);
     }
 
-    int animation{this->changeSprite()};
+    // int animation{this->changeSprite()};
 
     // choix du fantome
     for (Ghost *fantom : ghosts) {
@@ -438,7 +438,7 @@ bool Game::gameOver() {
     return true;
 }
 
-void Game::resetPositions(Ghost **ghosts, std::unique_ptr<ThePacman> &pacman, std::vector<std::vector<Tile>> map) {
+void Game::resetPositions(Ghost **ghosts, std::unique_ptr<ThePacman> &pacman) {
     pacman->setPosition(*(pacman->get_initPosition()));
     for (int i{0}; i < 4; i++) {
         ghosts[i]->setPosition(*(ghosts[i]->get_initPosition()));
@@ -451,9 +451,9 @@ void Game::resetPositions(Ghost **ghosts, std::unique_ptr<ThePacman> &pacman, st
     count = 0;
 }
 
-void Game::nextLevel(Ghost **ghosts, std::unique_ptr<ThePacman> &pacman, std::vector<std::vector<Tile>> map, SDL_Rect bg) {
+void Game::nextLevel(Ghost **ghosts, std::unique_ptr<ThePacman> &pacman, SDL_Rect bg) {
     level++;
-    resetPositions(ghosts, pacman, map);
+    resetPositions(ghosts, pacman);
     for (long unsigned int i{0}; i < dots.size(); i++) {
         dots[i]->setExist(true);
     }
