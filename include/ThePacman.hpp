@@ -33,7 +33,7 @@ class ThePacman : public Character {
      * @param bg
      * @param pWindow
      */
-    void die(SDL_Surface *plancheSprites, SDL_Rect *src_bg, SDL_Surface *win_surf, SDL_Rect *bg, SDL_Window *pWindow);
+    void die(SDL_Surface *plancheSprites, SDL_Rect &src_bg, SDL_Surface *win_surf, SDL_Rect &bg, SDL_Window *pWindow);
 
     /**
      * @brief Get the lives of Pacman

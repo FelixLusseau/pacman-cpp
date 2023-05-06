@@ -4,7 +4,7 @@
 #include "Ghost.hpp"
 #include <memory>
 
-/* rouge */
+/* Blue ghost */
 class Inky : public Ghost {
   private:
     /* inky utlise la position de blinky pour sa stratégie de chasse*/

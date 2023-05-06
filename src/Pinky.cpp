@@ -26,16 +26,16 @@ void Pinky::chase(const std::unique_ptr<ThePacman> &pacman, const std::vector<st
 
     SDL_Rect PacPosition = pacman->getPosition();
 
-    // tailles d'une case de la carte
+    // size of a case of the map
     int tailleCaseX{static_cast<int>(bg.w / map[0].size())};
     int tailleCaseY{static_cast<int>(bg.h / map.size())};
 
-    // taille de la case du sprite
+    // size of the sprite case
     int size{(position_.w) / 2};
 
-    // pinky cherches à aller devant pacman
+    // Pinky wants to gi behind Pacman
     SDL_Scancode pacMove{pacman->get_key()};
-    int coeff{4}; // nombre de case devant pacman
+    int coeff{4}; // number of case behind Pacman
     SDL_Rect Goal{PacPosition.x + size, PacPosition.y + size, tailleCaseX, tailleCaseY};
 
     int caseT{tailleCaseX};

@@ -9,16 +9,15 @@ bool Game::next_level = false;
 
 Game::Game() {
 
-    pWindow =
-        SDL_CreateWindow("PacMan", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 680, 900, SDL_WINDOW_SHOWN); // 680 à vérifier (initialement 700)
+    pWindow = SDL_CreateWindow("PacMan", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 680, 900, SDL_WINDOW_SHOWN);
     win_surf = SDL_GetWindowSurface(pWindow);
 
     plancheSprites = SDL_LoadBMP("./pacman_sprites.bmp");
 
-    bg = {0, 0, 672, 864}; // ici scale x4
+    bg = {0, 0, 672, 864}; // scale x4
 
-    // apparence de la carte
-    src_bg = {201, 4, 168, 216}; // x,y, w,h (0,0) en haut a gauche
+    // appearence of th map
+    src_bg = {201, 4, 168, 216}; // x,y, w,h (0,0) at the top left
     src_bg_dotless = {201 + 166 + 3, 4, 168, 216};
     src_bg_white = {201 + 2 * 166 + 8, 4, 168, 216};
     src_bg = src_bg_dotless;
@@ -30,8 +29,6 @@ Game::Game() {
 
     int pX{map->getWidth()};
     int pY{map->getHeight()};
-
-    // std::cout << "map: " << pX << " " << pY << std::endl;
 
     pacman = std::make_unique<ThePacman>(pX, pY);
 
@@ -46,7 +43,7 @@ Game::Game() {
 
     launched = false;
 
-    /* création de tout les points à partir de la map fournie */
+    // creation of all the dots from the map
     std::vector<std::vector<Tile>> thisMap = map->getMap();
 
     for (long unsigned int i{0}; i < thisMap.size(); i++) {
@@ -65,8 +62,6 @@ Game::Game() {
                 int x = static_cast<int>(j * pX + (pX / 4) - 4);
 
                 dots.push_back(std::make_unique<Dot>(x, y, TypeDot::Big));
-
-                // std::cout << "dot: " << i << " " << j << " " << x << " " << y << std::endl;
             }
         }
     }
@@ -78,7 +73,6 @@ int Game::start() {
         return 1;
     }
 
-    // Pour faciliter travail sur les animations
     /* // for (int i{0}; i < 10; i++) {
     level2To3();
     // }
@@ -133,7 +127,7 @@ int Game::start() {
         }
     }
 
-    // BOUCLE PRINCIPALE
+    // Main loop
     while (!quit) {
         SDL_Event event;
         while (!quit && SDL_PollEvent(&event)) {
@@ -147,7 +141,7 @@ int Game::start() {
             SDL_Delay(16);
         }
 
-        // Gestion du clavier
+        // Keyboard management
         int nbk;
         const Uint8 *keys{SDL_GetKeyboardState(&nbk)};
 
@@ -162,16 +156,16 @@ int Game::start() {
             }
             fantom->move(NULL, animation, map, bg);
 
-            // collison fantome / pacman
+            // ghost - Pacman collision
             if (abs(pacman->getPosition().x - fantom->getPosition().x) < fantom->getPosition().w &&
                 abs(pacman->getPosition().y - fantom->getPosition().y) < fantom->getPosition().h) {
 
-                // fantomes non touchable
+                // ghost are not vulnerable
                 if (fantom->getStatus() == Status::eyes || fantom->getStatus() == Status::eaten) {
                     break;
                 }
 
-                // fantome vulnérable
+                // vulnerable ghosts
                 if (Ghost::idle && fantom->getStatus() != Status::eaten) {
                     ghosts_eaten++;
                     switch (ghosts_eaten) {
@@ -192,7 +186,7 @@ int Game::start() {
                     break;
                 }
 
-                // pacman meurt
+                // Pacman dies
                 quit = gameOver();
 
                 if (pacman->getLives() != 0) {
@@ -210,7 +204,7 @@ int Game::start() {
             next_level = false;
         }
 
-        // AFFICHAGE
+        // Display
         draw();
 
         /* Waiting for the launch of the PacMan */
@@ -232,16 +226,16 @@ int Game::start() {
             }
         }
 
-        if (keys[SDL_SCANCODE_ESCAPE]) { // bug sur la page de fin avec ce if
+        if (keys[SDL_SCANCODE_ESCAPE]) {
             quit = gameOver();
         }
 
-        // LIMITE A 60 FPS
-        SDL_Delay(16); // utiliser SDL_GetTicks64() pour plus de precisions
+        // Limit to 60 FPS
+        SDL_Delay(16);
     }
     SDL_FreeSurface(plancheSprites);
     SDL_DestroyWindow(pWindow);
-    SDL_Quit(); // ON SORT
+    SDL_Quit(); // Quitting SDL
     return 0;
 }
 
@@ -293,19 +287,19 @@ void Game::draw() {
         }
     }
 
-    // couleur transparente
+    // transparent color
     SDL_SetColorKey(plancheSprites, true, 0);
 
-    /* gestion des points */
+    // dots management
     for (long unsigned int i{0}; i < dots.size(); i++) {
 
         score += dots[i]->getEat(pacman->getPosition());
 
-        if (dots[i]->getExist()) { // affichage
+        if (dots[i]->getExist()) { // draw
             SDL_BlitScaled(plancheSprites, &dots[i]->getSprite(), win_surf, &dots[i]->getPosition());
         }
     }
-    // sortie de inky et clyde
+    // release of Inky and Clyde
     if (dots[0]->nb_dot_eaten_ >= 30 && ghosts[3]->getStatus() == Status::stay_jail) {
         ghosts[3]->setStatus(Status::chase);
     }
@@ -313,13 +307,12 @@ void Game::draw() {
         ghosts[2]->setStatus(Status::chase);
     }
 
-    // choix du fantome
+    // draw the ghosts
     for (Ghost *fantom : ghosts) {
-        // affichage fantome
         SDL_BlitScaled(plancheSprites, &fantom->get_currSprite(), win_surf, &fantom->getPosition());
     }
 
-    // affichage pacman
+    // draw Pacman
     SDL_BlitScaled(plancheSprites, &pacman->get_currSprite(), win_surf, &pacman->getPosition());
 
     SDL_UpdateWindowSurface(pWindow);
@@ -328,7 +321,7 @@ void Game::draw() {
 }
 
 int Game::changeSprite() {
-    // ici on change entre les 2 sprites sources pour une jolie animation.
+    // We alternate between sprites for the animation
     int animation{0};
 
     if ((count / 4) % 2) {
@@ -345,10 +338,10 @@ bool Game::gameOver() {
     SDL_UpdateWindowSurface(pWindow);
     SDL_Delay(500);
 
-    // couleur transparente
+    // transparent color
     SDL_SetColorKey(plancheSprites, true, 0);
 
-    pacman->die(plancheSprites, &src_bg_dotless, win_surf, &bg, pWindow);
+    pacman->die(plancheSprites, src_bg_dotless, win_surf, bg, pWindow);
 
     for (int i{0}; i < 3; i++) {
         SDL_BlitScaled(plancheSprites, &src_bg_dotless, win_surf, &bg);
@@ -447,7 +440,7 @@ void Game::resetPositions(Ghost **ghosts, std::unique_ptr<ThePacman> &pacman) {
         ghosts[i]->set_outJail(false);
         ghosts[i]->set_speed(1);
     }
-    ghosts[0]->set_outJail(true); // blinky déjà dehors
+    ghosts[0]->set_outJail(true); // Blinky already out of jail
     launched = false;
     count = 0;
 }
@@ -462,7 +455,7 @@ void Game::nextLevel(Ghost **ghosts, std::unique_ptr<ThePacman> &pacman, SDL_Rec
     SDL_FillRect(win_surf, NULL, 0x000000);
     SDL_Delay(500);
 
-    // couleur transparente
+    // transparent color
     SDL_SetColorKey(plancheSprites, true, 0);
 
     for (int i{0}; i < 3; i++) {

@@ -4,9 +4,8 @@
 #include "Ghost.hpp"
 #include <memory>
 
-/* rouge */
+/* Red ghost */
 class Blinky : public Ghost {
-  private:
   public:
     Blinky(const int PixelX, const int PixelY);
 

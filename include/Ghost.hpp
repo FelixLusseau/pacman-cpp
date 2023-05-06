@@ -35,7 +35,6 @@ class Ghost : public Character {
     SDL_Rect four_hundreds_sprite_;
     SDL_Rect eight_hundreds_sprite_;
     SDL_Rect sixteen_hundreds_sprite_;
-  
 
   public:
     static clock_t timer_begin_ghost, timer_end_ghost;
@@ -45,24 +44,66 @@ class Ghost : public Character {
 
     inline void set_outJail(const bool t_f) { out_jail_ = t_f; }
 
+    /**
+     * @brief Set the status of the ghost
+     *
+     * @param stat
+     */
     inline void setStatus(const Status stat) { status_ = stat; }
+
+    /**
+     * @brief Get the status of the ghost
+     *
+     * @return Status
+     */
     inline Status getStatus() const { return status_; }
 
-    /* gère l'animation des fantomes celon le mode dans lequel il est*/
+    /**
+     * @brief Manage the animation of the ghost according to the mode in which it is
+     *
+     * @param animation
+     * @param map
+     * @param bg
+     */
     void dontStopMoving(const int animation, const std::vector<std::vector<Tile>> &map, const SDL_Rect bg);
 
+    /**
+     * @brief Function managing the movement of the ghost
+     *
+     * @param keys
+     * @param animation
+     * @param map
+     * @param bg
+     */
     void move(const Uint8 *keys, const int animation, const std::unique_ptr<Map> &map, const SDL_Rect bg);
 
-    /* stratégie pour pousuivre pacman */
+    /**
+     * @brief Strategy to follow Pacman
+     *
+     * @param pacman
+     * @param map
+     * @param bg
+     */
     virtual void chase(const std::unique_ptr<ThePacman> &pacman, const std::vector<std::vector<Tile>> &map, const SDL_Rect bg) = 0;
 
-    /* est bien placé à une intersection */
+    /**
+     * @brief Return if it is at an intersection
+     *
+     * @param tailleCaseX
+     * @param tailleCaseY
+     * @param directions
+     * @return true
+     * @return false
+     */
     bool intersection(const int tailleCaseX, const int tailleCaseY, const std::vector<Tile> directions);
 
     /* change key_prec selon la meilleur direction celon si on veut aller au Goal ou s'éloigné de Goal */
     void choosePath(const SDL_Rect Goal, const std::vector<Tile> directions, float min_init);
 
-    /* fantomes changent de direction quand deviennent vulnérable à pacman */
+    /**
+     * @brief Change direction when in idle mode
+     *
+     */
     void turnAround(void);
 };
 
