@@ -22,7 +22,7 @@ cmake -S ../ -B ./
 - Then to rebuild, from the build directory :
 
 ```bash
-cmake --build ./
+cmake --build ./ -j8
 ```
 
 - To launch the game :
