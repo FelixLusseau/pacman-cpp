@@ -109,6 +109,8 @@ int Game::start() {
 
     SDL_UpdateWindowSurface(pWindow);
     SDL_Delay(500);
+
+    bool quit{false};
     while (!start) {
         SDL_Event event;
         while (!start && SDL_PollEvent(&event)) {
@@ -116,6 +118,11 @@ int Game::start() {
             const Uint8 *keys = SDL_GetKeyboardState(&nbk);
             if (keys[SDL_SCANCODE_S]) {
                 start = true;
+            }
+            if (keys[SDL_SCANCODE_ESCAPE]) {
+                start = true;
+                quit = true;
+                break;
             }
             switch (event.type) {
             case SDL_QUIT:
@@ -129,7 +136,6 @@ int Game::start() {
     }
 
     // BOUCLE PRINCIPALE
-    bool quit{false};
     while (!quit) {
         SDL_Event event;
         while (!quit && SDL_PollEvent(&event)) {
@@ -222,6 +228,11 @@ int Game::start() {
                 const Uint8 *keys{SDL_GetKeyboardState(&nbk)};
                 if (keys[SDL_SCANCODE_LEFT] || keys[SDL_SCANCODE_RIGHT] || keys[SDL_SCANCODE_UP] || keys[SDL_SCANCODE_DOWN]) {
                     launched = true;
+                }
+                if (keys[SDL_SCANCODE_ESCAPE]) {
+                    launched = true;
+                    quit = true;
+                    break;
                 }
                 switch (event.type) {
                 case SDL_QUIT:
@@ -354,7 +365,6 @@ bool Game::gameOver() {
     pacman->die(plancheSprites, &src_bg_dotless, win_surf, &bg, pWindow);
 
     for (int i{0}; i < 3; i++) {
-
         SDL_BlitScaled(plancheSprites, &src_bg_dotless, win_surf, &bg);
         SDL_UpdateWindowSurface(pWindow);
         SDL_Delay(500);
