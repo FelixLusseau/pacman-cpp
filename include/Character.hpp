@@ -29,7 +29,7 @@ class Character {
     SDL_Scancode prec_key;
 
     /* vitesse du personnage */
-    float speed;
+    int speed;
 
     /* données de la carte: hauteur et longueur d'une case*/
     int height;
@@ -81,7 +81,7 @@ class Character {
      *
      * @param newSpeed
      */
-    inline void set_speed(const float newSpeed) { speed = newSpeed; };
+    inline void set_speed(const int newSpeed) { speed = newSpeed; };
 
     /**
      * @brief Change the position of the character
