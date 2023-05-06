@@ -4,34 +4,34 @@
 [![Author](https://img.shields.io/badge/author-@LouiseCouture-blue)](https://github.com/LouiseCouture)
 [![Author](https://img.shields.io/badge/author-@FelixLusseau-blue)](https://github.com/FelixLusseau)
 
-- Cloner le projet
+- Clone the project
 
-- Installer les dépendances :
+- Install dependencies :
 
 ```bash
 sudo apt install libsdl2-dev -y
 ```
 
-- Pour compiler la première fois :
+- To compile the first time :
 
 ```bash
 mkdir build && cd build
 cmake -S ../ -B ./
 ```
 
-- Ensuite pour recompiler, depuis le dossier build :
+- Then to rebuild, from the build directory :
 
 ```bash
 cmake --build ./
 ```
 
-- Pour lancer le programme :
+- To launch the game :
 
 ```bash
 ./PacMan
 ```
 
-- Pour nettoyer le projet et recompiler depuis la racine du projet :
+- To clean and recompile from the root of the project :
 
 ```bash
 ./clean-and-compile.sh
