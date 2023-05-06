@@ -97,7 +97,7 @@ int Game::start() {
     std::map<char, SDL_Rect> my_dictionary = dictionary->getDictionary();
     SDL_Rect press_pos{110, 400, 22, 22};
     std::string press_str{"PRESS S TO START !"};
-    dictionary->drawText(plancheSprites, win_surf, &press_pos, press_str);
+    dictionary->drawText(plancheSprites, win_surf, press_pos, press_str);
 
     SDL_Rect namco{27, 77, 61, 9};
     SDL_Rect namcoScale{215, 700, 244, 36};
@@ -105,7 +105,7 @@ int Game::start() {
 
     SDL_Rect authors{10, 850, 10, 10};
     std::string authors_str{"BY LOUISE COUTURE AND FELIX LUSSEAU"};
-    dictionary->drawText(plancheSprites, win_surf, &authors, authors_str);
+    dictionary->drawText(plancheSprites, win_surf, authors, authors_str);
 
     SDL_UpdateWindowSurface(pWindow);
     SDL_Delay(500);
@@ -254,12 +254,12 @@ void Game::draw() {
     std::map<char, SDL_Rect> my_dictionary = dictionary->getDictionary();
     SDL_Rect score_pos{34, 870, 14, 14};
     std::string score_str{"SCORE " + std::to_string(score) + " PT" + (score > 1 ? "S" : "")};
-    dictionary->drawText(plancheSprites, win_surf, &score_pos, score_str);
+    dictionary->drawText(plancheSprites, win_surf, score_pos, score_str);
 
     if (!launched) {
         SDL_Rect ready_pos = {265, 485, 20, 20};
         std::string ready_str{"READY!"};
-        dictionary->drawText(plancheSprites, win_surf, &ready_pos, ready_str);
+        dictionary->drawText(plancheSprites, win_surf, ready_pos, ready_str);
     }
 
     SDL_Rect lives_pos{580, 865, 28, 28};
@@ -381,7 +381,7 @@ bool Game::gameOver() {
         std::map<char, SDL_Rect> my_dictionary = dictionary->getDictionary();
         SDL_Rect game_over_pos{100, 300, 42, 42};
         std::string game_over_str{"GAME OVER !"};
-        dictionary->drawText(plancheSprites, win_surf, &game_over_pos, game_over_str);
+        dictionary->drawText(plancheSprites, win_surf, game_over_pos, game_over_str);
 
         int x_score = 0;
         switch (std::to_string(score).length()) {
@@ -400,11 +400,11 @@ bool Game::gameOver() {
         }
         SDL_Rect score_pos{x_score, 450, 16, 16};
         std::string score_str{"YOUR SCORE IS " + std::to_string(score) + " POINT" + (score > 1 ? "S" : "")};
-        dictionary->drawText(plancheSprites, win_surf, &score_pos, score_str);
+        dictionary->drawText(plancheSprites, win_surf, score_pos, score_str);
 
         SDL_Rect exit_pos{170, 580, 12, 12};
         std::string exit_str{"PRESS ANY KEY TO EXIT"};
-        dictionary->drawText(plancheSprites, win_surf, &exit_pos, exit_str);
+        dictionary->drawText(plancheSprites, win_surf, exit_pos, exit_str);
 
         SDL_Rect namco{27, 77, 61, 9};
         SDL_Rect namcoScale{215, 700, 244, 36};
@@ -412,7 +412,7 @@ bool Game::gameOver() {
 
         SDL_Rect authors{10, 850, 10, 10};
         std::string authors_str{"BY LOUISE COUTURE AND FELIX LUSSEAU"};
-        dictionary->drawText(plancheSprites, win_surf, &authors, authors_str);
+        dictionary->drawText(plancheSprites, win_surf, authors, authors_str);
 
         SDL_UpdateWindowSurface(pWindow);
         SDL_Delay(500);
