@@ -1,7 +1,7 @@
 #ifndef DOT_HPP
 #define DOT_HPP
 
-#include <SDL.h>
+#include <SDL2/SDL.h>
 #include <iostream>
 #include <vector>
 

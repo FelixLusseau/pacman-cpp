@@ -10,7 +10,7 @@
 #include "../include/Pinky.hpp"
 #include "../include/ThePacman.hpp"
 #include "../include/Write.hpp"
-#include <SDL.h>
+#include <SDL2/SDL.h>
 #include <array>
 #include <ctime>
 #include <iostream>

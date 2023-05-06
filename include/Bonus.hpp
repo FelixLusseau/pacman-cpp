@@ -1,7 +1,7 @@
 #ifndef BONUS_HPP
 #define BONUS_HPP
 
-#include <SDL.h>
+#include <SDL2/SDL.h>
 
 enum class TypeBonus { Cherry, Strawberry, Orange, Apple, Melon, Galaxian, Bell, Key };
 

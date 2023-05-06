@@ -2,7 +2,7 @@
 #define CHARACTER_HPP
 
 #include "Map.hpp"
-#include <SDL.h>
+#include <SDL2/SDL.h>
 #include <array>
 #include <iostream>
 #include <vector>
