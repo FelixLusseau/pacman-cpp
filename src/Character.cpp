@@ -74,6 +74,7 @@ int Character::changePosition(const int x, const int y, const std::vector<std::v
 
     SDL_Rect initial_pacman_position = {10 * pX, 20 * pY, 32, 32};
 
+    // collision with the ghost house door for Pacman
     if ((futurX < origineX && map[futurY / tailleCaseY][(futurX - halfWidth) / tailleCaseX] == Tile::GhostHouseDoor &&
          init_position_ == initial_pacman_position) ||
         (futurY < origineY && map[(futurY - halfWidth) / tailleCaseY][futurX / tailleCaseX] == Tile::GhostHouseDoor &&

@@ -12,8 +12,8 @@ class Map {
     std::vector<std::vector<Tile>> map;
     int height_;
     int width_;
-    long unsigned int colonne_;
-    long unsigned int ligne_;
+    int column_;
+    int line_;
 
   public:
     Map(const SDL_Rect bg);
@@ -39,20 +39,19 @@ class Map {
      */
     inline int getHeight(void) const { return height_; }
 
-
     /**
      * @brief Get the colunm  of the map
      *
      * @return int
      */
-    inline int getColunm(void) const { return colonne_; }
+    inline int getColunm(void) const { return column_; }
 
     /**
      * @brief Get the Line of the map
      *
      * @return int
      */
-    inline int getLine(void) const { return ligne_; }
+    inline int getLine(void) const { return line_; }
 };
 
 #endif

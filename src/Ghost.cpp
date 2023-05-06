@@ -60,17 +60,17 @@ void Ghost::move(const Uint8 *keys, const int animation, const std::unique_ptr<M
     int origineX{position_.x + (size / 2)};
     int origineY{position_.y + (size / 2)};
 
-    int ligne{origineX / map->getWidth()};
-    int colonne{origineY / map->getHeight()};
+    int line{origineX / map->getWidth()};
+    int column{origineY / map->getHeight()};
 
     std::vector<std::vector<Tile>> Map{map->getMap()};
 
-    std::vector<Tile> directions{Map[colonne + 1][ligne], Map[colonne - 1][ligne], Map[colonne][ligne + 1], Map[colonne][ligne - 1]};
+    std::vector<Tile> directions{Map[column + 1][line], Map[column - 1][line], Map[column][line + 1], Map[column][line - 1]};
 
     bool inter{intersection(tailleCaseX, tailleCaseY, directions)};
 
     // si fantome dans prison
-    if (Map[colonne][ligne] == Tile::GhostHouse) {
+    if (Map[column][line] == Tile::GhostHouse) {
         speed = 1;
         // eyes mode : the ghost has been eaten and is back to its initial position
         if (status_ == Status::eyes && position_.x == (10 * tailleCaseX)) {
@@ -237,7 +237,7 @@ void Ghost::dontStopMoving(const int animation, const std::vector<std::vector<Ti
 
 bool Ghost::intersection(const int tailleCaseX, const int tailleCaseY, const std::vector<Tile> directions) {
 
-    // well aligned on a tile => are we on an intersection ?
+    // well alined on a tile => are we on an intersection ?
     int rondeur{2};
     int intersection{0};
 
@@ -247,7 +247,7 @@ bool Ghost::intersection(const int tailleCaseX, const int tailleCaseY, const std
     int cornerY{(position_.y + rondeur) / tailleCaseY};
     int cornerYY{(position_.y + position_.h - rondeur) / tailleCaseY};
 
-    if (cornerX == cornerXX && cornerY == cornerYY) { // aligned on a tile
+    if (cornerX == cornerXX && cornerY == cornerYY) { // alined on a tile
         for (int i{0}; i < 4; i++) {
             if (directions[i] != Tile::Wall) { // intersection
                 intersection++;

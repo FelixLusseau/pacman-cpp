@@ -95,7 +95,9 @@ class Game {
     void nextLevel(std::array<std::shared_ptr<Ghost>, 4> &ghosts, std::unique_ptr<ThePacman> &pacman, SDL_Rect bg);
 
     /**
-     * @brief An animation between level 2 and 3
+     * @brief An animation between level 2 and 3.
+     * Pacman is chased by a ghost and then the affaid
+     * ghost is chased by a big Pacman
      *
      */
     void level2To3();

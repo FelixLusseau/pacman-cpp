@@ -22,6 +22,7 @@ Bonus::Bonus() {
     bell_sprite_ = {386, 257, 13, 13};
     key_sprite_ = {404, 257, 13, 13};
 
+    // Define the type of bonus and the number of points depending on the current level
     switch (Game::level) {
     case 1:
         type = TypeBonus::Cherry;

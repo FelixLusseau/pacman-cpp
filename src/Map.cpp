@@ -95,6 +95,6 @@ Map::Map(const SDL_Rect bg) {
     width_ = static_cast<int>(pixelX);
     height_ = static_cast<int>(pixelY);
 
-    ligne_ = map.size();
-    colonne_ = map[0].size();
+    line_ = map.size();
+    column_ = map[0].size();
 };

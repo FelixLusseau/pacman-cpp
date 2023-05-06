@@ -51,6 +51,7 @@ Write::Write() {
 };
 
 void Write::drawText(SDL_Surface *plancheSprites, SDL_Surface *win_surf, SDL_Rect &pos, const std::string text) {
+    // Draw each letter independantly on the screen
     for (auto e : text) {
         SDL_BlitScaled(plancheSprites, &dictionary[e], win_surf, &pos);
         pos.x += pos.w + 4;

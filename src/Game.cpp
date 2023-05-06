@@ -249,18 +249,21 @@ void Game::draw() {
     SDL_SetColorKey(plancheSprites, false, 0);
     SDL_BlitScaled(plancheSprites, &src_bg, win_surf, &bg);
 
+    // Draw the score
     dictionary = std::make_unique<Write>();
     std::map<char, SDL_Rect> my_dictionary = dictionary->getDictionary();
     SDL_Rect score_pos{34, 870, 14, 14};
     std::string score_str{"SCORE " + std::to_string(score) + " PT" + (score > 1 ? "S" : "")};
     dictionary->drawText(plancheSprites, win_surf, score_pos, score_str);
 
+    // Draw "Ready" at the beginning of the game when Pacman is not launched
     if (!launched) {
         SDL_Rect ready_pos = {265, 485, 20, 20};
         std::string ready_str{"READY!"};
         dictionary->drawText(plancheSprites, win_surf, ready_pos, ready_str);
     }
 
+    // Draw the lives
     SDL_Rect lives_pos{580, 865, 28, 28};
     SDL_Rect lives{168, 75, 14, 14};
     SDL_BlitScaled(plancheSprites, &lives, win_surf, &lives_pos);
@@ -274,7 +277,7 @@ void Game::draw() {
         SDL_BlitScaled(plancheSprites, &lives, win_surf, &lives_pos);
     }
 
-    // score
+    // Draw the bonus
     if (count >= 2000) {
         if (count == 2000) {
             bonus = std::make_unique<Bonus>();
@@ -347,8 +350,10 @@ bool Game::gameOver() {
     // transparent color
     SDL_SetColorKey(plancheSprites, true, 0);
 
+    // Pacman die animation
     pacman->die(plancheSprites, src_bg_dotless, win_surf, bg, pWindow);
 
+    // Map blinking
     for (int i{0}; i < 3; i++) {
         SDL_BlitScaled(plancheSprites, &src_bg_dotless, win_surf, &bg);
         SDL_UpdateWindowSurface(pWindow);
@@ -361,6 +366,7 @@ bool Game::gameOver() {
 
     SDL_Delay(500);
 
+    // Game over screen
     if (pacman->getLives() == 0) {
         std::cout << "GAME OVER" << std::endl;
         std::cout << "Score: " << score << std::endl;
@@ -378,6 +384,7 @@ bool Game::gameOver() {
         std::string game_over_str{"GAME OVER !"};
         dictionary->drawText(plancheSprites, win_surf, game_over_pos, game_over_str);
 
+        // Center the score
         int x_score = 0;
         switch (std::to_string(score).length()) {
         case 2:
@@ -464,6 +471,7 @@ void Game::nextLevel(std::array<std::shared_ptr<Ghost>, 4> &ghosts, std::unique_
     // transparent color
     SDL_SetColorKey(plancheSprites, true, 0);
 
+    // Map blinking
     for (int i{0}; i < 3; i++) {
         SDL_BlitScaled(plancheSprites, &src_bg_dotless, win_surf, &bg);
         SDL_UpdateWindowSurface(pWindow);
@@ -475,6 +483,7 @@ void Game::nextLevel(std::array<std::shared_ptr<Ghost>, 4> &ghosts, std::unique_
     }
 
     SDL_Delay(500);
+    // Animation on some level transitions
     switch (level) {
     case 3:
         level2To3();
