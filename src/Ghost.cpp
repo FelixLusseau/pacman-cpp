@@ -74,7 +74,7 @@ void Ghost::move(const Uint8 *keys, const int animation, const std::unique_ptr<M
             goal_.w = tailleCaseX;
             goal_.h = tailleCaseY;
             choosePath(goal_, directions, (float)bg.h);
-        } else if (status_ != Status::stay_jail && status_ != Status::eyes) {
+        } else if (status_ != Status::stay_jail ) {
             goal_.x = 10 * tailleCaseX;
             goal_.y = 12 * tailleCaseY;
             goal_.w = tailleCaseX;
