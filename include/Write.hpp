@@ -26,7 +26,7 @@ class Write {
      * @param pos
      * @param text
      */
-    void drawText(SDL_Surface *plancheSprites, SDL_Surface *win_surf, SDL_Rect *pos, const std::string text);
+    void drawText(SDL_Surface *plancheSprites, SDL_Surface *win_surf, SDL_Rect &pos, const std::string text);
 };
 
 #endif

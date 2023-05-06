@@ -59,8 +59,6 @@ Game::Game() {
                 int x = static_cast<int>(j * pX + (pX / 4));
                 dots.push_back(std::make_unique<Dot>(x, y, TypeDot::Simple));
 
-                // std::cout << "dot: " << i << " " << j << " " << x << " " << y << std::endl;
-
             } else if (thisMap[i][j] == Tile::PowerPellet) {
 
                 int y = static_cast<int>(i * pY + (pY / 4) - 4);
@@ -97,7 +95,7 @@ int Game::start() {
     std::map<char, SDL_Rect> my_dictionary = dictionary->getDictionary();
     SDL_Rect press_pos{110, 400, 22, 22};
     std::string press_str{"PRESS S TO START !"};
-    dictionary->drawText(plancheSprites, win_surf, &press_pos, press_str);
+    dictionary->drawText(plancheSprites, win_surf, press_pos, press_str);
 
     SDL_Rect namco{27, 77, 61, 9};
     SDL_Rect namcoScale{215, 700, 244, 36};
@@ -105,10 +103,12 @@ int Game::start() {
 
     SDL_Rect authors{10, 850, 10, 10};
     std::string authors_str{"BY LOUISE COUTURE AND FELIX LUSSEAU"};
-    dictionary->drawText(plancheSprites, win_surf, &authors, authors_str);
+    dictionary->drawText(plancheSprites, win_surf, authors, authors_str);
 
     SDL_UpdateWindowSurface(pWindow);
     SDL_Delay(500);
+
+    bool quit{false};
     while (!start) {
         SDL_Event event;
         while (!start && SDL_PollEvent(&event)) {
@@ -116,6 +116,11 @@ int Game::start() {
             const Uint8 *keys = SDL_GetKeyboardState(&nbk);
             if (keys[SDL_SCANCODE_S]) {
                 start = true;
+            }
+            if (keys[SDL_SCANCODE_ESCAPE]) {
+                start = true;
+                quit = true;
+                break;
             }
             switch (event.type) {
             case SDL_QUIT:
@@ -129,7 +134,6 @@ int Game::start() {
     }
 
     // BOUCLE PRINCIPALE
-    bool quit{false};
     while (!quit) {
         SDL_Event event;
         while (!quit && SDL_PollEvent(&event)) {
@@ -158,8 +162,6 @@ int Game::start() {
             }
             fantom->move(NULL, animation, map, bg);
 
-            // std::cout << fantom->getPosition()->x << " " << fantom->getPosition()->y << std::endl;
-
             // collison fantome / pacman
             if (abs(pacman->getPosition().x - fantom->getPosition().x) < fantom->getPosition().w &&
                 abs(pacman->getPosition().y - fantom->getPosition().y) < fantom->getPosition().h) {
@@ -171,7 +173,6 @@ int Game::start() {
 
                 // fantome vulnérable
                 if (Ghost::idle && fantom->getStatus() != Status::eaten) {
-                    // std::cout << score;
                     ghosts_eaten++;
                     switch (ghosts_eaten) {
                     case 1:
@@ -187,9 +188,7 @@ int Game::start() {
                         score += 1600;
                         break;
                     }
-                    // std::cout << " " << score << std::endl;
                     fantom->setStatus(Status::eaten);
-                    // fantom->set_speed(2);
                     break;
                 }
 
@@ -223,6 +222,11 @@ int Game::start() {
                 if (keys[SDL_SCANCODE_LEFT] || keys[SDL_SCANCODE_RIGHT] || keys[SDL_SCANCODE_UP] || keys[SDL_SCANCODE_DOWN]) {
                     launched = true;
                 }
+                if (keys[SDL_SCANCODE_ESCAPE]) {
+                    launched = true;
+                    quit = true;
+                    break;
+                }
                 switch (event.type) {
                 case SDL_QUIT:
                     launched = true;
@@ -254,12 +258,12 @@ void Game::draw() {
     std::map<char, SDL_Rect> my_dictionary = dictionary->getDictionary();
     SDL_Rect score_pos{34, 870, 14, 14};
     std::string score_str{"SCORE " + std::to_string(score) + " PT" + (score > 1 ? "S" : "")};
-    dictionary->drawText(plancheSprites, win_surf, &score_pos, score_str);
+    dictionary->drawText(plancheSprites, win_surf, score_pos, score_str);
 
     if (!launched) {
         SDL_Rect ready_pos = {265, 485, 20, 20};
         std::string ready_str{"READY!"};
-        dictionary->drawText(plancheSprites, win_surf, &ready_pos, ready_str);
+        dictionary->drawText(plancheSprites, win_surf, ready_pos, ready_str);
     }
 
     SDL_Rect lives_pos{580, 865, 28, 28};
@@ -314,8 +318,6 @@ void Game::draw() {
         ghosts[2]->setStatus(Status::chase);
     }
 
-    // int animation{this->changeSprite()};
-
     // choix du fantome
     for (Ghost *fantom : ghosts) {
         // affichage fantome
@@ -354,7 +356,6 @@ bool Game::gameOver() {
     pacman->die(plancheSprites, &src_bg_dotless, win_surf, &bg, pWindow);
 
     for (int i{0}; i < 3; i++) {
-
         SDL_BlitScaled(plancheSprites, &src_bg_dotless, win_surf, &bg);
         SDL_UpdateWindowSurface(pWindow);
         SDL_Delay(500);
@@ -381,7 +382,7 @@ bool Game::gameOver() {
         std::map<char, SDL_Rect> my_dictionary = dictionary->getDictionary();
         SDL_Rect game_over_pos{100, 300, 42, 42};
         std::string game_over_str{"GAME OVER !"};
-        dictionary->drawText(plancheSprites, win_surf, &game_over_pos, game_over_str);
+        dictionary->drawText(plancheSprites, win_surf, game_over_pos, game_over_str);
 
         int x_score = 0;
         switch (std::to_string(score).length()) {
@@ -400,11 +401,11 @@ bool Game::gameOver() {
         }
         SDL_Rect score_pos{x_score, 450, 16, 16};
         std::string score_str{"YOUR SCORE IS " + std::to_string(score) + " POINT" + (score > 1 ? "S" : "")};
-        dictionary->drawText(plancheSprites, win_surf, &score_pos, score_str);
+        dictionary->drawText(plancheSprites, win_surf, score_pos, score_str);
 
         SDL_Rect exit_pos{170, 580, 12, 12};
         std::string exit_str{"PRESS ANY KEY TO EXIT"};
-        dictionary->drawText(plancheSprites, win_surf, &exit_pos, exit_str);
+        dictionary->drawText(plancheSprites, win_surf, exit_pos, exit_str);
 
         SDL_Rect namco{27, 77, 61, 9};
         SDL_Rect namcoScale{215, 700, 244, 36};
@@ -412,7 +413,7 @@ bool Game::gameOver() {
 
         SDL_Rect authors{10, 850, 10, 10};
         std::string authors_str{"BY LOUISE COUTURE AND FELIX LUSSEAU"};
-        dictionary->drawText(plancheSprites, win_surf, &authors, authors_str);
+        dictionary->drawText(plancheSprites, win_surf, authors, authors_str);
 
         SDL_UpdateWindowSurface(pWindow);
         SDL_Delay(500);
@@ -421,6 +422,9 @@ bool Game::gameOver() {
             while (!key_pressed && SDL_PollEvent(&event)) {
                 int nbk;
                 const Uint8 *keys{SDL_GetKeyboardState(&nbk)};
+                if (keys[SDL_SCANCODE_ESCAPE]) {
+                    continue;
+                }
                 for (int i{0}; i < nbk; i++) {
                     if (keys[i]) {
                         key_pressed = true;
@@ -467,7 +471,6 @@ void Game::nextLevel(Ghost **ghosts, std::unique_ptr<ThePacman> &pacman, SDL_Rec
     SDL_SetColorKey(plancheSprites, true, 0);
 
     for (int i{0}; i < 3; i++) {
-
         SDL_BlitScaled(plancheSprites, &src_bg_dotless, win_surf, &bg);
         SDL_UpdateWindowSurface(pWindow);
         SDL_Delay(250);

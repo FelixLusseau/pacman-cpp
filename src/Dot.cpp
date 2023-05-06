@@ -34,8 +34,6 @@ int Dot::getEat(const SDL_Rect &pac_position) {
 
     int score{0};
 
-    // float side{(static_cast<float>(pac_position->w) / 2)};
-
     float origineX{static_cast<float>(pac_position.x + (pac_position.w / 2))};
     float origineY{static_cast<float>(pac_position.y + (pac_position.h / 2))};
 
@@ -47,14 +45,10 @@ int Dot::getEat(const SDL_Rect &pac_position) {
     if (distance < (pac_position.w / 2.25)) {
         exist_ = false;
         score = point;
-        // std::cout << "get eaten!, +" << score << " x:" << position_.x << " y:" << position_.y << std::endl;
-        // std::cout << "pacman x:" << origineX << " y:" << origineY << std::endl;
         if (type == TypeDot::Big) {
-            // std::cout << "big dot eaten" << std::endl;
             Ghost::idle = true;
             Game::timer_begin = clock();
         }
-
         nb_dot_eaten_++;
     }
 

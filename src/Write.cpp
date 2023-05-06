@@ -50,10 +50,9 @@ Write::Write() {
     dictionary['\''] = {108, 53, 7, 7};
 };
 
-// SDL_Rect Write::get(char c) { return dictionary[c]; }
-void Write::drawText(SDL_Surface *plancheSprites, SDL_Surface *win_surf, SDL_Rect *pos, const std::string text) {
+void Write::drawText(SDL_Surface *plancheSprites, SDL_Surface *win_surf, SDL_Rect &pos, const std::string text) {
     for (auto e : text) {
-        SDL_BlitScaled(plancheSprites, &dictionary[e], win_surf, pos);
-        pos->x += pos->w + 4;
+        SDL_BlitScaled(plancheSprites, &dictionary[e], win_surf, &pos);
+        pos.x += pos.w + 4;
     }
 }
