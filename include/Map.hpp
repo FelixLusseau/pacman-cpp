@@ -16,11 +16,27 @@ class Map {
     long unsigned int ligne_;
 
   public:
-    Map(SDL_Rect bg);
+    Map(const SDL_Rect bg);
 
+    /**
+     * @brief Get the Map object
+     *
+     * @return std::vector<std::vector<Tile>>&
+     */
     inline std::vector<std::vector<Tile>> &getMap(void) { return map; }
 
+    /**
+     * @brief Get the Width of the map
+     *
+     * @return int
+     */
     inline int getWidth(void) const { return width_; }
+
+    /**
+     * @brief Get the Height of the map
+     *
+     * @return int
+     */
     inline int getHeight(void) const { return height_; }
 };
 

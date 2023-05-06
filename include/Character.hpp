@@ -29,7 +29,7 @@ class Character {
     SDL_Scancode prec_key;
 
     /* vitesse du personnage */
-    int speed;
+    float speed;
 
     /* données de la carte: hauteur et longueur d'une case*/
     int height;
@@ -37,10 +37,10 @@ class Character {
 
   public:
     Character();
-    Character(int px, int py);
+    Character(const int px, const int py);
     virtual ~Character();
 
-    inline SDL_Rect &getSprite(int i) { return sprite_[i]; };
+    inline SDL_Rect &getSprite(const int i) { return sprite_[i]; };
 
     inline SDL_Rect &getPosition() { return position_; };
 
@@ -50,16 +50,16 @@ class Character {
     inline SDL_Rect &get_currSprite() { return cur_sprite_; };
 
     /* renvoit la dernière touche du clavier pressé = direction*/
-    inline SDL_Scancode get_key() { return prec_key; };
+    inline SDL_Scancode get_key() const { return prec_key; };
 
-    inline void set_speed(int newSpeed) { speed = newSpeed; };
+    inline void set_speed(const float newSpeed) { speed = newSpeed; };
 
-    int changePosition(int x, int y, std::vector<std::vector<Tile>> &map, SDL_Rect bg);
+    int changePosition(const int x, const int y, const std::vector<std::vector<Tile>> &map, const SDL_Rect bg);
 
-    inline SDL_Rect get_initPosition() { return init_position_; };
+    inline SDL_Rect get_initPosition() const { return init_position_; };
 
     /*méthode de mouvement */
-    virtual void move(const Uint8 *keys, int animation, std::unique_ptr<Map> &map, SDL_Rect bg) = 0;
+    virtual void move(const Uint8 *keys, const int animation, const std::unique_ptr<Map> &map, const SDL_Rect bg) = 0;
 };
 
 #endif

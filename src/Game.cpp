@@ -41,7 +41,8 @@ Game::Game() {
     ghosts[3] = new Inky{pX, pY, ghosts[0]};
     Ghost::timer_begin_ghost = clock();
 
-    score = {0};
+    score = 0;
+    count = 0;
 
     launched = false;
 
@@ -56,7 +57,7 @@ Game::Game() {
 
                 int y = static_cast<int>(i * pY + (pY / 4));
                 int x = static_cast<int>(j * pX + (pX / 4));
-                dots.push_back(new Dot{x, y, TypeDot::Simple});
+                dots.push_back(std::make_unique<Dot>(x, y, TypeDot::Simple));
 
                 // std::cout << "dot: " << i << " " << j << " " << x << " " << y << std::endl;
 
@@ -65,7 +66,7 @@ Game::Game() {
                 int y = static_cast<int>(i * pY + (pY / 4) - 4);
                 int x = static_cast<int>(j * pX + (pX / 4) - 4);
 
-                dots.push_back(new Dot{x, y, TypeDot::Big});
+                dots.push_back(std::make_unique<Dot>(x, y, TypeDot::Big));
 
                 // std::cout << "dot: " << i << " " << j << " " << x << " " << y << std::endl;
             }
@@ -123,8 +124,8 @@ int Game::start() {
             default:
                 break;
             }
+            SDL_Delay(16);
         }
-        // std::cout << "Appuyer sur une touche pour commencer" << std::endl;
     }
 
     // BOUCLE PRINCIPALE
@@ -139,6 +140,7 @@ int Game::start() {
             default:
                 break;
             }
+            SDL_Delay(16);
         }
 
         // Gestion du clavier
@@ -239,6 +241,7 @@ int Game::start() {
         SDL_Delay(16); // utiliser SDL_GetTicks64() pour plus de precisions
     }
     SDL_FreeSurface(plancheSprites);
+    SDL_DestroyWindow(pWindow);
     SDL_Quit(); // ON SORT
     return 0;
 }
@@ -325,7 +328,6 @@ void Game::draw() {
     SDL_UpdateWindowSurface(pWindow);
 
     count++;
-    // std::cout << count << std::endl;
 }
 
 int Game::changeSprite() {

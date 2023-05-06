@@ -12,8 +12,8 @@ class Inky : public Ghost {
     Ghost *blinky_;
 
   public:
-    Inky(int PixelX, int PixelY);
-    Inky(int PixelX, int PixelY, Ghost *blinky);
+    Inky(const int PixelX, const int PixelY);
+    Inky(const int PixelX, const int PixelY, Ghost *blinky);
 
     void chase(const std::unique_ptr<ThePacman> &pacman, const std::vector<std::vector<Tile>> &map, const SDL_Rect bg) override;
 };

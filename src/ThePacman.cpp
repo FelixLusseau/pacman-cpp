@@ -1,6 +1,6 @@
 #include "../include/ThePacman.hpp"
 
-ThePacman::ThePacman(int x, int y) : Character() {
+ThePacman::ThePacman(const int x, const int y) : Character() {
     /* right */
     sprite_[0] = {18, 90, 16, 16};
     sprite_[1] = {34, 90, 14, 16};
@@ -36,7 +36,7 @@ ThePacman::ThePacman(int x, int y) : Character() {
     speed = 2;
 }
 
-void ThePacman::move(const Uint8 *keys, int animation, std::unique_ptr<Map> &map, SDL_Rect bg) {
+void ThePacman::move(const Uint8 *keys, const int animation, const std::unique_ptr<Map> &map, const SDL_Rect bg) {
 
     // tailles d'une case de la carte
     int tailleCaseX{map->getWidth()};
