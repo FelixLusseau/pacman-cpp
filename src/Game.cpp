@@ -124,6 +124,7 @@ int Game::start() {
             switch (event.type) {
             case SDL_QUIT:
                 start = true;
+                quit = true;
                 break;
             default:
                 break;
