@@ -28,10 +28,10 @@ class Game {
     SDL_Window *pWindow;
     SDL_Surface *win_surf;
     SDL_Surface *plancheSprites;
-    SDL_Rect src_bg; // x,y, w,h (0,0) en haut a gauche
+    SDL_Rect src_bg; // x,y, w,h (0,0) at top-left
     SDL_Rect src_bg_dotless;
     SDL_Rect src_bg_white;
-    SDL_Rect bg; // ici scale x4
+    SDL_Rect bg; // scale x4
 
     int count;
     int score;
