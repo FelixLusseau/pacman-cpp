@@ -222,11 +222,6 @@ int Game::start() {
                 if (keys[SDL_SCANCODE_LEFT] || keys[SDL_SCANCODE_RIGHT] || keys[SDL_SCANCODE_UP] || keys[SDL_SCANCODE_DOWN]) {
                     launched = true;
                 }
-                if (keys[SDL_SCANCODE_ESCAPE]) {
-                    launched = true;
-                    quit = true;
-                    break;
-                }
                 switch (event.type) {
                 case SDL_QUIT:
                     launched = true;
