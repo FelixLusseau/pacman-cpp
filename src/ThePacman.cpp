@@ -78,17 +78,11 @@ void ThePacman::move(const Uint8 *keys, const int animation, const std::unique_p
         if (changePosition(position_.x + mv_x, position_.y + mv_y, map->getMap(), bg))
             cur_sprite_ = sprite_[6 + animation];
     }
-
-    // cur_sprite_=sp;
-    // this->changePosition(position_.x + mv_x, position_.y + mv_y, map, bg);
-
-    // std::cout<<position_.x<<" "<<position_.y<<std::endl;
 }
 
 void ThePacman::die(SDL_Surface *plancheSprites, SDL_Rect *src_bg, SDL_Surface *win_surf, SDL_Rect *bg, SDL_Window *pWindow) {
 
     int x{position_.x};
-    // int y{position_.y};
 
     for (int i{0}; i < 11; i++) { // animation
 

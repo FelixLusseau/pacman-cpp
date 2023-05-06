@@ -58,10 +58,6 @@ void Inky::chase(const std::unique_ptr<ThePacman> &pacman, const std::vector<std
     // taille de la case du sprite
     int size{(position_.w) / 2};
 
-    // origine = centre de la case du sprite et pas son coin gauche
-    /* int origineX{position_.x + size};
-    int origineY{position_.y + size}; */
-
     // Inky cherches à aller devant pacman en utilisant la possition de blinky
     SDL_Scancode pacMove{pacman->get_key()};
     int coeff{4}; // nombre de case devant pacman

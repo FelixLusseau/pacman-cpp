@@ -59,8 +59,6 @@ Game::Game() {
                 int x = static_cast<int>(j * pX + (pX / 4));
                 dots.push_back(std::make_unique<Dot>(x, y, TypeDot::Simple));
 
-                // std::cout << "dot: " << i << " " << j << " " << x << " " << y << std::endl;
-
             } else if (thisMap[i][j] == Tile::PowerPellet) {
 
                 int y = static_cast<int>(i * pY + (pY / 4) - 4);
@@ -164,8 +162,6 @@ int Game::start() {
             }
             fantom->move(NULL, animation, map, bg);
 
-            // std::cout << fantom->getPosition()->x << " " << fantom->getPosition()->y << std::endl;
-
             // collison fantome / pacman
             if (abs(pacman->getPosition().x - fantom->getPosition().x) < fantom->getPosition().w &&
                 abs(pacman->getPosition().y - fantom->getPosition().y) < fantom->getPosition().h) {
@@ -177,7 +173,6 @@ int Game::start() {
 
                 // fantome vulnérable
                 if (Ghost::idle && fantom->getStatus() != Status::eaten) {
-                    // std::cout << score;
                     ghosts_eaten++;
                     switch (ghosts_eaten) {
                     case 1:
@@ -193,9 +188,7 @@ int Game::start() {
                         score += 1600;
                         break;
                     }
-                    // std::cout << " " << score << std::endl;
                     fantom->setStatus(Status::eaten);
-                    // fantom->set_speed(2);
                     break;
                 }
 
@@ -325,8 +318,6 @@ void Game::draw() {
         ghosts[2]->setStatus(Status::chase);
     }
 
-    // int animation{this->changeSprite()};
-
     // choix du fantome
     for (Ghost *fantom : ghosts) {
         // affichage fantome
@@ -431,6 +422,9 @@ bool Game::gameOver() {
             while (!key_pressed && SDL_PollEvent(&event)) {
                 int nbk;
                 const Uint8 *keys{SDL_GetKeyboardState(&nbk)};
+                if (keys[SDL_SCANCODE_ESCAPE]) {
+                    continue;
+                }
                 for (int i{0}; i < nbk; i++) {
                     if (keys[i]) {
                         key_pressed = true;
@@ -477,7 +471,6 @@ void Game::nextLevel(Ghost **ghosts, std::unique_ptr<ThePacman> &pacman, SDL_Rec
     SDL_SetColorKey(plancheSprites, true, 0);
 
     for (int i{0}; i < 3; i++) {
-
         SDL_BlitScaled(plancheSprites, &src_bg_dotless, win_surf, &bg);
         SDL_UpdateWindowSurface(pWindow);
         SDL_Delay(250);

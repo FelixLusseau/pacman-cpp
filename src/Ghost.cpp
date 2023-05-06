@@ -7,8 +7,6 @@ bool Ghost::idle = false;
 clock_t Ghost::timer_begin_ghost = 0;
 clock_t Ghost::timer_end_ghost = 0;
 
-// void Ghost::setIdle(bool idle) { this->idle = idle; }
-
 Ghost::Ghost() : Character() {
     blue_sprite_[0] = {3, 195, 16, 16};
     blue_sprite_[1] = {20, 195, 16, 16};
@@ -74,7 +72,7 @@ void Ghost::move(const Uint8 *keys, const int animation, const std::unique_ptr<M
             goal_.w = tailleCaseX;
             goal_.h = tailleCaseY;
             choosePath(goal_, directions, (float)bg.h);
-        } else if (status_ != Status::stay_jail ) {
+        } else if (status_ != Status::stay_jail) {
             goal_.x = 10 * tailleCaseX;
             goal_.y = 12 * tailleCaseY;
             goal_.w = tailleCaseX;
@@ -106,7 +104,7 @@ void Ghost::move(const Uint8 *keys, const int animation, const std::unique_ptr<M
             goal_.h = corner_.h;
         }
         // mode chase
-         if ((timer_end_ghost - timer_begin_ghost) % 12000000 > 3000000 && !idle && status_ == Status::flee) {
+        if ((timer_end_ghost - timer_begin_ghost) % 12000000 > 3000000 && !idle && status_ == Status::flee) {
             status_ = Status::chase;
         }
         // on a été mangé on retourne à sa position initiale
@@ -314,19 +312,15 @@ void Ghost::choosePath(const SDL_Rect Goal, const std::vector<Tile> directions, 
 
     switch (best) {
     case 0:
-        // std::cout<<"best:down"<<std::endl;
         prec_key = SDL_SCANCODE_DOWN;
         break;
     case 1:
-        // std::cout<<"best:up"<<std::endl;
         prec_key = SDL_SCANCODE_UP;
         break;
     case 2:
-        // std::cout<<"best:right"<<std::endl;
         prec_key = SDL_SCANCODE_RIGHT;
         break;
     case 3:
-        // std::cout<<"best:left"<<std::endl;
         prec_key = SDL_SCANCODE_LEFT;
         break;
     }

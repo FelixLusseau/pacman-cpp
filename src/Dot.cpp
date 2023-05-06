@@ -34,8 +34,6 @@ int Dot::getEat(const SDL_Rect &pac_position) {
 
     int score{0};
 
-    // float side{(static_cast<float>(pac_position->w) / 2)};
-
     float origineX{static_cast<float>(pac_position.x + (pac_position.w / 2))};
     float origineY{static_cast<float>(pac_position.y + (pac_position.h / 2))};
 
