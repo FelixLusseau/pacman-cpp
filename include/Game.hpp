@@ -18,7 +18,7 @@
 
 class Game {
   protected:
-    Ghost *ghosts[4];
+    std::array<std::shared_ptr<Ghost>, 4> ghosts;
     std::unique_ptr<ThePacman> pacman;
 
     std::unique_ptr<Map> map;
@@ -79,7 +79,7 @@ class Game {
      * @param ghosts
      * @param pacman
      */
-    void resetPositions(Ghost **ghosts, std::unique_ptr<ThePacman> &pacman);
+    void resetPositions(std::array<std::shared_ptr<Ghost>, 4> &ghosts, std::unique_ptr<ThePacman> &pacman);
 
     /**
      * @brief Change the level of the game
@@ -88,7 +88,7 @@ class Game {
      * @param pacman
      * @param bg
      */
-    void nextLevel(Ghost **ghosts, std::unique_ptr<ThePacman> &pacman, SDL_Rect bg);
+    void nextLevel(std::array<std::shared_ptr<Ghost>, 4> &ghosts, std::unique_ptr<ThePacman> &pacman, SDL_Rect bg);
 
     /**
      * @brief An animation between level 2 and 3

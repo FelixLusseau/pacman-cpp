@@ -22,7 +22,7 @@ Inky::Inky(const int PixelX, const int PixelY) : Ghost() {
     corner_ = {PixelX * 18, PixelY * 22, PixelX, PixelY};
 }
 
-Inky::Inky(const int PixelX, const int PixelY, Ghost *blinky) : Ghost() {
+Inky::Inky(const int PixelX, const int PixelY, std::shared_ptr<Ghost> blinky) : Ghost() {
     blinky_ = blinky;
 
     /* right */

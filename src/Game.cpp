@@ -32,10 +32,10 @@ Game::Game() {
 
     pacman = std::make_unique<ThePacman>(pX, pY);
 
-    ghosts[0] = new Blinky{pX, pY};
-    ghosts[1] = new Pinky{pX, pY};
-    ghosts[2] = new Clyde{pX, pY};
-    ghosts[3] = new Inky{pX, pY, ghosts[0]};
+    ghosts[0] = std::make_shared<Blinky>(pX, pY);
+    ghosts[1] = std::make_shared<Pinky>(pX, pY);
+    ghosts[2] = std::make_shared<Clyde>(pX, pY);
+    ghosts[3] = std::make_shared<Inky>(pX, pY, ghosts[0]);
     Ghost::timer_begin_ghost = clock();
 
     score = 0;
@@ -149,7 +149,7 @@ int Game::start() {
 
         pacman->move(keys, animation, map, bg);
 
-        for (Ghost *fantom : ghosts) {
+        for (std::shared_ptr<Ghost> fantom : ghosts) {
 
             if (fantom->getStatus() == Status::chase) {
                 fantom->chase(pacman, map->getMap(), bg);
@@ -308,7 +308,7 @@ void Game::draw() {
     }
 
     // draw the ghosts
-    for (Ghost *fantom : ghosts) {
+    for (std::shared_ptr<Ghost> fantom : ghosts) {
         SDL_BlitScaled(plancheSprites, &fantom->get_currSprite(), win_surf, &fantom->getPosition());
     }
 
@@ -432,7 +432,7 @@ bool Game::gameOver() {
     return true;
 }
 
-void Game::resetPositions(Ghost **ghosts, std::unique_ptr<ThePacman> &pacman) {
+void Game::resetPositions(std::array<std::shared_ptr<Ghost>, 4> &ghosts, std::unique_ptr<ThePacman> &pacman) {
     pacman->setPosition(pacman->get_initPosition());
     for (int i{0}; i < 4; i++) {
         ghosts[i]->setPosition(ghosts[i]->get_initPosition());
@@ -445,7 +445,7 @@ void Game::resetPositions(Ghost **ghosts, std::unique_ptr<ThePacman> &pacman) {
     count = 0;
 }
 
-void Game::nextLevel(Ghost **ghosts, std::unique_ptr<ThePacman> &pacman, SDL_Rect bg) {
+void Game::nextLevel(std::array<std::shared_ptr<Ghost>, 4> &ghosts, std::unique_ptr<ThePacman> &pacman, SDL_Rect bg) {
     level++;
     resetPositions(ghosts, pacman);
     for (long unsigned int i{0}; i < dots.size(); i++) {
