@@ -9,8 +9,8 @@
 class ThePacman : public Character {
   private:
     std::array<SDL_Rect, 11> die_animation;
-    int lives_; // number of lives of Pacman
-    std::array<bool, SDL_NUM_SCANCODES> key_buffer{false};
+    int lives_;                                            // number of lives of Pacman
+    std::array<bool, SDL_NUM_SCANCODES> key_buffer{false}; // Buffer of pressed keys
 
   public:
     ThePacman(const int x, const int y);

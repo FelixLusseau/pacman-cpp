@@ -52,7 +52,7 @@ void ThePacman::move(const Uint8 *keys, const int animation, const std::unique_p
     int mv_x{0};
     int mv_y{0};
 
-    // Buffer of keys pressed
+    // Buffer of pressed keys
     for (int i{0}; i < SDL_NUM_SCANCODES; i++) {
         if (keys[i])
             key_buffer[i] = true;
