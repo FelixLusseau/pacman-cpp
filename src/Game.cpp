@@ -16,10 +16,10 @@ Game::Game() {
 
     bg = {0, 0, 672, 864}; // scale x4
 
-    // appearence of th map
-    src_bg = {201, 4, 168, 216}; // x,y, w,h (0,0) at the top left
-    src_bg_dotless = {201 + 166 + 3, 4, 168, 216};
-    src_bg_white = {201 + 2 * 166 + 8, 4, 168, 216};
+    // appearence of the map
+    src_bg = {201, 4, 166, 216}; // x,y, w,h (0,0) at the top left
+    src_bg_dotless = {201 + 166 + 3, 4, 166, 216};
+    src_bg_white = {201 + 2 * 166 + 8, 4, 166, 216};
     src_bg = src_bg_dotless;
 
     SDL_SetColorKey(plancheSprites, false, 0);
