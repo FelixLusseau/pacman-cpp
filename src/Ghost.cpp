@@ -67,7 +67,7 @@ void Ghost::move(const Uint8 *keys, int animation, std::unique_ptr<Map> &map, SD
             out_jail_ = false;
         }
         // sortie de prison
-        if ((status_ != Status::stay_jail) && position_.x == (10 * tailleCaseX)) {
+        else if ((status_ != Status::stay_jail) && position_.x == (10 * tailleCaseX)) {
             goal_.x = 10 * tailleCaseX;
             goal_.y = 10 * tailleCaseY;
             goal_.w = tailleCaseX;
