@@ -34,9 +34,21 @@ Ghost::Ghost() : Character() {
 
     eaten_score_timer_ = 0;
     last_prec_key = SDL_SCANCODE_UNKNOWN;
+
+    wasNotIdle=true;
 }
 
 void Ghost::move(const Uint8 *keys, const int animation, const std::unique_ptr<Map> &map, const SDL_Rect bg) {
+
+    // idle= vulnérable à pacman, demi tour quand le deviennent
+    if(idle && wasNotIdle){
+        wasNotIdle=false;
+        turnAround();
+    }
+    if(idle==false && wasNotIdle==false){
+        wasNotIdle=true;
+    }
+
     (void)keys;
 
     // tailles d'une case de la carte
@@ -332,4 +344,16 @@ void Ghost::choosePath(const SDL_Rect Goal, const std::vector<Tile> directions, 
     }
 
     last_prec_key = prec_key;
+}
+
+void Ghost::turnAround(){
+    if(prec_key==SDL_SCANCODE_DOWN){
+        prec_key=SDL_SCANCODE_UP;
+    }else if(prec_key==SDL_SCANCODE_UP){
+        prec_key=SDL_SCANCODE_DOWN;
+    }else if(prec_key==SDL_SCANCODE_LEFT){
+        prec_key=SDL_SCANCODE_RIGHT;
+    }else if(prec_key==SDL_SCANCODE_RIGHT){
+        prec_key=SDL_SCANCODE_LEFT;
+    }
 }

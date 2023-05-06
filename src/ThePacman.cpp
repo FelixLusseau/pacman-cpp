@@ -57,24 +57,28 @@ void ThePacman::move(const Uint8 *keys, const int animation, const std::unique_p
     if ((keys[SDL_SCANCODE_RIGHT] || prec_key == SDL_SCANCODE_RIGHT) && map->getMap()[coinY[0]][coinX[0] + 1] != Tile::Wall) {
         prec_key = SDL_SCANCODE_RIGHT;
         mv_x = speed;
+        position_.y =coinY[0]*tailleCaseY;
         if (changePosition(position_.x + mv_x, position_.y + mv_y, map->getMap(), bg))
             cur_sprite_ = sprite_[0 + animation];
     }
     if ((keys[SDL_SCANCODE_LEFT] || prec_key == SDL_SCANCODE_LEFT) && map->getMap()[coinY[0]][coinX[1] - 1] != Tile::Wall) {
         prec_key = SDL_SCANCODE_LEFT;
         mv_x = -speed;
+        position_.y =coinY[0]*tailleCaseY;
         if (changePosition(position_.x + mv_x, position_.y + mv_y, map->getMap(), bg))
             cur_sprite_ = sprite_[2 + animation];
     }
     if ((keys[SDL_SCANCODE_DOWN] || prec_key == SDL_SCANCODE_DOWN) && map->getMap()[coinY[0] + 1][coinX[0]] != Tile::Wall) {
         prec_key = SDL_SCANCODE_DOWN;
         mv_y = speed;
+        position_.x =coinX[0]*tailleCaseX;
         if (changePosition(position_.x + mv_x, position_.y + mv_y, map->getMap(), bg))
             cur_sprite_ = sprite_[4 + animation];
     }
     if ((keys[SDL_SCANCODE_UP] || prec_key == SDL_SCANCODE_UP) && map->getMap()[coinY[1] - 1][coinX[0]] != Tile::Wall) {
         prec_key = SDL_SCANCODE_UP;
         mv_y = -speed;
+        position_.x =coinX[0]*tailleCaseX;
         if (changePosition(position_.x + mv_x, position_.y + mv_y, map->getMap(), bg))
             cur_sprite_ = sprite_[6 + animation];
     }

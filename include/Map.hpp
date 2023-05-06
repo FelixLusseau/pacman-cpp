@@ -26,18 +26,33 @@ class Map {
     inline std::vector<std::vector<Tile>> &getMap(void) { return map; }
 
     /**
-     * @brief Get the Width of the map
+     * @brief Get the Width of a case of the map
      *
      * @return int
      */
     inline int getWidth(void) const { return width_; }
 
     /**
-     * @brief Get the Height of the map
+     * @brief Get the Height of a case of the map
      *
      * @return int
      */
     inline int getHeight(void) const { return height_; }
+
+
+    /**
+     * @brief Get the colunm  of the map
+     *
+     * @return int
+     */
+    inline int getColunm(void) const { return colonne_; }
+
+    /**
+     * @brief Get the Line of the map
+     *
+     * @return int
+     */
+    inline int getLine(void) const { return ligne_; }
 };
 
 #endif

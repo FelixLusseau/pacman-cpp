@@ -26,6 +26,8 @@ class Ghost : public Character {
     /* le score augmente avec le nombre de fantome mangé */
     int eaten_score_timer_;
 
+    bool wasNotIdle;
+
     std::array<SDL_Rect, 2> blue_sprite_;
     std::array<SDL_Rect, 2> white_sprite_;
     std::array<SDL_Rect, 4> eyes_sprite_;
@@ -33,6 +35,7 @@ class Ghost : public Character {
     SDL_Rect four_hundreds_sprite_;
     SDL_Rect eight_hundreds_sprite_;
     SDL_Rect sixteen_hundreds_sprite_;
+  
 
   public:
     static clock_t timer_begin_ghost, timer_end_ghost;
@@ -58,6 +61,9 @@ class Ghost : public Character {
 
     /* change key_prec selon la meilleur direction celon si on veut aller au Goal ou s'éloigné de Goal */
     void choosePath(const SDL_Rect Goal, const std::vector<Tile> directions, float min_init);
+
+    /* fantomes changent de direction quand deviennent vulnérable à pacman */
+    void turnAround(void);
 };
 
 #endif
