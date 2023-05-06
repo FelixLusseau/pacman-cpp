@@ -33,9 +33,14 @@ Game::Game() {
     pacman = std::make_unique<ThePacman>(pX, pY);
 
     ghosts[0] = std::make_shared<Blinky>(pX, pY);
+    blinky = ghosts[0];
     ghosts[1] = std::make_shared<Pinky>(pX, pY);
+    pinky = ghosts[1];
     ghosts[2] = std::make_shared<Clyde>(pX, pY);
-    ghosts[3] = std::make_shared<Inky>(pX, pY, ghosts[0]);
+    clyde = ghosts[2];
+    ghosts[3] = std::make_shared<Inky>(pX, pY, blinky);
+    inky = ghosts[3];
+
     Ghost::timer_begin_ghost = clock();
 
     score = 0;
@@ -300,11 +305,11 @@ void Game::draw() {
         }
     }
     // release of Inky and Clyde
-    if (dots[0]->nb_dot_eaten_ >= 30 && ghosts[3]->getStatus() == Status::stay_jail) {
-        ghosts[3]->setStatus(Status::chase);
+    if (dots[0]->nb_dot_eaten_ >= 30 && inky->getStatus() == Status::stay_jail) {
+        inky->setStatus(Status::chase);
     }
-    if (dots[0]->nb_dot_eaten_ >= 60 && ghosts[2]->getStatus() == Status::stay_jail) {
-        ghosts[2]->setStatus(Status::chase);
+    if (dots[0]->nb_dot_eaten_ >= 60 && clyde->getStatus() == Status::stay_jail) {
+        clyde->setStatus(Status::chase);
     }
 
     // draw the ghosts
@@ -440,7 +445,7 @@ void Game::resetPositions(std::array<std::shared_ptr<Ghost>, 4> &ghosts, std::un
         ghosts[i]->set_outJail(false);
         ghosts[i]->set_speed(1);
     }
-    ghosts[0]->set_outJail(true); // Blinky already out of jail
+    blinky->set_outJail(true); // Blinky already out of jail
     launched = false;
     count = 0;
 }

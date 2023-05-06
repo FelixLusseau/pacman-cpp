@@ -19,6 +19,10 @@
 class Game {
   protected:
     std::array<std::shared_ptr<Ghost>, 4> ghosts;
+    std::shared_ptr<Ghost> blinky;
+    std::shared_ptr<Ghost> pinky;
+    std::shared_ptr<Ghost> inky;
+    std::shared_ptr<Ghost> clyde;
     std::unique_ptr<ThePacman> pacman;
 
     std::unique_ptr<Map> map;
