@@ -48,14 +48,7 @@ int Character::changePosition(const int x, const int y, const std::vector<std::v
         return 0;
     }
 
-    // Corridors
-    // if (futurX < origineX && map[futurY / tailleCaseY][(futurX - halfWidth) / tailleCaseX] == Tile::Corridor)
-    //     speed = speed / 2;
-
-    // if (futurX > origineX && map[futurY / tailleCaseY][(futurX + halfWidth) / tailleCaseX] == Tile::Corridor)
-    //     speed = speed / 2;
-
-    // collision wall
+    // wall collision
     if ((futurX < origineX && map[futurY / tailleCaseY][(futurX - halfWidth) / tailleCaseX] == Tile::Wall) ||
         (futurY < origineY && map[(futurY - halfWidth) / tailleCaseY][futurX / tailleCaseX] == Tile::Wall) ||
         (futurY > origineY && map[(futurY + halfWidth) / tailleCaseY][(futurX) / tailleCaseX] == Tile::Wall) ||
