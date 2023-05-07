@@ -40,25 +40,75 @@ class Character {
     Character(const int px, const int py);
     virtual ~Character();
 
+   /**
+   * @brief Get the Sprite object
+   * 
+   * @param i 
+   * @return SDL_Rect& 
+   */
     inline SDL_Rect &getSprite(const int i) { return sprite_[i]; };
 
+    /**
+     * @brief Get the Position object
+     * 
+     * @return SDL_Rect& 
+     */
     inline SDL_Rect &getPosition() { return position_; };
 
+    /**
+     * @brief Set the Position object
+     * 
+     * @param newPosition 
+     */
     inline void setPosition(SDL_Rect newPosition) { position_ = newPosition; };
 
-    /* sprite actuel */
+    /**
+     * @brief Get the current Sprite 
+     * 
+     * @return SDL_Rect& 
+     */
     inline SDL_Rect &get_currSprite() { return cur_sprite_; };
 
-    /* renvoit la dernière touche du clavier pressé = direction*/
+    /**
+     * @brief Get the prec_key object
+     * 
+     * @return SDL_Scancode 
+     */
     inline SDL_Scancode get_key() const { return prec_key; };
 
+    /**
+     * @brief Set the speed object
+     * 
+     * @param newSpeed 
+     */
     inline void set_speed(const float newSpeed) { speed = newSpeed; };
 
+    /**
+     * @brief change the position if it is allowed
+     * 
+     * @param x 
+     * @param y 
+     * @param map 
+     * @param bg 
+     * @return int 
+     */
     int changePosition(const int x, const int y, const std::vector<std::vector<Tile>> &map, const SDL_Rect bg);
 
+    /**
+     * @brief Get the initPosition object
+     * 
+     * @return SDL_Rect 
+     */
     inline SDL_Rect get_initPosition() const { return init_position_; };
 
-    /*méthode de mouvement */
+    /**
+     * @brief virtual method for the movement of the character
+     * 
+     * @param keys 
+     * @param animation 
+     * @param map 
+     * @param bg 
+     */
     virtual void move(const Uint8 *keys, const int animation, const std::unique_ptr<Map> &map, const SDL_Rect bg) = 0;
 };
 

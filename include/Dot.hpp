@@ -12,7 +12,7 @@ class Dot {
     TypeDot type;
 
     /* combien de points il vaut */
-    int point;
+    int point_;
     bool exist_;
 
     SDL_Rect sprite_;
@@ -25,10 +25,36 @@ class Dot {
 
     Dot(const int x, const int y, const TypeDot type);
 
+    /**
+     * @brief Get the Exist object
+     * 
+     * @return true 
+     * @return false 
+     */
     bool inline getExist(void) const { return exist_; }
+    /**
+     * @brief Get the Position object
+     * 
+     * @return SDL_Rect& 
+     */
     inline SDL_Rect &getPosition(void) { return position_; }
+    /**
+     * @brief Get the Sprite object
+     * 
+     * @return SDL_Rect& 
+     */
     inline SDL_Rect &getSprite(void) { return sprite_; }
-    inline int getPoint(void) const { return point; }
+    /**
+     * @brief Get the number of Point (score) the dot is 
+     * 
+     * @return int 
+     */
+    inline int getPoint(void) const { return point_; }
+    /**
+     * @brief Set the Exist object
+     * 
+     * @param exist 
+     */
     inline void setExist(const bool exist) { exist_ = exist; }
 
     /* fonction pour manger les points: renvoit 0 si pas mangé, son nombre de point sinon */

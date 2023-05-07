@@ -43,26 +43,78 @@ class Ghost : public Character {
     Ghost();
     static bool idle;
 
+    /**
+     * @brief Set the outJail bool
+     * 
+     * @param t_f 
+     */
     inline void set_outJail(const bool t_f) { out_jail_ = t_f; }
 
+    /**
+     * @brief Set the Status object
+     * 
+     * @param stat 
+     */
     inline void setStatus(const Status stat) { status_ = stat; }
+    /**
+     * @brief Get the Status object
+     * 
+     * @return Status 
+     */
     inline Status getStatus() const { return status_; }
 
-    /* gère l'animation des fantomes celon le mode dans lequel il est*/
+    /**
+     * @brief change the animation of ghost (depend of its status)
+     * 
+     * @param animation 
+     * @param map 
+     * @param bg 
+     */
     void dontStopMoving(const int animation, const std::vector<std::vector<Tile>> &map, const SDL_Rect bg);
 
+    /**
+     * @brief choose how to move
+     * 
+     * @param keys 
+     * @param animation 
+     * @param map 
+     * @param bg 
+     */
     void move(const Uint8 *keys, const int animation, const std::unique_ptr<Map> &map, const SDL_Rect bg);
 
-    /* stratégie pour pousuivre pacman */
+    /**
+     * @brief strategy to chase pacman
+     * 
+     * @param pacman 
+     * @param map 
+     * @param bg 
+     */
     virtual void chase(const std::unique_ptr<ThePacman> &pacman, const std::vector<std::vector<Tile>> &map, const SDL_Rect bg) = 0;
 
-    /* est bien placé à une intersection */
+    /**
+     * @brief detect if at an intersection (>3 direction)
+     * 
+     * @param tailleCaseX 
+     * @param tailleCaseY 
+     * @param directions 
+     * @return true 
+     * @return false 
+     */
     bool intersection(const int tailleCaseX, const int tailleCaseY, const std::vector<Tile> directions);
 
-    /* change key_prec selon la meilleur direction celon si on veut aller au Goal ou s'éloigné de Goal */
+    /**
+     * @brief Choose the path that bring them closer to its goal_
+     * 
+     * @param Goal 
+     * @param directions 
+     * @param min_init 
+     */
     void choosePath(const SDL_Rect Goal, const std::vector<Tile> directions, float min_init);
 
-    /* fantomes changent de direction quand deviennent vulnérable à pacman */
+    /**
+     * @brief turn around when become idle
+     * 
+     */
     void turnAround(void);
 };
 

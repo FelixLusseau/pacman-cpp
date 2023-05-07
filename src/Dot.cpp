@@ -13,11 +13,11 @@ Dot::Dot(const int x, const int y, const TypeDot typeDot) {
     switch (type) {
     case TypeDot::Simple:
         sprite_ = {3, 80, 4, 4};
-        point = 10;
+        point_ = 10;
         break;
     case TypeDot::Big:
         sprite_ = {9, 79, 7, 7};
-        point = 50;
+        point_ = 50;
         break;
     }
 
@@ -44,7 +44,7 @@ int Dot::getEat(const SDL_Rect &pac_position) {
 
     if (distance < (pac_position.w / 2.25)) {
         exist_ = false;
-        score = point;
+        score = point_;
         if (type == TypeDot::Big) {
             Ghost::idle = true;
             Game::timer_begin = clock();
