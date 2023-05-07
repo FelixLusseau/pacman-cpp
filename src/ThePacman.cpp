@@ -54,8 +54,14 @@ void ThePacman::move(const Uint8 *keys, const int animation, const std::unique_p
 
     // Buffer of pressed keys
     for (int i{0}; i < SDL_NUM_SCANCODES; i++) {
-        if (keys[i])
+        if (keys[i]) {
             key_buffer[i] = true;
+            for (int j{0}; j < SDL_NUM_SCANCODES; j++) {
+                if (i != j)
+                    key_buffer[j] = false;
+            }
+            break;
+        }
     }
 
     if ((keys[SDL_SCANCODE_RIGHT] || prec_key == SDL_SCANCODE_RIGHT || key_buffer[SDL_SCANCODE_RIGHT]) &&
