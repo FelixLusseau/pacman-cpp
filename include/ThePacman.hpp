@@ -4,7 +4,6 @@
 #include "../include/Character.hpp"
 #include <array>
 #include <iostream>
-#include <vector>
 
 class ThePacman : public Character {
   private:

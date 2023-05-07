@@ -37,8 +37,8 @@ class Ghost : public Character {
 
     /**
      * @brief Set the outJail bool
-     * 
-     * @param t_f 
+     *
+     * @param t_f
      */
     inline void set_outJail(const bool t_f) { out_jail_ = t_f; }
 
@@ -93,7 +93,7 @@ class Ghost : public Character {
      * @return true
      * @return false
      */
-    bool intersection(const int tailleCaseX, const int tailleCaseY, const std::vector<Tile> directions);
+    bool intersection(const int tailleCaseX, const int tailleCaseY, const std::vector<Tile> &directions);
 
     /**
      * @brief Choose the best direction to go to the goal or to move away from it by modifying the prec_key
@@ -102,7 +102,7 @@ class Ghost : public Character {
      * @param directions
      * @param min_init
      */
-    void choosePath(const SDL_Rect Goal, const std::vector<Tile> directions, float min_init);
+    void choosePath(const SDL_Rect Goal, const std::vector<Tile> &directions, float min_init);
 
     /**
      * @brief Change direction when in idle mode

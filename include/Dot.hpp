@@ -2,7 +2,6 @@
 #define DOT_HPP
 
 #include <SDL2/SDL.h>
-#include <iostream>
 #include <vector>
 
 enum class TypeDot { Simple, Big };

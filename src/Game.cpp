@@ -49,7 +49,7 @@ Game::Game() {
     launched = false;
 
     // creation of all the dots from the map
-    std::vector<std::vector<Tile>> thisMap = map->getMap();
+    std::vector<std::vector<Tile>> thisMap{map->getMap()};
 
     for (long unsigned int i{0}; i < thisMap.size(); i++) {
 

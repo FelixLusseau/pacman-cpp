@@ -235,7 +235,7 @@ void Ghost::dontStopMoving(const int animation, const std::vector<std::vector<Ti
     this->changePosition(position_.x + mv_x, position_.y + mv_y, map, bg);
 }
 
-bool Ghost::intersection(const int tailleCaseX, const int tailleCaseY, const std::vector<Tile> directions) {
+bool Ghost::intersection(const int tailleCaseX, const int tailleCaseY, const std::vector<Tile> &directions) {
 
     // well alined on a tile => are we on an intersection ?
     int rondeur{2};
@@ -261,7 +261,7 @@ bool Ghost::intersection(const int tailleCaseX, const int tailleCaseY, const std
     return false;
 }
 
-void Ghost::choosePath(const SDL_Rect Goal, const std::vector<Tile> directions, float min) {
+void Ghost::choosePath(const SDL_Rect Goal, const std::vector<Tile> &directions, float min) {
 
     // size of the sprite's tile
     int size{position_.w / 2};

@@ -4,11 +4,9 @@
 #include "Map.hpp"
 #include <SDL2/SDL.h>
 #include <array>
-#include <iostream>
-#include <vector>
-
 #include <ctime>
 #include <memory>
+#include <vector>
 
 class Character {
   protected:
