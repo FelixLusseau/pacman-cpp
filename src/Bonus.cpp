@@ -80,7 +80,7 @@ Bonus::Bonus() {
         break;
     }
     exist = false;
-    position_ = {315, 477, 30, 30};
+    position_ = {320, 477, 30, 30};
 }
 
 int Bonus::getEat(const SDL_Rect &pac_position) {
