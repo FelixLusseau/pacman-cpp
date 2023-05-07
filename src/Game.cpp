@@ -459,9 +459,9 @@ void Game::resetPositions(std::array<std::shared_ptr<Ghost>, 4> &ghosts_, std::u
     Ghost::idle = false;
 }
 
-void Game::nextLevel(std::array<std::shared_ptr<Ghost>, 4> &ghosts_, std::unique_ptr<ThePacman> &pacman_, SDL_Rect bg) {
+void Game::nextLevel(std::array<std::shared_ptr<Ghost>, 4> &ghosts, std::unique_ptr<ThePacman> &pacman, SDL_Rect bg) {
     level++;
-    resetPositions(ghosts_, pacman_);
+    resetPositions(ghosts, pacman);
     for (long unsigned int i{0}; i < dots_.size(); i++) {
         dots_[i]->setExist(true);
     }
