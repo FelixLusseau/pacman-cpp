@@ -21,34 +21,34 @@ class Dot {
     Dot(const int x, const int y, const TypeDot type);
 
     /**
-     * @brief Get the Exist object
-     * 
-     * @return true 
-     * @return false 
+     * @brief Return if the dot exists and has to appear
+     *
+     * @return true
+     * @return false
      */
     bool inline getExist(void) const { return exist_; }
     /**
-     * @brief Get the Position object
-     * 
-     * @return SDL_Rect& 
+     * @brief Get the position of the dot
+     *
+     * @return SDL_Rect&
      */
     inline SDL_Rect &getPosition(void) { return position_; }
     /**
-     * @brief Get the Sprite object
-     * 
-     * @return SDL_Rect& 
+     * @brief Get the sprite of the dot
+     *
+     * @return SDL_Rect&
      */
     inline SDL_Rect &getSprite(void) { return sprite_; }
     /**
-     * @brief Get the number of Point (score) the dot is 
-     * 
-     * @return int 
+     * @brief Get the number of points (score) the dot is
+     *
+     * @return int
      */
     inline int getPoint(void) const { return points; }
     /**
-     * @brief Set the Exist object
-     * 
-     * @param exist 
+     * @brief Set if the dot exists and has to appear
+     *
+     * @param exist
      */
     inline void setExist(const bool exist) { exist_ = exist; }
 
