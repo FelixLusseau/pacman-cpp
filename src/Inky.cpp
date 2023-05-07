@@ -57,7 +57,7 @@ void Inky::chase(const std::unique_ptr<ThePacman> &pacman, const std::vector<std
     case SDL_SCANCODE_DOWN:
         Goal.y += (caseT * coeff);
         break;
-    default: // à check
+    default:
         break;
     }
 

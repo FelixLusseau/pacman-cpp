@@ -78,11 +78,6 @@ int Game::start() {
         return 1;
     }
 
-    /* // for (int i{0}; i < 10; i++) {
-    level2To3();
-    // }
-    return 0; */
-
     SDL_FillRect(win_surf, NULL, 0x000000);
     SDL_Rect title{3, 3, 184, 49};
     SDL_Rect titleScale{60, 20, 552, 150};

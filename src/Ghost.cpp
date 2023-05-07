@@ -183,7 +183,7 @@ void Ghost::dontStopMoving(const int animation, const std::vector<std::vector<Ti
             cur_sprite_ = eyes_sprite_[3];
             mv_y = speed;
             break;
-        default: // à check
+        default:
             break;
         }
     } else {
@@ -204,7 +204,7 @@ void Ghost::dontStopMoving(const int animation, const std::vector<std::vector<Ti
             cur_sprite_ = sprite_[6 + animation];
             mv_y = speed;
             break;
-        default: // à check
+        default:
             break;
         }
         if (idle) {
