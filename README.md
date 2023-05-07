@@ -38,3 +38,9 @@ cmake --build ./ -j8
 ```bash
 ./clean-and-compile.sh
 ```
+
+- To generate the Doxygen documentation from the root of the project :
+
+```bash
+doxygen Doxyfile
+```
