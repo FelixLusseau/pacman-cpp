@@ -257,7 +257,6 @@ bool Ghost::intersection(const int tailleCaseX, const int tailleCaseY, const std
 
     if (intersection >= 3) {
         return true;
-        std::cout << "inter " << std::endl;
     }
     return false;
 }

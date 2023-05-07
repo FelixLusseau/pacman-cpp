@@ -456,6 +456,7 @@ void Game::resetPositions(std::array<std::shared_ptr<Ghost>, 4> &ghosts, std::un
     blinky->set_outJail(true); // Blinky already out of jail
     launched = false;
     count = 0;
+    Ghost::idle = false;
 }
 
 void Game::nextLevel(std::array<std::shared_ptr<Ghost>, 4> &ghosts, std::unique_ptr<ThePacman> &pacman, SDL_Rect bg) {
