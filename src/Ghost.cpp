@@ -3,7 +3,7 @@
 
 bool Ghost::idle = false;
 
-// horloge des ghost pour si status=chase ou status=flee
+// timer for flee and chase modes
 clock_t Ghost::timer_begin_ghost = 0;
 clock_t Ghost::timer_end_ghost = 0;
 
@@ -33,51 +33,51 @@ Ghost::Ghost() : Character() {
     eaten_score_timer_ = 0;
     last_prec_key = SDL_SCANCODE_UNKNOWN;
 
-    wasNotIdle=true;
+    wasNotIdle = true;
 }
 
 void Ghost::move(const Uint8 *keys, const int animation, const std::unique_ptr<Map> &map, const SDL_Rect bg) {
 
-    // idle= vulnérable à pacman, demi tour quand le deviennent
-    if(idle && wasNotIdle){
-        wasNotIdle=false;
+    // idle = vulnerable -> go back when become blue
+    if (idle && wasNotIdle) {
+        wasNotIdle = false;
         turnAround();
     }
-    if(idle==false && wasNotIdle==false){
-        wasNotIdle=true;
+    if (idle == false && wasNotIdle == false) {
+        wasNotIdle = true;
     }
 
     (void)keys;
 
-    // tailles d'une case de la carte
+    // size of a tile of the map
     int tailleCaseX{map->getWidth()};
     int tailleCaseY{map->getHeight()};
 
-    // taille de la case du sprite
+    // size of the sprite tile
     int size{position_.w};
 
-    // origine = centre de la case du sprite et pas son coin gauche
+    // origin = center of the Pacman and not the top left corner
     int origineX{position_.x + (size / 2)};
     int origineY{position_.y + (size / 2)};
 
-    int ligne{origineX / map->getWidth()};
-    int colonne{origineY / map->getHeight()};
+    int line{origineX / map->getWidth()};
+    int column{origineY / map->getHeight()};
 
     std::vector<std::vector<Tile>> Map{map->getMap()};
 
-    std::vector<Tile> directions{Map[colonne + 1][ligne], Map[colonne - 1][ligne], Map[colonne][ligne + 1], Map[colonne][ligne - 1]};
+    std::vector<Tile> directions{Map[column + 1][line], Map[column - 1][line], Map[column][line + 1], Map[column][line - 1]};
 
     bool inter{intersection(tailleCaseX, tailleCaseY, directions)};
 
     // si fantome dans prison
-    if (Map[colonne][ligne] == Tile::GhostHouse) {
+    if (Map[column][line] == Tile::GhostHouse) {
         speed = 1;
-        // mode eyes: le fantomes c'est fait manger et est revenu à sa position initiale
+        // eyes mode : the ghost has been eaten and is back to its initial position
         if (status_ == Status::eyes && position_.x == (10 * tailleCaseX)) {
             status_ = Status::chase;
             out_jail_ = false;
         }
-        // sortie de prison
+        // jail release
         else if ((status_ != Status::stay_jail) && position_.x == (10 * tailleCaseX)) {
             goal_.x = 10 * tailleCaseX;
             goal_.y = 10 * tailleCaseY;
@@ -92,7 +92,7 @@ void Ghost::move(const Uint8 *keys, const int animation, const std::unique_ptr<M
             choosePath(goal_, directions, (float)bg.h);
         }
 
-        // ne sort pas tout de suite -> animation haut en bas
+        // don't go out immediately -> up and down animation
         else if (position_.y > (init_position_.y - tailleCaseY) && prec_key != SDL_SCANCODE_DOWN) {
             prec_key = SDL_SCANCODE_UP;
         } else {
@@ -100,12 +100,12 @@ void Ghost::move(const Uint8 *keys, const int animation, const std::unique_ptr<M
         }
     }
 
-    // on choisit une nouvelle direction si on est a une intersection (3 directions possible) ou si on a arrêté de bouger
+    // we choose a new direction if we are at an intersection (3 possible directions) or if we have stopped moving
     else if (inter || prec_key == SDL_SCANCODE_UNKNOWN) {
         out_jail_ = true;
 
         timer_end_ghost = clock();
-        // mode flee, il s'enfuit vers son coin de la carte
+        // flee mode, he runs away to his corner of the map
         if (status_ == Status::flee || (timer_end_ghost - timer_begin_ghost) % 12000000 < 3000000 || idle) {
             if (status_ != Status::eyes) {
                 status_ = Status::flee;
@@ -115,11 +115,11 @@ void Ghost::move(const Uint8 *keys, const int animation, const std::unique_ptr<M
             goal_.w = corner_.w;
             goal_.h = corner_.h;
         }
-        // mode chase
+        // chase mode
         if ((timer_end_ghost - timer_begin_ghost) % 12000000 > 3000000 && !idle && status_ == Status::flee) {
             status_ = Status::chase;
         }
-        // on a été mangé on retourne à sa position initiale
+        // we have been eaten, we go back to our initial position
         else if (status_ == Status::eyes) {
             if (!(sqrt(pow(static_cast<float>(position_.x - init_position_.x), 2) + pow(static_cast<float>(position_.y - init_position_.y), 2)) <
                   (size / 2))) {
@@ -237,7 +237,7 @@ void Ghost::dontStopMoving(const int animation, const std::vector<std::vector<Ti
 
 bool Ghost::intersection(const int tailleCaseX, const int tailleCaseY, const std::vector<Tile> directions) {
 
-    // bien aligné sur une case => est ce qu'on est sur une intersection?
+    // well alined on a tile => are we on an intersection ?
     int rondeur{2};
     int intersection{0};
 
@@ -247,7 +247,7 @@ bool Ghost::intersection(const int tailleCaseX, const int tailleCaseY, const std
     int cornerY{(position_.y + rondeur) / tailleCaseY};
     int cornerYY{(position_.y + position_.h - rondeur) / tailleCaseY};
 
-    if (cornerX == cornerXX && cornerY == cornerYY) { // aligné sur une case
+    if (cornerX == cornerXX && cornerY == cornerYY) { // alined on a tile
         for (int i{0}; i < 4; i++) {
             if (directions[i] != Tile::Wall) { // intersection
                 intersection++;
@@ -264,26 +264,25 @@ bool Ghost::intersection(const int tailleCaseX, const int tailleCaseY, const std
 
 void Ghost::choosePath(const SDL_Rect Goal, const std::vector<Tile> directions, float min) {
 
-    // taille de la case du sprite
+    // size of the sprite's tile
     int size{position_.w / 2};
 
-    // origine = centre de la case du sprite et pas son coin gauche
+    // origin = center of the sprite's tile and not its top left corner
     int origineX{position_.x + size};
     int origineY{position_.y + size};
 
-    // origine = centre de la case du sprite et pas son coin gauche
+    // origin = center of the sprite's tile and not its top left corner
     int GoalOrigineX{Goal.x + size};
     int GoalOrigineY{Goal.y + size};
 
-    // float min{min_init}; // distance min entre le goal et le ghost
-    int best{5}; // meilleur direction possible
+    int best{5}; // best possible direction
 
     for (int i{0}; i < 4; i++) {
 
         int nextX{origineX};
         int nextY{origineY};
 
-        // on teste quelle direction est la meilleur
+        // we test which direction is the best
         if (directions[i] != Tile::Wall && ((directions[i] != Tile::GhostHouseDoor || status_ == Status::eyes) || !out_jail_)) {
             bool went_here{true};
             switch (i) {
@@ -340,14 +339,14 @@ void Ghost::choosePath(const SDL_Rect Goal, const std::vector<Tile> directions, 
     last_prec_key = prec_key;
 }
 
-void Ghost::turnAround(){
-    if(prec_key==SDL_SCANCODE_DOWN){
-        prec_key=SDL_SCANCODE_UP;
-    }else if(prec_key==SDL_SCANCODE_UP){
-        prec_key=SDL_SCANCODE_DOWN;
-    }else if(prec_key==SDL_SCANCODE_LEFT){
-        prec_key=SDL_SCANCODE_RIGHT;
-    }else if(prec_key==SDL_SCANCODE_RIGHT){
-        prec_key=SDL_SCANCODE_LEFT;
+void Ghost::turnAround() {
+    if (prec_key == SDL_SCANCODE_DOWN) {
+        prec_key = SDL_SCANCODE_UP;
+    } else if (prec_key == SDL_SCANCODE_UP) {
+        prec_key = SDL_SCANCODE_DOWN;
+    } else if (prec_key == SDL_SCANCODE_LEFT) {
+        prec_key = SDL_SCANCODE_RIGHT;
+    } else if (prec_key == SDL_SCANCODE_RIGHT) {
+        prec_key = SDL_SCANCODE_LEFT;
     }
 }

@@ -4,9 +4,8 @@
 #include "Ghost.hpp"
 #include <memory>
 
-/* rouge */
+/* pink ghost */
 class Pinky : public Ghost {
-  private:
   public:
     Pinky(const int PixelX, const int PixelY);
 

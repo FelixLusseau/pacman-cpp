@@ -15,8 +15,8 @@ Clyde::Clyde(const int PixelX, const int PixelY) : Ghost() {
     sprite_[6] = {105, 177, 16, 16};
     sprite_[7] = {122, 177, 16, 16};
 
-    position_ = {11 * PixelX, 13 * PixelY, 32, 32};      // ici scale x2
-    init_position_ = {11 * PixelX, 13 * PixelY, 32, 32}; // ici scale x2
+    position_ = {11 * PixelX, 13 * PixelY, 32, 32};      // scale x2
+    init_position_ = {11 * PixelX, 13 * PixelY, 32, 32}; // scale x2
     prec_key = SDL_SCANCODE_UP;
 
     corner_ = {PixelX * 1, PixelY * 27, PixelX, PixelY};
@@ -27,7 +27,7 @@ void Clyde::chase(const std::unique_ptr<ThePacman> &pacman, const std::vector<st
 
     SDL_Rect Goal{pacman->getPosition()};
 
-    // tailles d'une case de la carte
+    // size of a tile of the map
     float tailleCaseX{static_cast<float>(bg.w) / static_cast<float>(map[0].size())};
 
     int dist_min{static_cast<int>(tailleCaseX * 4)};

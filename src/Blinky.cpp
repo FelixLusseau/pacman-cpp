@@ -15,7 +15,7 @@ Blinky::Blinky(const int PixelX, const int PixelY) : Ghost() {
     sprite_[6] = {105, 123, 16, 16};
     sprite_[7] = {122, 123, 16, 16};
 
-    position_ = {10 * PixelX, 10 * PixelY, 32, 32}; // ici scale x2
+    position_ = {10 * PixelX, 10 * PixelY, 32, 32}; // scale x2
     init_position_ = {10 * PixelX, 10 * PixelY, 32, 32};
 
     corner_ = {PixelX * 17, -PixelY, PixelX, PixelY};

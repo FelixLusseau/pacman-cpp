@@ -88,13 +88,13 @@ Map::Map(const SDL_Rect bg) {
         {Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall,
          Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall}};
 
-    /* tailles cases */
+    /* size of cases */
     float pixelX{static_cast<float>(bg.w) / static_cast<float>(map[0].size())};
     float pixelY{static_cast<float>(bg.h) / static_cast<float>(map.size())};
 
     width_ = static_cast<int>(pixelX);
     height_ = static_cast<int>(pixelY);
 
-    ligne_ = map.size();
-    colonne_ = map[0].size();
+    line_ = map.size();
+    column_ = map[0].size();
 };

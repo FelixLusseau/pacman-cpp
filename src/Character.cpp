@@ -20,22 +20,22 @@ inline bool operator==(const SDL_Rect &a, const SDL_Rect &b) { return a.x == b.x
 
 int Character::changePosition(const int x, const int y, const std::vector<std::vector<Tile>> &map, const SDL_Rect bg) {
 
-    // tailles d'une case de la carte
+    // size of a tile
     float tailleCaseX{static_cast<float>(bg.w) / static_cast<float>(map[0].size())};
     float tailleCaseY{static_cast<float>(bg.h) / static_cast<float>(map.size())};
 
-    // taille de la case de pacman
+    // size of the Pacman tile
     int halfWidth = (position_.w / 2);
 
-    // origine = centre de la case de pacman et pas son coin gauche
+    // origin = center of the Pacman and not the top left corner
     int origineX{position_.x + halfWidth};
     int origineY{position_.y + halfWidth};
 
-    // origine futur
+    // futur origin
     int futurX{x + halfWidth};
     int futurY{y + halfWidth};
 
-    // tunnel de téléportation
+    // teleportation tunnel
     if ((futurX < origineX && map[futurY / tailleCaseY][(futurX - halfWidth) / tailleCaseX] == Tile::EscapeTunnel)) {
         position_.x = x + 19 * tailleCaseX;
         position_.y = y;
@@ -55,7 +55,7 @@ int Character::changePosition(const int x, const int y, const std::vector<std::v
     // if (futurX > origineX && map[futurY / tailleCaseY][(futurX + halfWidth) / tailleCaseX] == Tile::Corridor)
     //     speed = speed / 2;
 
-    // collision mur
+    // collision wall
     if ((futurX < origineX && map[futurY / tailleCaseY][(futurX - halfWidth) / tailleCaseX] == Tile::Wall) ||
         (futurY < origineY && map[(futurY - halfWidth) / tailleCaseY][futurX / tailleCaseX] == Tile::Wall) ||
         (futurY > origineY && map[(futurY + halfWidth) / tailleCaseY][(futurX) / tailleCaseX] == Tile::Wall) ||
@@ -65,7 +65,7 @@ int Character::changePosition(const int x, const int y, const std::vector<std::v
         return 0;
     }
 
-    // collision porte fantome
+    // ghost house door collision
     float pixelX{static_cast<float>(bg.w) / static_cast<float>(map[0].size())};
     float pixelY{static_cast<float>(bg.h) / static_cast<float>(map.size())};
 
@@ -74,6 +74,7 @@ int Character::changePosition(const int x, const int y, const std::vector<std::v
 
     SDL_Rect initial_pacman_position = {10 * pX, 20 * pY, 32, 32};
 
+    // collision with the ghost house door for Pacman
     if ((futurX < origineX && map[futurY / tailleCaseY][(futurX - halfWidth) / tailleCaseX] == Tile::GhostHouseDoor &&
          init_position_ == initial_pacman_position) ||
         (futurY < origineY && map[(futurY - halfWidth) / tailleCaseY][futurX / tailleCaseX] == Tile::GhostHouseDoor &&
@@ -87,7 +88,7 @@ int Character::changePosition(const int x, const int y, const std::vector<std::v
         return 0;
     }
 
-    // collision aux coins avec un sprite ayant une certaine rondeur
+    // collision at the corners with a sprite having a certain roundness
     int rondeur{3};
     if ((map[(y + rondeur) / tailleCaseY][(x + rondeur) / tailleCaseX] == Tile::Wall) ||
         map[(y + rondeur) / tailleCaseY][(x + position_.h - rondeur) / tailleCaseX] == Tile::Wall ||

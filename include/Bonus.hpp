@@ -1,7 +1,7 @@
 #ifndef BONUS_HPP
 #define BONUS_HPP
 
-#include <SDL.h>
+#include <SDL2/SDL.h>
 
 enum class TypeBonus { Cherry, Strawberry, Orange, Apple, Melon, Galaxian, Bell, Key };
 
@@ -53,9 +53,9 @@ class Bonus {
     /**
      * @brief Set if the bonus exists and has to appear
      *
-     * @param e
+     * @param b
      */
-    inline void setExists(const bool e) { exist = e; }
+    inline void setExists(const bool b) { exist = b; }
 
     /**
      * @brief Check if Pacman is on the bonus

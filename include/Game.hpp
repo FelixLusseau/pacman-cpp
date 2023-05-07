@@ -10,7 +10,7 @@
 #include "../include/Pinky.hpp"
 #include "../include/ThePacman.hpp"
 #include "../include/Write.hpp"
-#include <SDL.h>
+#include <SDL2/SDL.h>
 #include <array>
 #include <ctime>
 #include <iostream>
@@ -18,7 +18,11 @@
 
 class Game {
   protected:
-    Ghost *ghosts[4];
+    std::array<std::shared_ptr<Ghost>, 4> ghosts;
+    std::shared_ptr<Ghost> blinky;
+    std::shared_ptr<Ghost> pinky;
+    std::shared_ptr<Ghost> inky;
+    std::shared_ptr<Ghost> clyde;
     std::unique_ptr<ThePacman> pacman;
 
     std::unique_ptr<Map> map;
@@ -28,10 +32,10 @@ class Game {
     SDL_Window *pWindow;
     SDL_Surface *win_surf;
     SDL_Surface *plancheSprites;
-    SDL_Rect src_bg; // x,y, w,h (0,0) en haut a gauche
+    SDL_Rect src_bg; // x,y, w,h (0,0) at top-left
     SDL_Rect src_bg_dotless;
     SDL_Rect src_bg_white;
-    SDL_Rect bg; // ici scale x4
+    SDL_Rect bg; // scale x4
 
     int count;
     int score;
@@ -43,9 +47,10 @@ class Game {
     Game();
     static int ghosts_eaten, level;
     static bool next_level;
+    static clock_t timer_begin, timer_end;
 
     /**
-     * @brief Display of the game
+     * @brief Main display function of the game
      *
      */
     void draw();
@@ -63,8 +68,6 @@ class Game {
      */
     int changeSprite(void);
 
-    static clock_t timer_begin, timer_end;
-
     /**
      * @brief Function executed when Pacman dies
      *
@@ -79,7 +82,7 @@ class Game {
      * @param ghosts
      * @param pacman
      */
-    void resetPositions(Ghost **ghosts, std::unique_ptr<ThePacman> &pacman);
+    void resetPositions(std::array<std::shared_ptr<Ghost>, 4> &ghosts, std::unique_ptr<ThePacman> &pacman);
 
     /**
      * @brief Change the level of the game
@@ -88,10 +91,12 @@ class Game {
      * @param pacman
      * @param bg
      */
-    void nextLevel(Ghost **ghosts, std::unique_ptr<ThePacman> &pacman, SDL_Rect bg);
+    void nextLevel(std::array<std::shared_ptr<Ghost>, 4> &ghosts, std::unique_ptr<ThePacman> &pacman, SDL_Rect bg);
 
     /**
-     * @brief An animation between level 2 and 3
+     * @brief An animation between level 2 and 3.
+     * Pacman is chased by a ghost and then the affaid
+     * ghost is chased by a big Pacman
      *
      */
     void level2To3();
