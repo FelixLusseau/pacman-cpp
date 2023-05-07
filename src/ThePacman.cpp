@@ -21,17 +21,17 @@ ThePacman::ThePacman(const int x, const int y) : Character() {
 
     lives_ = 3;
 
-    die_animation[0] = {4, 90, 16, 16};
-    die_animation[1] = {4, 106, 16, 16};
-    die_animation[2] = {23, 106, 16, 16};
-    die_animation[3] = {42, 106, 16, 16};
-    die_animation[4] = {61, 106, 16, 16};
-    die_animation[5] = {80, 106, 16, 16};
-    die_animation[6] = {99, 106, 14, 16};
-    die_animation[7] = {116, 106, 10, 16};
-    die_animation[8] = {129, 106, 6, 16};
-    die_animation[9] = {138, 106, 2, 16};
-    die_animation[10] = {143, 106, 16, 16};
+    die_animation_[0] = {4, 90, 16, 16};
+    die_animation_[1] = {4, 106, 16, 16};
+    die_animation_[2] = {23, 106, 16, 16};
+    die_animation_[3] = {42, 106, 16, 16};
+    die_animation_[4] = {61, 106, 16, 16};
+    die_animation_[5] = {80, 106, 16, 16};
+    die_animation_[6] = {99, 106, 14, 16};
+    die_animation_[7] = {116, 106, 10, 16};
+    die_animation_[8] = {129, 106, 6, 16};
+    die_animation_[9] = {138, 106, 2, 16};
+    die_animation_[10] = {143, 106, 16, 16};
 
     speed = 2;
 }
@@ -55,46 +55,46 @@ void ThePacman::move(const Uint8 *keys, const int animation, const std::unique_p
     // Buffer of pressed keys
     for (int i{0}; i < SDL_NUM_SCANCODES; i++) {
         if (keys[i]) {
-            key_buffer[i] = true;
+            key_buffer_[i] = true;
             for (int j{0}; j < SDL_NUM_SCANCODES; j++) {
                 if (i != j)
-                    key_buffer[j] = false;
+                    key_buffer_[j] = false;
             }
             break;
         }
     }
 
-    if ((keys[SDL_SCANCODE_RIGHT] || prec_key == SDL_SCANCODE_RIGHT || key_buffer[SDL_SCANCODE_RIGHT]) &&
+    if ((keys[SDL_SCANCODE_RIGHT] || prec_key == SDL_SCANCODE_RIGHT || key_buffer_[SDL_SCANCODE_RIGHT]) &&
         map->getMap()[coinY[0]][coinX[0] + 1] != Tile::Wall) {
         prec_key = SDL_SCANCODE_RIGHT;
-        key_buffer[SDL_SCANCODE_RIGHT] = false;
+        key_buffer_[SDL_SCANCODE_RIGHT] = false;
         mv_x = speed;
         position_.y = coinY[0] * tailleCaseY;
         if (changePosition(position_.x + mv_x, position_.y + mv_y, map->getMap(), bg))
             cur_sprite_ = sprite_[0 + animation];
     }
-    if ((keys[SDL_SCANCODE_LEFT] || prec_key == SDL_SCANCODE_LEFT || key_buffer[SDL_SCANCODE_LEFT]) &&
+    if ((keys[SDL_SCANCODE_LEFT] || prec_key == SDL_SCANCODE_LEFT || key_buffer_[SDL_SCANCODE_LEFT]) &&
         map->getMap()[coinY[0]][coinX[1] - 1] != Tile::Wall) {
         prec_key = SDL_SCANCODE_LEFT;
-        key_buffer[SDL_SCANCODE_LEFT] = false;
+        key_buffer_[SDL_SCANCODE_LEFT] = false;
         mv_x = -speed;
         position_.y = coinY[0] * tailleCaseY;
         if (changePosition(position_.x + mv_x, position_.y + mv_y, map->getMap(), bg))
             cur_sprite_ = sprite_[2 + animation];
     }
-    if ((keys[SDL_SCANCODE_DOWN] || prec_key == SDL_SCANCODE_DOWN || key_buffer[SDL_SCANCODE_DOWN]) &&
+    if ((keys[SDL_SCANCODE_DOWN] || prec_key == SDL_SCANCODE_DOWN || key_buffer_[SDL_SCANCODE_DOWN]) &&
         map->getMap()[coinY[0] + 1][coinX[0]] != Tile::Wall) {
         prec_key = SDL_SCANCODE_DOWN;
-        key_buffer[SDL_SCANCODE_DOWN] = false;
+        key_buffer_[SDL_SCANCODE_DOWN] = false;
         mv_y = speed;
         position_.x = coinX[0] * tailleCaseX;
         if (changePosition(position_.x + mv_x, position_.y + mv_y, map->getMap(), bg))
             cur_sprite_ = sprite_[4 + animation];
     }
-    if ((keys[SDL_SCANCODE_UP] || prec_key == SDL_SCANCODE_UP || key_buffer[SDL_SCANCODE_UP]) &&
+    if ((keys[SDL_SCANCODE_UP] || prec_key == SDL_SCANCODE_UP || key_buffer_[SDL_SCANCODE_UP]) &&
         map->getMap()[coinY[1] - 1][coinX[0]] != Tile::Wall) {
         prec_key = SDL_SCANCODE_UP;
-        key_buffer[SDL_SCANCODE_UP] = false;
+        key_buffer_[SDL_SCANCODE_UP] = false;
         mv_y = -speed;
         position_.x = coinX[0] * tailleCaseX;
         if (changePosition(position_.x + mv_x, position_.y + mv_y, map->getMap(), bg))
@@ -118,7 +118,7 @@ void ThePacman::die(SDL_Surface *plancheSprites, SDL_Rect &src_bg, SDL_Surface *
 
         SDL_SetColorKey(plancheSprites, false, 0);
         SDL_BlitScaled(plancheSprites, &src_bg, win_surf, &bg);
-        SDL_BlitScaled(plancheSprites, &die_animation[i], win_surf, &position_);
+        SDL_BlitScaled(plancheSprites, &die_animation_[i], win_surf, &position_);
         SDL_UpdateWindowSurface(pWindow);
         SDL_Delay(150);
     }

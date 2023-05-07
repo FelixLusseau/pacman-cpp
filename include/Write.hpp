@@ -7,7 +7,7 @@
 
 class Write {
   private:
-    std::map<char, SDL_Rect> dictionary;
+    std::map<char, SDL_Rect> dictionary_;
 
   public:
     Write();
@@ -16,7 +16,7 @@ class Write {
      *
      * @return std::map<char, SDL_Rect>
      */
-    inline std::map<char, SDL_Rect> getDictionary(void) const { return dictionary; }
+    inline std::map<char, SDL_Rect> getDictionary(void) const { return dictionary_; }
 
     /**
      * @brief Draw text given on the screen

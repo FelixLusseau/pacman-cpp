@@ -2,28 +2,28 @@
 #include "../include/Game.hpp"
 #include "../include/Ghost.hpp"
 
-int Dot::nb_dot_tot_{0};
-int Dot::nb_dot_eaten_{0};
+int Dot::nb_dot_tot{0};
+int Dot::nb_dot_eaten{0};
 
 Dot::Dot(const int x, const int y, const TypeDot typeDot) {
 
     exist_ = true;
-    type = typeDot;
+    type_ = typeDot;
 
-    switch (type) {
+    switch (type_) {
     case TypeDot::Simple:
         sprite_ = {3, 80, 4, 4};
-        points = 10;
+        points_ = 10;
         break;
     case TypeDot::Big:
         sprite_ = {9, 79, 7, 7};
-        points = 50;
+        points_ = 50;
         break;
     }
 
     position_ = {x, y, sprite_.w * 4, sprite_.h * 4};
 
-    nb_dot_tot_++;
+    nb_dot_tot++;
 };
 
 int Dot::getEat(const SDL_Rect &pac_position) {
@@ -44,15 +44,15 @@ int Dot::getEat(const SDL_Rect &pac_position) {
 
     if (distance < (pac_position.w / 2.25)) {
         exist_ = false;
-        score = points;
-        if (type == TypeDot::Big) {
+        score = points_;
+        if (type_ == TypeDot::Big) {
             Ghost::idle = true;
             Game::timer_begin = clock();
         }
-        nb_dot_eaten_++;
+        nb_dot_eaten++;
     }
 
-    if (nb_dot_eaten_ == nb_dot_tot_) {
+    if (nb_dot_eaten == nb_dot_tot) {
         Game::next_level = true;
     }
 

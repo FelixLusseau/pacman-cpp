@@ -19,7 +19,7 @@ class Ghost : public Character {
     Status status_;             // strategy of the ghost
     int eaten_score_timer_;     // timer for the score when eating a ghost
 
-    bool wasNotIdle;
+    bool wasNotIdle_;
 
     std::array<SDL_Rect, 2> blue_sprite_;
     std::array<SDL_Rect, 2> white_sprite_;
@@ -31,9 +31,9 @@ class Ghost : public Character {
 
   public:
     static clock_t timer_begin_ghost, timer_end_ghost;
+    static bool idle;
 
     Ghost();
-    static bool idle;
 
     /**
      * @brief Set the outJail bool

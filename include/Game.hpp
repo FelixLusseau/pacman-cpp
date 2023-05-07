@@ -17,17 +17,18 @@
 #include <memory>
 
 class Game {
-  protected:
-    std::array<std::shared_ptr<Ghost>, 4> ghosts;
-    std::shared_ptr<Ghost> blinky;
-    std::shared_ptr<Ghost> pinky;
-    std::shared_ptr<Ghost> inky;
-    std::shared_ptr<Ghost> clyde;
-    std::unique_ptr<ThePacman> pacman;
+  private:
+    std::array<std::shared_ptr<Ghost>, 4> ghosts_;
+    std::shared_ptr<Ghost> blinky_;
+    std::shared_ptr<Ghost> pinky_;
+    std::shared_ptr<Ghost> inky_;
+    std::shared_ptr<Ghost> clyde_;
+    std::unique_ptr<ThePacman> pacman_;
 
-    std::unique_ptr<Map> map;
-    std::unique_ptr<Write> dictionary;
-    std::vector<std::unique_ptr<Dot>> dots;
+    std::unique_ptr<Map> map_;
+    std::unique_ptr<Write> dictionary_;
+    std::vector<std::unique_ptr<Dot>> dots_;
+    std::unique_ptr<Bonus> bonus_;
 
     SDL_Window *pWindow;
     SDL_Surface *win_surf;
@@ -37,11 +38,9 @@ class Game {
     SDL_Rect src_bg_white;
     SDL_Rect bg; // scale x4
 
-    int count;
-    int score;
-    bool launched;
-
-    std::unique_ptr<Bonus> bonus;
+    int count_;
+    int score_;
+    bool launched_;
 
   public:
     Game();
@@ -82,7 +81,7 @@ class Game {
      * @param ghosts
      * @param pacman
      */
-    void resetPositions(std::array<std::shared_ptr<Ghost>, 4> &ghosts, std::unique_ptr<ThePacman> &pacman);
+    void resetPositions(std::array<std::shared_ptr<Ghost>, 4> &ghosts_, std::unique_ptr<ThePacman> &pacman);
 
     /**
      * @brief Change the level of the game
@@ -91,7 +90,7 @@ class Game {
      * @param pacman
      * @param bg
      */
-    void nextLevel(std::array<std::shared_ptr<Ghost>, 4> &ghosts, std::unique_ptr<ThePacman> &pacman, SDL_Rect bg);
+    void nextLevel(std::array<std::shared_ptr<Ghost>, 4> &ghosts_, std::unique_ptr<ThePacman> &pacman, SDL_Rect bg);
 
     /**
      * @brief An animation between level 2 and 3.

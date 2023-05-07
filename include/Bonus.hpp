@@ -7,9 +7,9 @@ enum class TypeBonus { Cherry, Strawberry, Orange, Apple, Melon, Galaxian, Bell,
 
 class Bonus {
   private:
-    TypeBonus type;
-    int points;
-    bool exist;
+    TypeBonus type_;
+    int points_;
+    bool exist_;
     SDL_Rect sprite_;
     SDL_Rect sprite_points_;
     SDL_Rect position_;
@@ -48,14 +48,14 @@ class Bonus {
      * @return true
      * @return false
      */
-    inline bool getExists() const { return exist; }
+    inline bool getExists() const { return exist_; }
 
     /**
      * @brief Set if the bonus exists and has to appear
      *
      * @param b
      */
-    inline void setExists(const bool b) { exist = b; }
+    inline void setExists(const bool b) { exist_ = b; }
 
     /**
      * @brief Check if Pacman is on the bonus

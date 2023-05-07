@@ -1,7 +1,7 @@
 #include "../include/Map.hpp"
 
 Map::Map(const SDL_Rect bg) {
-    map = {
+    map_ = {
         // 1
         {Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall,
          Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall},
@@ -89,12 +89,12 @@ Map::Map(const SDL_Rect bg) {
          Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall, Tile::Wall}};
 
     /* size of cases */
-    float pixelX{static_cast<float>(bg.w) / static_cast<float>(map[0].size())};
-    float pixelY{static_cast<float>(bg.h) / static_cast<float>(map.size())};
+    float pixelX{static_cast<float>(bg.w) / static_cast<float>(map_[0].size())};
+    float pixelY{static_cast<float>(bg.h) / static_cast<float>(map_.size())};
 
     width_ = static_cast<int>(pixelX);
     height_ = static_cast<int>(pixelY);
 
-    line_ = map.size();
-    column_ = map[0].size();
+    line_ = map_.size();
+    column_ = map_[0].size();
 };

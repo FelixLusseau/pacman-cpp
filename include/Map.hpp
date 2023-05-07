@@ -9,7 +9,7 @@ enum class Tile { Wall, Empty, Dot, PowerPellet, GhostHouse, GhostHouseDoor, Esc
 
 class Map {
   private:
-    std::vector<std::vector<Tile>> map;
+    std::vector<std::vector<Tile>> map_;
     int height_;
     int width_;
     int column_;
@@ -23,7 +23,7 @@ class Map {
      *
      * @return std::vector<std::vector<Tile>>&
      */
-    inline std::vector<std::vector<Tile>> &getMap(void) { return map; }
+    inline std::vector<std::vector<Tile>> &getMap(void) { return map_; }
 
     /**
      * @brief Get the Width of a tile of the map

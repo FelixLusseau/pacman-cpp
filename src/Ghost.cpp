@@ -33,18 +33,18 @@ Ghost::Ghost() : Character() {
     eaten_score_timer_ = 0;
     last_prec_key = SDL_SCANCODE_UNKNOWN;
 
-    wasNotIdle = true;
+    wasNotIdle_ = true;
 }
 
 void Ghost::move(const Uint8 *keys, const int animation, const std::unique_ptr<Map> &map, const SDL_Rect bg) {
 
     // idle = vulnerable -> go back when become blue
-    if (idle && wasNotIdle) {
-        wasNotIdle = false;
+    if (idle && wasNotIdle_) {
+        wasNotIdle_ = false;
         turnAround();
     }
-    if (idle == false && wasNotIdle == false) {
-        wasNotIdle = true;
+    if (idle == false && wasNotIdle_ == false) {
+        wasNotIdle_ = true;
     }
 
     (void)keys;

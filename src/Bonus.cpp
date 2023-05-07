@@ -22,70 +22,70 @@ Bonus::Bonus() {
     bell_sprite_ = {386, 257, 13, 13};
     key_sprite_ = {404, 257, 13, 13};
 
-    // Define the type of bonus and the number of points depending on the current level
+    // Define the type of bonus and the number of points_ depending on the current level
     switch (Game::level) {
     case 1:
-        type = TypeBonus::Cherry;
-        points = 100;
+        type_ = TypeBonus::Cherry;
+        points_ = 100;
         sprite_ = cherry_sprite_;
         sprite_points_ = hundred_sprite_;
         break;
     case 2:
-        type = TypeBonus::Strawberry;
-        points = 300;
+        type_ = TypeBonus::Strawberry;
+        points_ = 300;
         sprite_ = strawberry_sprite_;
         sprite_points_ = three_hundreds_sprite_;
         break;
     case 3:
     case 4:
-        type = TypeBonus::Orange;
-        points = 500;
+        type_ = TypeBonus::Orange;
+        points_ = 500;
         sprite_ = orange_sprite_;
         sprite_points_ = five_hundreds_sprite_;
         break;
     case 5:
     case 6:
-        type = TypeBonus::Apple;
-        points = 700;
+        type_ = TypeBonus::Apple;
+        points_ = 700;
         sprite_ = apple_sprite_;
         sprite_points_ = seven_hundreds_sprite_;
         break;
     case 7:
     case 8:
-        type = TypeBonus::Melon;
-        points = 1000;
+        type_ = TypeBonus::Melon;
+        points_ = 1000;
         sprite_ = melon_sprite_;
         sprite_points_ = one_thousand_sprite_;
         break;
     case 9:
     case 10:
-        type = TypeBonus::Galaxian;
-        points = 2000;
+        type_ = TypeBonus::Galaxian;
+        points_ = 2000;
         sprite_ = galaxian_sprite_;
         sprite_points_ = two_thousands_sprite_;
         break;
     case 11:
     case 12:
-        type = TypeBonus::Bell;
-        points = 3000;
+        type_ = TypeBonus::Bell;
+        points_ = 3000;
         sprite_ = bell_sprite_;
         sprite_points_ = three_thousands_sprite_;
         break;
     case 13:
     default:
-        type = TypeBonus::Key;
-        points = 5000;
+        type_ = TypeBonus::Key;
+        points_ = 5000;
         sprite_ = key_sprite_;
         sprite_points_ = five_thousands_sprite_;
         break;
     }
-    exist = false;
+    exist_ = false;
     position_ = {320, 477, 30, 30};
 }
 
 int Bonus::getEat(const SDL_Rect &pac_position) {
 
-    if (!exist) {
+    if (!exist_) {
         return 0;
     }
 
@@ -101,8 +101,8 @@ int Bonus::getEat(const SDL_Rect &pac_position) {
 
     if (distance < (pac_position.w / 2.25)) {
         bonus_score_timer++;
-        exist = false;
-        score = points;
+        exist_ = false;
+        score = points_;
     }
 
     return score;
