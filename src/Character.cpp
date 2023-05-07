@@ -20,11 +20,11 @@ inline bool operator==(const SDL_Rect &a, const SDL_Rect &b) { return a.x == b.x
 
 int Character::changePosition(const int x, const int y, const std::vector<std::vector<Tile>> &map, const SDL_Rect bg) {
 
-    // size of a case
+    // size of a tile
     float tailleCaseX{static_cast<float>(bg.w) / static_cast<float>(map[0].size())};
     float tailleCaseY{static_cast<float>(bg.h) / static_cast<float>(map.size())};
 
-    // size of the Pacman case
+    // size of the Pacman tile
     int halfWidth = (position_.w / 2);
 
     // origin = center of the Pacman and not the top left corner

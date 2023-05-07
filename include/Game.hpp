@@ -47,6 +47,7 @@ class Game {
     Game();
     static int ghosts_eaten, level;
     static bool next_level;
+    static clock_t timer_begin, timer_end;
 
     /**
      * @brief Display of the game
@@ -66,8 +67,6 @@ class Game {
      * @return int
      */
     int changeSprite(void);
-
-    static clock_t timer_begin, timer_end;
 
     /**
      * @brief Function executed when Pacman dies

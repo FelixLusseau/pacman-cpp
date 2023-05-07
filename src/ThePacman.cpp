@@ -38,7 +38,7 @@ ThePacman::ThePacman(const int x, const int y) : Character() {
 
 void ThePacman::move(const Uint8 *keys, const int animation, const std::unique_ptr<Map> &map, const SDL_Rect bg) {
 
-    // size of a case of the map
+    // size of a tile of the map
     int tailleCaseX{map->getWidth()};
     int tailleCaseY{map->getHeight()};
 

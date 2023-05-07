@@ -12,26 +12,26 @@
 
 class Character {
   protected:
-    /* sprite pour bouger dans les 4 directions (2 images par directions)
-       ordre: right-left-down-up */
+    // sprite to move in the 4 directions (2 images per directions)
+    // order: right-left-down-up
     std::array<SDL_Rect, 8> sprite_;
 
-    /* sprite actuellement dessiné */
+    // sprite currently drawn
     SDL_Rect cur_sprite_;
 
-    /* position dans la fenètre de jeu */
+    // current position in the window
     SDL_Rect position_;
 
-    /*position initial */
+    // initial position in the window
     SDL_Rect init_position_;
 
-    /* dernière touche du clavier pressé (pacman) / direction prise (ghost)*/
+    // precedent key pressed (pacman) / direction taken (ghosts)
     SDL_Scancode prec_key;
 
-    /* vitesse du personnage */
+    // speed of the character
     int speed;
 
-    /* données de la carte: hauteur et longueur d'une case*/
+    // map data: height and width of a tile
     int height;
     int width;
 

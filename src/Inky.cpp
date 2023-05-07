@@ -51,11 +51,11 @@ void Inky::chase(const std::unique_ptr<ThePacman> &pacman, const std::vector<std
     SDL_Rect PacPosition{pacman->getPosition()};
     SDL_Rect BlyPosition{blinky_->getPosition()};
 
-    // size of a case of the map
+    // size of a tile of the map
     int tailleCaseX{static_cast<int>(bg.w / map[0].size())};
     int tailleCaseY{static_cast<int>(bg.h / map.size())};
 
-    // size of the sprite case
+    // size of the sprite tile
     int size{(position_.w) / 2};
 
     // Inky wants to go behind Pacman using the position of Blinky

@@ -27,7 +27,7 @@ void Clyde::chase(const std::unique_ptr<ThePacman> &pacman, const std::vector<st
 
     SDL_Rect Goal{pacman->getPosition()};
 
-    // size of a case of the map
+    // size of a tile of the map
     float tailleCaseX{static_cast<float>(bg.w) / static_cast<float>(map[0].size())};
 
     int dist_min{static_cast<int>(tailleCaseX * 4)};

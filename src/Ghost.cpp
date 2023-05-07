@@ -49,11 +49,11 @@ void Ghost::move(const Uint8 *keys, const int animation, const std::unique_ptr<M
 
     (void)keys;
 
-    // size of a case of the map
+    // size of a tile of the map
     int tailleCaseX{map->getWidth()};
     int tailleCaseY{map->getHeight()};
 
-    // size of the sprite case
+    // size of the sprite tile
     int size{position_.w};
 
     // origin = center of the Pacman and not the top left corner
