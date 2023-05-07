@@ -65,7 +65,7 @@ int Character::changePosition(const int x, const int y, const std::vector<std::v
         return 0;
     }
 
-    // ghoste house door collision
+    // ghost house door collision
     float pixelX{static_cast<float>(bg.w) / static_cast<float>(map[0].size())};
     float pixelY{static_cast<float>(bg.h) / static_cast<float>(map.size())};
 

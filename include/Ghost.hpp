@@ -11,20 +11,13 @@ enum class Status { eyes, chase, flee, stay_jail, eaten };
 
 class Ghost : public Character {
   protected:
-    /* position pour les fantomes commençant dans la prison */
-    SDL_Rect jail_position_;
-    /* pour sortir de la prison */
-    bool out_jail_;
-    /* endroit que les fantomes visent en bougeant*/
-    SDL_Rect goal_;
-    /* quand en status = flee ils s'enfuit vers un des coins du jeu*/
-    SDL_Rect corner_;
-    /* direction actuelle du fantome */
-    SDL_Scancode last_prec_key;
-    /* determine la stratégie du fantome*/
-    Status status_;
-    /* le score augmente avec le nombre de fantome mangé */
-    int eaten_score_timer_;
+    SDL_Rect jail_position_;    // position for the ghosts starting into the jail
+    bool out_jail_;             // true if the ghost can leave the jail
+    SDL_Rect goal_;             // goal of the ghost when moving
+    SDL_Rect corner_;           // corner of the ghost when fleeing
+    SDL_Scancode last_prec_key; // current direction of the ghost
+    Status status_;             // strategy of the ghost
+    int eaten_score_timer_;     // timer for the score when eating a ghost
 
     bool wasNotIdle;
 
@@ -97,7 +90,13 @@ class Ghost : public Character {
      */
     bool intersection(const int tailleCaseX, const int tailleCaseY, const std::vector<Tile> directions);
 
-    /* change key_prec selon la meilleur direction celon si on veut aller au Goal ou s'éloigné de Goal */
+    /**
+     * @brief Choose the best direction to go to the goal or to move away from it by modifying the prec_key
+     *
+     * @param Goal
+     * @param directions
+     * @param min_init
+     */
     void choosePath(const SDL_Rect Goal, const std::vector<Tile> directions, float min_init);
 
     /**

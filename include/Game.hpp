@@ -50,7 +50,7 @@ class Game {
     static clock_t timer_begin, timer_end;
 
     /**
-     * @brief Display of the game
+     * @brief Main display function of the game
      *
      */
     void draw();

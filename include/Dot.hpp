@@ -5,33 +5,63 @@
 #include <iostream>
 #include <vector>
 
-enum class TypeDot { Simple, Big /* , Fruit */ };
+enum class TypeDot { Simple, Big };
 
 class Dot {
   private:
     TypeDot type;
-
-    /* combien de points il vaut */
-    int point;
+    int points; // number of points
     bool exist_;
-
-    SDL_Rect sprite_;
-
-    /* position dans la fenètre de jeu */
-    SDL_Rect position_;
+    SDL_Rect sprite_;   // sprite of the dot
+    SDL_Rect position_; // position in the game window
 
   public:
-    static int nb_dot_tot_, nb_dot_eaten_;
+    static int nb_dot_tot_, nb_dot_eaten_; // counters of dots for the release of the ghosts and the level change
 
     Dot(const int x, const int y, const TypeDot type);
 
+    /**
+     * @brief Return if the dot exists and has to appear
+     *
+     * @return true
+     * @return false
+     */
     bool inline getExist(void) const { return exist_; }
+
+    /**
+     * @brief Get the position of the dot
+     *
+     * @return SDL_Rect&
+     */
     inline SDL_Rect &getPosition(void) { return position_; }
+
+    /**
+     * @brief Get the sprite of the dot
+     *
+     * @return SDL_Rect&
+     */
     inline SDL_Rect &getSprite(void) { return sprite_; }
-    inline int getPoint(void) const { return point; }
+
+    /**
+     * @brief Get the number of points of the dot
+     *
+     * @return int
+     */
+    inline int getPoint(void) const { return points; }
+
+    /**
+     * @brief Set if the dot exists and has to appear
+     *
+     * @param exist
+     */
     inline void setExist(const bool exist) { exist_ = exist; }
 
-    /* fonction pour manger les points: renvoit 0 si pas mangé, son nombre de point sinon */
+    /**
+     * @brief Function to eat the points: return 0 if not eaten, its number of points otherwise
+     *
+     * @param pac_position
+     * @return int
+     */
     int getEat(const SDL_Rect &pac_position);
 };
 

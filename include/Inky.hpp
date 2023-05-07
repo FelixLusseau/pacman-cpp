@@ -11,7 +11,6 @@ class Inky : public Ghost {
     std::shared_ptr<Ghost> blinky_;
 
   public:
-    Inky(const int PixelX, const int PixelY);
     Inky(const int PixelX, const int PixelY, std::shared_ptr<Ghost> blinky);
 
     void chase(const std::unique_ptr<ThePacman> &pacman, const std::vector<std::vector<Tile>> &map, const SDL_Rect bg) override;

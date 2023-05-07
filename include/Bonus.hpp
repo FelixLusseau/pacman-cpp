@@ -53,9 +53,9 @@ class Bonus {
     /**
      * @brief Set if the bonus exists and has to appear
      *
-     * @param e
+     * @param b
      */
-    inline void setExists(const bool e) { exist = e; }
+    inline void setExists(const bool b) { exist = b; }
 
     /**
      * @brief Check if Pacman is on the bonus
