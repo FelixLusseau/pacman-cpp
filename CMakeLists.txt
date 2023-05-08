@@ -11,12 +11,18 @@ file(GLOB SOURCES
 
 find_package(SDL2 REQUIRED SDL2)
 
+# Embed the image into the binary using the file(READ) command
+file(READ ${CMAKE_CURRENT_SOURCE_DIR}/pacman_sprites.bmp PACMAN_SPRITES_HEX HEX)
+string(REGEX REPLACE "(..)" "0x\\0," PACMAN_SPRITES_HEX "${PACMAN_SPRITES_HEX}")
+configure_file(${CMAKE_CURRENT_SOURCE_DIR}/include/Sprites.hpp.in ${CMAKE_CURRENT_SOURCE_DIR}/include/Sprites.hpp)
+#message("PACMAN_SPRITES_HEX: ${PACMAN_SPRITES_HEX}")
+
 add_executable(${PROJECT_NAME} ${SOURCES})
 target_compile_definitions(${PROJECT_NAME} PRIVATE "SDL_MAIN_HANDLED")
 target_link_libraries(${PROJECT_NAME} PRIVATE SDL2::SDL2)
 
-file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/pacman_sprites.bmp
-	DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/)	
+#file(COPY ${CMAKE_CURRENT_SOURCE_DIR}/pacman_sprites.bmp
+#	DESTINATION ${CMAKE_CURRENT_BINARY_DIR}/)	
 
 if(MSVC)
 	set_property(DIRECTORY ${CMAKE_CURRENT_SOURCE_DIR} PROPERTY VS_STARTUP_PROJECT ${PROJECT_NAME})

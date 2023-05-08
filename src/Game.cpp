@@ -1,5 +1,6 @@
 #include "../include/Game.hpp"
 #include "../include/Dot.hpp"
+#include "../include/Sprites.hpp"
 
 clock_t Game::timer_begin = 0;
 clock_t Game::timer_end = 0;
@@ -12,7 +13,10 @@ Game::Game() {
     pWindow = SDL_CreateWindow("PacMan", SDL_WINDOWPOS_UNDEFINED, SDL_WINDOWPOS_UNDEFINED, 680, 900, SDL_WINDOW_SHOWN);
     win_surf = SDL_GetWindowSurface(pWindow);
 
-    plancheSprites = SDL_LoadBMP("./pacman_sprites.bmp");
+    // Load the image data from the PACMAN_SPRITES constant
+    SDL_RWops *sprite_data = SDL_RWFromConstMem(PACMAN_SPRITES.data(), PACMAN_SPRITES.size());
+    plancheSprites = SDL_LoadBMP_RW(sprite_data, 1);
+    // plancheSprites = SDL_LoadBMP("./pacman_sprites.bmp");
 
     bg = {0, 0, 672, 864}; // scale x4
 

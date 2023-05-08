@@ -1,0 +1,9 @@
+#ifndef PACMAN_SPRITES_HPP
+#define PACMAN_SPRITES_HPP
+
+#include <vector>
+
+// Define the embedded image data as a const char array
+const std::vector<unsigned char> PACMAN_SPRITES = {${PACMAN_SPRITES_HEX}};
+
+#endif // PACMAN_SPRITES_HPP
