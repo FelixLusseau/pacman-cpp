@@ -11,7 +11,7 @@ enum class Status { eyes, chase, flee, stay_jail, eaten };
 
 class Ghost : public Character {
   protected:
-    SDL_Rect jail_position_;    // position for the ghosts starting into the jail
+    SDL_Rect jail_position_;    // position for the ghost starting into the jail
     bool out_jail_;             // true if the ghost can leave the jail
     SDL_Rect goal_;             // goal of the ghost when moving
     SDL_Rect corner_;           // corner of the ghost when fleeing
